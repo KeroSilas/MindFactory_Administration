@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                group3.mindfactory_administration/group3.mindfactory_administration.HelloApplication
+                                group3.mindfactory_administration/group3.mindfactory_administration.AdministrationApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

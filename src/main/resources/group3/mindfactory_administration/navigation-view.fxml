@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.NavigationController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="12.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/cropped-cropped-MF_NEGATIVE_WHITE-1.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="12.0" />
+               </HBox.margin>
+            </ImageView>
+            <MFXButton fx:id="dashboardBtn" minHeight="35.0" minWidth="90.0" onAction="#handleDashboard" prefHeight="35.0" prefWidth="90.0" text="Dashboard" />
+            <MFXButton fx:id="kalenderBtn" minHeight="35.0" minWidth="90.0" onAction="#handleKalender" prefHeight="35.0" prefWidth="90.0" text="Kalender" />
+            <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="90.0" onAction="#handleStatistik" prefHeight="35.0" prefWidth="90.0" text="Statistik" />
+            <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+               <children>
+                  <MFXButton fx:id="indstillingerBtn" minHeight="35.0" minWidth="35.0" onAction="#handleIndstillinger" prefHeight="35.0" prefWidth="35.0" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/settings_small.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MFXButton>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="12.0" right="12.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <StackPane fx:id="stackPane" alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
