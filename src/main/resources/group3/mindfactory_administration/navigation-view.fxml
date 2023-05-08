@@ -26,7 +26,7 @@
             <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="90.0" onAction="#handleStatistik" prefHeight="35.0" prefWidth="90.0" text="Statistik" />
             <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72" />
+                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnDismiss="true" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72" />
                </children>
             </HBox>
          </children>
