@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" afterDir="false" />
+    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Notification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/navigation-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/navigation-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +63,15 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="Run application" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="group3.mindfactory_administration.AdministrationApplication" />
+      <module name="MindFactory_Administration" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -74,10 +84,23 @@
       <workItem from="1683189010972" duration="852000" />
       <workItem from="1683189870702" duration="2598000" />
       <workItem from="1683538754514" duration="2562000" />
+      <workItem from="1683555825219" duration="2972000" />
     </task>
+    <task id="LOCAL-00001" summary="Changes">
+      <created>1683555912951</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1683555912951</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
 </project>

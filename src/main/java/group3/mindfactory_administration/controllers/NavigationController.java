@@ -1,11 +1,18 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
+import group3.mindfactory_administration.model.Notification;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
+import io.github.palexdev.materialfx.controls.cell.MFXNotificationCell;
+import io.github.palexdev.materialfx.notifications.MFXNotificationCenterSystem;
+import io.github.palexdev.materialfx.notifications.MFXNotificationSystem;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -16,10 +23,10 @@ public class NavigationController {
     private BorderPane view1, view2, view3;
 
     @FXML
-    private MFXButton dashboardBtn;
+    private MFXNotificationCenter notificationCenter;
 
     @FXML
-    private MFXButton indstillingerBtn;
+    private MFXButton dashboardBtn;
 
     @FXML
     private MFXButton kalenderBtn;
@@ -38,6 +45,10 @@ public class NavigationController {
 
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view1);
+
+        // Test notification
+        Notification notification = new Notification("Test", "Test");
+        notificationCenter.getNotifications().add(notification);
     }
 
     @FXML
@@ -55,11 +66,6 @@ public class NavigationController {
         kalenderBtn.setDisable(false);
         dashboardBtn.setDisable(false);
         statistikBtn.setDisable(true);
-    }
-
-    @FXML
-    void handleIndstillinger() {
-
     }
 
     public void initialize() {

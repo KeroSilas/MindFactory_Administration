@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXNotificationCenter?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,15 +26,7 @@
             <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="90.0" onAction="#handleStatistik" prefHeight="35.0" prefWidth="90.0" text="Statistik" />
             <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXButton fx:id="indstillingerBtn" minHeight="35.0" minWidth="35.0" onAction="#handleIndstillinger" prefHeight="35.0" prefWidth="35.0" text=" ">
-                     <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/settings_small.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MFXButton>
+                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72" />
                </children>
             </HBox>
          </children>
