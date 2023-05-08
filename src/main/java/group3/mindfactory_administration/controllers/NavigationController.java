@@ -35,6 +35,9 @@ public class NavigationController {
         kalenderBtn.setDisable(false);
         dashboardBtn.setDisable(true);
         statistikBtn.setDisable(false);
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().add(view1);
     }
 
     @FXML
@@ -61,13 +64,13 @@ public class NavigationController {
 
     public void initialize() {
         // Get the views from the FXML files
-        //FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("view1.fxml"));
+        FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("dashboard-view.fxml"));
         FXMLLoader view2Loader = new FXMLLoader(AdministrationApplication.class.getResource("calendar-view.fxml"));
         //FXMLLoader view3Loader = new FXMLLoader(AdministrationApplication.class.getResource("view3.fxml"));
 
         // Load the views into memory
         try {
-            //view1 = view1Loader.load();
+            view1 = view1Loader.load();
             view2 = view2Loader.load();
             //view3 = view3Loader.load();
         } catch (IOException e) {
@@ -77,7 +80,7 @@ public class NavigationController {
         // Insert view1 into the stack pane by default
         dashboardBtn.setDisable(true);
         stackPane.getChildren().clear();
-        //stackPane.getChildren().add(view1);
+        stackPane.getChildren().add(view1);
     }
 
 }
