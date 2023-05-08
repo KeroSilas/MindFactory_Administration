@@ -13,7 +13,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="12.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="60.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/cropped-cropped-MF_NEGATIVE_WHITE-1.png" />
                </image>

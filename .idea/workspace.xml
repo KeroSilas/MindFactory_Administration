@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/StatisticController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/AdministrationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/AdministrationApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/dashboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/dashboard-view.fxml" afterDir="false" />
     </list>
@@ -89,7 +88,7 @@
       <workItem from="1683189870702" duration="2598000" />
       <workItem from="1683538754514" duration="2562000" />
       <workItem from="1683555825219" duration="2972000" />
-      <workItem from="1683564029837" duration="1995000" />
+      <workItem from="1683564029837" duration="3241000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1683555912951</created>
@@ -105,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683559513657</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Changes">
+      <created>1683567604792</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683567604792</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

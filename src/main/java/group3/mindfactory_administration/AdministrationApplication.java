@@ -12,9 +12,9 @@ public class AdministrationApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setWidth(850);
+        stage.setWidth(1200);
         stage.setHeight(900);
-        stage.setMinWidth(850);
+        stage.setMinWidth(1200);
         stage.setMinHeight(900);
         stage.setTitle("Mind Factory Administration");
         stage.setScene(scene);

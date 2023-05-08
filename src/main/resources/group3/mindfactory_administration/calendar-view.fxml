@@ -38,10 +38,10 @@
             <Insets left="12.0" right="12.0" />
          </padding>
          <children>
-            <MFXButton onAction="#handlePreviousMonth" prefHeight="35.0" prefWidth="35.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="&lt;" />
+            <MFXButton onAction="#handlePreviousMonth" prefHeight="35.0" prefWidth="35.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&lt;" />
             <MFXComboBox fx:id="monthComboBox" floatMode="DISABLED" minHeight="35.0" minWidth="150.0" prefHeight="35.0" prefWidth="150.0" style="-fx-border-color: lightgrey;" />
             <MFXComboBox fx:id="yearComboBox" floatMode="DISABLED" minHeight="35.0" minWidth="150.0" prefHeight="35.0" prefWidth="150.0" style="-fx-border-color: lightgrey;" />
-            <MFXButton onAction="#handleNextMonth" prefHeight="35.0" prefWidth="35.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="&gt;" />
+            <MFXButton onAction="#handleNextMonth" prefHeight="35.0" prefWidth="35.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&gt;" />
          </children>
       </HBox>
    </bottom>

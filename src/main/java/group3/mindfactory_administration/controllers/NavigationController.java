@@ -83,7 +83,6 @@ public class NavigationController {
 
         // Insert view1 into the stack pane by default
         dashboardBtn.setDisable(true);
-        stackPane.getChildren().clear();
         stackPane.getChildren().add(view1);
     }
 

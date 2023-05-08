@@ -21,7 +21,7 @@
             <MFXDatePicker fx:id="toDP" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXButton onAction="#handleReset" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="Reset" />
+                  <MFXButton onAction="#handleReset" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Reset" />
                </children>
             </HBox>
          </children>
