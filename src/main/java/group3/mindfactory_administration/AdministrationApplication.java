@@ -13,9 +13,9 @@ public class AdministrationApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setWidth(850);
-        stage.setHeight(700);
+        stage.setHeight(900);
         stage.setMinWidth(850);
-        stage.setMinHeight(700);
+        stage.setMinHeight(900);
         stage.setTitle("Mind Factory Administration");
         stage.setScene(scene);
         stage.show();

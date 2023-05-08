@@ -1,48 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.DashboardController">
-   <top>
-      <HBox alignment="CENTER" prefHeight="60.0" spacing="8.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets left="12.0" right="12.0" />
-         </padding>
-      </HBox>
-   </top>
    <center>
-      <FlowPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" spacing="16.0">
          <children>
-            <VBox>
+            <HBox spacing="16.0">
                <children>
-                  <Label text="Dagens booking">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox style="-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                  <VBox spacing="4.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" />
+                        <Label text="Kommende bookinger">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <MFXScrollPane fitToWidth="true" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1;">
+                           <content>
+                              <HBox style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </content>
+                        </MFXScrollPane>
                      </children>
-                  </HBox>
+                  </VBox>
+                  <VBox fillWidth="false" spacing="4.0">
+                     <children>
+                        <Label text="Dagens billede">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                           <children>
+                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <VBox>
+            </HBox>
+            <VBox spacing="4.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Ugens bookinger">
+                  <Label text="Årets statistik">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <HBox style="-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                  <HBox style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" />
+                        <BarChart fx:id="barChart" HBox.hgrow="ALWAYS">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
                      </children>
                   </HBox>
                </children>
@@ -51,6 +77,6 @@
          <padding>
             <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
          </padding>
-      </FlowPane>
+      </VBox>
    </center>
 </BorderPane>

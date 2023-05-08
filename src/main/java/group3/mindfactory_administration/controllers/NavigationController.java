@@ -4,15 +4,10 @@ import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Notification;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
-import io.github.palexdev.materialfx.controls.cell.MFXNotificationCell;
-import io.github.palexdev.materialfx.notifications.MFXNotificationCenterSystem;
-import io.github.palexdev.materialfx.notifications.MFXNotificationSystem;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -66,19 +61,22 @@ public class NavigationController {
         kalenderBtn.setDisable(false);
         dashboardBtn.setDisable(false);
         statistikBtn.setDisable(true);
+
+        stackPane.getChildren().clear();
+        stackPane.getChildren().add(view3);
     }
 
     public void initialize() {
         // Get the views from the FXML files
         FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("dashboard-view.fxml"));
         FXMLLoader view2Loader = new FXMLLoader(AdministrationApplication.class.getResource("calendar-view.fxml"));
-        //FXMLLoader view3Loader = new FXMLLoader(AdministrationApplication.class.getResource("view3.fxml"));
+        FXMLLoader view3Loader = new FXMLLoader(AdministrationApplication.class.getResource("statistic-view.fxml"));
 
         // Load the views into memory
         try {
             view1 = view1Loader.load();
             view2 = view2Loader.load();
-            //view3 = view3Loader.load();
+            view3 = view3Loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
