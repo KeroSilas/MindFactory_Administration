@@ -8,4 +8,5 @@ public class Notification extends MFXSimpleNotification {
         CalendarBooking calendarBooking = new CalendarBooking(title);
         setContent(calendarBooking);
     }
+
 }
