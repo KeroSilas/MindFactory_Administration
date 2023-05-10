@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/DatabaseConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Booking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingFilesDaoImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +19,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -77,6 +79,7 @@
       <recent name="group3.mindfactory_administration" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="group3.mindfactory_administration.model" />
       <recent name="group3.mindfactory_administration.dao" />
     </key>
   </component>
@@ -103,7 +106,7 @@
       <workItem from="1683538754514" duration="2562000" />
       <workItem from="1683555825219" duration="2972000" />
       <workItem from="1683564029837" duration="3241000" />
-      <workItem from="1683708052392" duration="2089000" />
+      <workItem from="1683708052392" duration="7340000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1683555912951</created>
@@ -133,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683709678357</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Changes">
+      <created>1683710591678</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683710591678</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
