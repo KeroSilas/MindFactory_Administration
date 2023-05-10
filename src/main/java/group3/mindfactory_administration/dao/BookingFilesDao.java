@@ -19,4 +19,6 @@ public interface BookingFilesDao {
 
     void saveBookingFileList(List<String> bookingFilesList, int bookingID);
 
+}
+
 
