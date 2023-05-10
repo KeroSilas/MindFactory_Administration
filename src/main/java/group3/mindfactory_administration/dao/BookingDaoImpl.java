@@ -3,7 +3,11 @@ package group3.mindfactory_administration.dao;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.BookingTime;
 
+import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BookingDaoImpl implements BookingDao {
 
@@ -11,6 +15,97 @@ public class BookingDaoImpl implements BookingDao {
 
     public BookingDaoImpl() {
         databaseConnector = DatabaseConnector.getInstance();
+    }
+
+    // Get all booking data from the database and return it as a HashMap with BookingTime as key and Booking as value
+    // This method is used to populate the calendar with bookings
+    @Override
+    public HashMap<BookingTime, Booking> getBookings() {
+
+        HashMap<BookingTime, Booking> bookings = new HashMap<>();
+        List<BookingTime> tempBookingTimes = new ArrayList<>();
+        List<Booking> tempBookings = new ArrayList<>();
+
+        try (Connection con = databaseConnector.getConnection()) {
+            // Get the bookings
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Booking;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Booking booking = new Booking(
+                        rs.getInt("bookingID"),
+                        rs.getString("package"),
+                        rs.getString("activity"),
+                        rs.getString("organization"),
+                        rs.getString("åbenSkoleForløb"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("position"),
+                        rs.getString("department"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("assistance"),
+                        rs.getString("transportType"),
+                        rs.getString("transportArrival"),
+                        rs.getString("transportDeparture"),
+                        rs.getInt("participants"),
+                        rs.getTimestamp("bookingDate").toLocalDateTime(),
+                        rs.getString("messageToAS"),
+                        rs.getString("personalNote"),
+                        rs.getString("bookingType")
+                );
+                tempBookings.add(booking);
+            }
+
+            // Get the bookingEquipment and add it to the booking
+            ps = con.prepareStatement("SELECT * FROM BookingEquipment;");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                for (Booking booking : tempBookings) {
+                    if (rs.getInt("bookingID") == booking.getBookingID()) {
+                        booking.getEquipmentList().add(rs.getString("equipment"));
+                    }
+                }
+            }
+
+            // Get the bookingFiles and add it to the booking
+            ps = con.prepareStatement("SELECT * FROM BookingFiles;");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                for (Booking booking : tempBookings) {
+                    if (rs.getInt("bookingID") == booking.getBookingID()) {
+                        booking.getBookingFilesList().add(new File(rs.getString("filePath")));
+                    }
+                }
+            }
+
+            // Get the bookingTimes
+            ps = con.prepareStatement("SELECT * FROM BookingTimes;");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                BookingTime bookingTime = new BookingTime(
+                        rs.getDate("startDate").toLocalDate(),
+                        rs.getTime("startTime").toLocalTime(),
+                        rs.getTime("endTime").toLocalTime(),
+                        rs.getBoolean("isWholeDay"),
+                        rs.getBoolean("isHalfDayEarly"),
+                        rs.getBoolean("isNoShow"),
+                        rs.getInt("bookingID")
+                );
+                tempBookingTimes.add(bookingTime);
+            }
+
+            // Put the bookingTime and booking together in a HashMap
+            for (BookingTime bookingTime : tempBookingTimes) {
+                for (Booking booking : tempBookings) {
+                    if (bookingTime.getBookingID() == booking.getBookingID()) {
+                        bookings.put(bookingTime, booking);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("cannot get bookings " + e.getMessage());
+        }
+        return bookings;
     }
 
     @Override
@@ -66,7 +161,7 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public void deleteBooking(int bookingID) {
+    public void deleteBooking(int bookingID) throws SQLException {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
@@ -77,7 +172,7 @@ public class BookingDaoImpl implements BookingDao {
                 throw new RuntimeException("Booking with ID " + bookingID + " does not exist");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 }

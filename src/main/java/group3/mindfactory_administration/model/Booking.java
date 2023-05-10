@@ -1,6 +1,7 @@
 package group3.mindfactory_administration.model;
 
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +25,13 @@ public class Booking {
     private String transportDeparture;
     private int participants;
     private LocalDateTime bookingDateTime;
-    private boolean isEmailSent;
     private String messageToAS;
     private String personalNote;
     private String bookingType;
     private List<String> equipmentList;
-    private List<BookingTime> bookingTimeList;
-    private List<String> bookingFileList;
+    private List<File> bookingFileList;
 
-    private static Booking instance = null;
-
-    public Booking(int bookingID, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, boolean isEmailSent, String messageToAS, String personalNote, String bookingType, List<String> equipmentList, List<BookingTime> bookingTimeList, List<String> bookingFileList) {
+    public Booking(int bookingID, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, String messageToAS, String personalNote, String bookingType) {
         this.bookingID = bookingID;
         this.catering = catering;
         this.activity = activity;
@@ -52,13 +49,11 @@ public class Booking {
         this.transportDeparture = transportDeparture;
         this.participants = participants;
         this.bookingDateTime = bookingDateTime;
-        this.isEmailSent = isEmailSent;
         this.messageToAS = messageToAS;
         this.personalNote = personalNote;
         this.bookingType = bookingType;
-        this.equipmentList = equipmentList;
-        this.bookingTimeList = bookingTimeList;
-        this.bookingFileList = bookingFileList;
+        this.equipmentList = new ArrayList<>();
+        this.bookingFileList = new ArrayList<>();
     }
 
     public int getBookingID() {
@@ -197,14 +192,6 @@ public class Booking {
         this.assistance = assistance;
     }
 
-    public boolean isEmailSent() {
-        return isEmailSent;
-    }
-
-    public void setEmailSent(boolean isEmailSent) {
-        this.isEmailSent = isEmailSent;
-    }
-
     public String getMessageToAS() {
         return messageToAS;
     }
@@ -237,15 +224,9 @@ public class Booking {
         this.equipmentList = equipmentList;
     }
 
-    public List<BookingTime> getBookingTimesList() {
-        return bookingTimeList;
-    }
+    public List<File> getBookingFilesList() {return bookingFileList; }
 
-    public void setBookingTimesList(List<BookingTime> bookingTimeList) {
-        this.bookingTimeList = bookingTimeList;
-    }
-    public List<String> getBookingFilesList() {return bookingFileList; }
-    public void setBookingFilesList(List<String> bookingFileList) {
+    public void setBookingFilesList(List<File> bookingFileList) {
         this.bookingFileList = bookingFileList;
     }
 

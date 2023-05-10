@@ -8,30 +8,23 @@ import javafx.scene.layout.HBox;
 
 public class CalendarBooking extends HBox {
 
-    private final String name;
+    private BookingTime time;
+    private Booking booking;
 
-    public CalendarBooking(String name) {
-        this.name = name;
+    public CalendarBooking(BookingTime time, Booking booking) {
+        this.time = time;
+        this.booking = booking;
 
-        // Styling
-        setPrefHeight(15);
-        setPrefWidth(USE_COMPUTED_SIZE);
-        setStyle("-fx-background-color: #0051ff; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #0051ff; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+        getContent();
 
-        // Temporary code
-        Label eventName = new Label(name + " ");
-        eventName.setStyle("-fx-text-fill: #ffffff");
-        eventName.setMouseTransparent(true);
-
-        getChildren().add(eventName);
-
+        /* TODO: Drag and drop
         // Starts the drag and drop process
         setOnDragDetected(e -> {
             Dragboard db = startDragAndDrop(TransferMode.ANY);
 
             // Generated with GitHub Copilot
             ClipboardContent content = new ClipboardContent();
-            content.putString(name);
+            content.putString(?);
             db.setContent(content);
 
             e.consume();
@@ -46,6 +39,7 @@ public class CalendarBooking extends HBox {
             }
             e.consume();
         });
+        */
     }
 
     public void setClicked(boolean clicked) {
@@ -55,8 +49,30 @@ public class CalendarBooking extends HBox {
             setStyle("-fx-background-color: #0051ff; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #0051ff; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
     }
 
+    public void getContent() {
+        // Styling
+        setPrefHeight(15);
+        setPrefWidth(USE_COMPUTED_SIZE);
+        setStyle("-fx-background-color: #0051ff; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #0051ff; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+
+        // Temporary code
+        Label eventName = new Label(booking.getAfdeling());
+        eventName.setStyle("-fx-text-fill: #ffffff");
+        eventName.setMouseTransparent(true);
+
+        getChildren().add(eventName);
+    }
+
+    public BookingTime getTime() {
+        return time;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
     @Override
     public String toString() {
-        return name;
+        return booking.getAfdeling();
     }
 }

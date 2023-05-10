@@ -10,6 +10,7 @@ public class BookingTime {
     private boolean isWholeDay;
     private boolean isHalfDayEarly;
     private boolean isNoShow;
+    private int bookingID;
 
     public BookingTime(LocalDate date, LocalTime startTime, LocalTime endTime) {
         this.date = date;
@@ -20,11 +21,12 @@ public class BookingTime {
         isNoShow = false;
     }
 
-    public BookingTime(LocalDate date, LocalTime startTime, LocalTime endTime, boolean isWholeDay, boolean isHalfDayEarly, boolean isNoShow) {
+    public BookingTime(LocalDate date, LocalTime startTime, LocalTime endTime, boolean isWholeDay, boolean isHalfDayEarly, boolean isNoShow, int bookingID) {
         this(date, startTime, endTime);
         this.isWholeDay = isWholeDay;
         this.isHalfDayEarly = isHalfDayEarly;
         this.isNoShow = isNoShow;
+        this.bookingID = bookingID;
     }
 
     public LocalDate getDate() {
@@ -67,6 +69,10 @@ public class BookingTime {
 
     public void setHalfDayEarly(boolean isHalfDayEarly) {
         this.isHalfDayEarly = isHalfDayEarly;
+    }
+
+    public int getBookingID() {
+        return bookingID;
     }
 
     @Override

@@ -1,9 +1,10 @@
 package group3.mindfactory_administration.controllers;
 
-import group3.mindfactory_administration.model.CalendarBooking;
-import group3.mindfactory_administration.model.CalendarCell;
+import group3.mindfactory_administration.model.*;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
@@ -15,11 +16,12 @@ import java.util.Optional;
 // Drag and drop inspired by https://stackoverflow.com/questions/38172278/drag-and-drop-a-node-into-another-node
 public class CalendarController {
 
+    private BookingManager bookingManager;
+    private LocalDate date = LocalDate.now();
+
     @FXML private GridPane calendarGrid;
     @FXML private MFXComboBox<String> monthComboBox;
     @FXML private MFXComboBox<String> yearComboBox;
-
-    private LocalDate date = LocalDate.now();
 
     @FXML
     private void handleNextMonth() {
@@ -32,6 +34,13 @@ public class CalendarController {
     }
 
     public void initialize() {
+        bookingManager = BookingManager.getInstance();
+        bookingManager.addPropertyChangeListener(e -> {
+            if (e.getPropertyName().equals("bookings"))
+                drawCalendar();
+        });
+
+        // Draw calendar when month is changed
         monthComboBox.getItems().addAll("January", "February", "March", "April", "May", "June", "July", "August",
                 "September", "October", "November", "December");
         monthComboBox.selectIndex(date.getMonthValue() - 1);
@@ -39,6 +48,8 @@ public class CalendarController {
             date = date.withMonth(monthComboBox.getSelectionModel().getSelectedIndex() + 1);
             drawCalendar();
         });
+
+        // Draw calendar when year is changed
         yearComboBox.getItems().addAll("2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027",
                 "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035");
         yearComboBox.selectIndex(date.getYear() - 2020);
@@ -47,13 +58,12 @@ public class CalendarController {
             drawCalendar();
         });
 
-        drawCalendar();
-
+        // Open new window when clicked on booking
+        // TODO: Change this to open an fxml file
         calendarGrid.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof CalendarBooking ce) {
                 ce.setClicked(true);
-                CalendarCell cc = (CalendarCell) ce.getParent();
-                Alert alert = new Alert(Alert.AlertType.NONE, ce + "\n" + cc, ButtonType.NO, ButtonType.YES);
+                Alert alert = new Alert(Alert.AlertType.NONE, ce.getBooking() + "\n" + ce.getTime(), ButtonType.NO, ButtonType.YES);
                 alert.setTitle("Event Clicked");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent()) {

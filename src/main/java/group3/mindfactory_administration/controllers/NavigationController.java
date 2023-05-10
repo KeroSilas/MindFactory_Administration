@@ -1,7 +1,6 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
-import group3.mindfactory_administration.model.Notification;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
 import javafx.fxml.FXML;
