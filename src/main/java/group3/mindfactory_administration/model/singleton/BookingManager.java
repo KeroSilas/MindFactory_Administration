@@ -45,6 +45,11 @@ public class BookingManager {
 
     public void editBooking(Booking booking, BookingTime bookingTime) {
         EditBookingTask editBookingTask = new EditBookingTask(booking, bookingTime);
+        editBookingTask.setOnSucceeded(e -> {
+            if (editBookingTask.getValue()) {
+                // Edit files and equipment
+            }
+        });
         Thread thread = new Thread(editBookingTask);
         thread.setDaemon(true);
         thread.start();
