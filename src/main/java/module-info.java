@@ -10,4 +10,6 @@ module group3.mindfactory_administration {
     exports group3.mindfactory_administration;
     exports group3.mindfactory_administration.controllers;
     opens group3.mindfactory_administration.controllers to javafx.fxml;
+    exports group3.mindfactory_administration.dao;
+    opens group3.mindfactory_administration.dao to javafx.fxml;
 }
