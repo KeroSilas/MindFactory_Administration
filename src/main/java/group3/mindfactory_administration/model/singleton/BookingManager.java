@@ -1,5 +1,7 @@
-package group3.mindfactory_administration.model;
+package group3.mindfactory_administration.model.singleton;
 
+import group3.mindfactory_administration.model.Booking;
+import group3.mindfactory_administration.model.BookingTime;
 import group3.mindfactory_administration.model.tasks.DeleteBookingTask;
 import group3.mindfactory_administration.model.tasks.EditBookingTask;
 import group3.mindfactory_administration.model.tasks.GetBookingsTask;

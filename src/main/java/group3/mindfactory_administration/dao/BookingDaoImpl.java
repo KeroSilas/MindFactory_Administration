@@ -113,7 +113,7 @@ public class BookingDaoImpl implements BookingDao {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
+            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET package = ?, activity = ?, organization = ?, åbenSkoleForløb = ?,firstName = ?, lastName = ?, position = ?, department = ?, phone = ?, email = ?,assistance = ?, transportType = ?, transportArrival = ?, transportDeparture = ?, participants = ?, bookingDate = ?, messageToAS = ?, personalNote = ?, bookingType = ? WHERE bookingID = ?;");
 
             ps.setString(1, booking.getCatering());
             ps.setString(2, booking.getActivity());
@@ -137,16 +137,18 @@ public class BookingDaoImpl implements BookingDao {
             ps.setInt(20, booking.getBookingID());
             ps.executeUpdate();
 
-            PreparedStatement ps2 = con.prepareStatement("UPDATE BookingTimes SET (?,?,?,?,?,?,?);");
+            PreparedStatement ps2 = con.prepareStatement("UPDATE BookingTimes SET startDate = ?, startTime = ?, endTime = ?, isWholeDay = ?, isHalfDayEarly = ?, isNoShow = ? WHERE bookingID = ?;");
 
-            ps2.setInt(1, booking.getBookingID());
-            ps2.setDate(2, Date.valueOf(bookingTime.getDate()));
-            ps2.setTime(3, Time.valueOf(bookingTime.getStartTime()));
-            ps2.setTime(4, Time.valueOf(bookingTime.getEndTime()));
-            ps2.setBoolean(5, bookingTime.isWholeDay());
-            ps2.setBoolean(6, bookingTime.isHalfDayEarly());
-            ps2.setBoolean(7, bookingTime.isNoShow());
+            ps2.setDate(1, Date.valueOf(bookingTime.getDate()));
+            ps2.setTime(2, Time.valueOf(bookingTime.getStartTime()));
+            ps2.setTime(3, Time.valueOf(bookingTime.getEndTime()));
+            ps2.setBoolean(4, bookingTime.isWholeDay());
+            ps2.setBoolean(5, bookingTime.isHalfDayEarly());
+            ps2.setBoolean(6, bookingTime.isNoShow());
+            ps2.setInt(7, booking.getBookingID());
             ps2.executeUpdate();
+
+            // TODO: Update BookingFiles and BookingEquipment
 
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
@@ -164,16 +166,46 @@ public class BookingDaoImpl implements BookingDao {
     public void deleteBooking(int bookingID) throws SQLException {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE bookingID = ?");
             ps.setInt(1, bookingID);
             rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
 
             if (rowsAffected == 0) {
-                throw new RuntimeException("Booking with ID " + bookingID + " does not exist");
+                throw new SQLException("Booking with ID " + bookingID + " does not exist");
             }
         } catch (SQLException e) {
             throw new SQLException(e);
         }
+    }
+
+    @Override
+    public void deleteBookingTime(int timeID) throws SQLException {
+        int rowsAffected;
+        try (Connection con = databaseConnector.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM BookingTimes WHERE timeID = ?");
+            ps.setInt(1, timeID);
+            rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
+
+            if (rowsAffected == 0) {
+                throw new SQLException("BookingTime with ID " + timeID + " does not exist");
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+    }
+
+    // Test
+    public static void main(String[] args) throws SQLException {
+        BookingDao bookingDao = new BookingDaoImpl();
+        HashMap<BookingTime, Booking> bookings = bookingDao.getBookings();
+        // Get first booking
+        Booking booking = bookings.values().iterator().next();
+        BookingTime bookingTime = bookings.keySet().iterator().next();
+
+        booking.setFirstName("PETER");
+
+        // Edit booking
+        bookingDao.editBooking(booking, bookingTime);
     }
 }
 

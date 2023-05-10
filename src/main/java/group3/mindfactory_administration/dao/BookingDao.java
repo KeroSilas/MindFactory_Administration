@@ -13,4 +13,6 @@ public interface BookingDao {
 
     void deleteBooking (int bookingID) throws SQLException;
 
+    void deleteBookingTime (int timeID) throws SQLException;
+
 }

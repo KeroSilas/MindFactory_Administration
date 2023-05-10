@@ -16,4 +16,6 @@ module group3.mindfactory_administration {
     opens group3.mindfactory_administration.dao to javafx.fxml;
     exports group3.mindfactory_administration.model;
     opens group3.mindfactory_administration.model to javafx.fxml;
+    exports group3.mindfactory_administration.model.singleton;
+    opens group3.mindfactory_administration.model.singleton to javafx.fxml;
 }

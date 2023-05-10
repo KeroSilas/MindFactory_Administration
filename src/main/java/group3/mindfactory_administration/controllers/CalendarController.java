@@ -1,10 +1,9 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.model.*;
+import group3.mindfactory_administration.model.singleton.BookingManager;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;

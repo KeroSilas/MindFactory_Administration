@@ -1,10 +1,9 @@
 package group3.mindfactory_administration.model;
 
+import group3.mindfactory_administration.model.singleton.BookingManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
@@ -56,15 +55,7 @@ public class CalendarCell extends VBox{
         });
         */
 
-        // Pseudocode for actually loading events from database
-        // List<CalendarEvent> events = getEventsFromDatabase();
-        // for (CalendarEvent event : events) {
-        //     if (event.getStartTime().toLocalDate().isEqual(date)) {
-        //         getChildren().add(event);
-        //     }
-        // }
-
-        // Temporary code
+        // Adds all the events for the day
         HashMap<BookingTime, Booking> bookings = bookingManager.getBookings();
         for (BookingTime time : bookings.keySet()) {
             if (time.getDate().isEqual(date)) {

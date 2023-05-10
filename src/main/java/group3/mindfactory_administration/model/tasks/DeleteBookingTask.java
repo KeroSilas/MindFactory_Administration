@@ -2,8 +2,6 @@ package group3.mindfactory_administration.model.tasks;
 
 import group3.mindfactory_administration.dao.BookingDao;
 import group3.mindfactory_administration.dao.BookingDaoImpl;
-import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.BookingTime;
 import javafx.concurrent.Task;
 
 import java.sql.SQLException;
