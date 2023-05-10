@@ -42,8 +42,8 @@ public class NavigationController {
         stackPane.getChildren().add(view1);
 
         // Test notification
-        Notification notification = new Notification("Test", "Test");
-        notificationCenter.getNotifications().add(notification);
+        //Notification notification = new Notification("Test", "Test");
+        //notificationCenter.getNotifications().add(notification);
     }
 
     @FXML

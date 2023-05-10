@@ -1,13 +1,20 @@
 package group3.mindfactory_administration.dao;
 
+import group3.mindfactory_administration.model.Booking;
+import group3.mindfactory_administration.model.BookingTime;
+
 import java.sql.*;
 
 public class BookingDaoImpl implements BookingDao {
 
+    private final DatabaseConnector databaseConnector;
 
+    public BookingDaoImpl() {
+        databaseConnector = DatabaseConnector.getInstance();
+    }
 
     @Override
-    public void editBooking(String Catering, String Activity, String Organization, String ÅbenSkoleForløb, String FirstName, String LastName, String Position, String Afdeling, String Phone, String Email, String Assistance, String TransportType, String TransportArrival, String TransportDeparture, int Participants, java.security.Timestamp BookingDateTime, String MessageToAS, String PersonalNote, String BookingType) throws SQLException {
+    public void editBooking(Booking booking, BookingTime bookingTime) throws SQLException {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
@@ -32,22 +39,19 @@ public class BookingDaoImpl implements BookingDao {
             ps.setString(17, booking.getMessageToAS());
             ps.setString(18, booking.getPersonalNote());
             ps.setString(19, booking.getBookingType());
-            ps.setInt(20, booking.getBookingID);
+            ps.setInt(20, booking.getBookingID());
             ps.executeUpdate();
 
             PreparedStatement ps2 = con.prepareStatement("UPDATE BookingTimes SET (?,?,?,?,?,?,?);");
 
-            for (BookingTime bookingTime : bookingTimes) {
-                ps2.setInt(1, booking.getBookingID());
-                ps2.setDate(2, Date.valueOf(bookingTime.getDate()));
-                ps2.setTime(3, Time.valueOf(bookingTime.getStartTime()));
-                ps2.setTime(4, Time.valueOf(bookingTime.getEndTime()));
-                ps2.setBoolean(5, bookingTime.isWholeDay());
-                ps2.setBoolean(6, bookingTime.isHalfDayEarly());
-                ps2.setBoolean(7, bookingTime.isNoShow());
-                ps2.addBatch();
-            }
-            ps2.executeBatch();
+            ps2.setInt(1, booking.getBookingID());
+            ps2.setDate(2, Date.valueOf(bookingTime.getDate()));
+            ps2.setTime(3, Time.valueOf(bookingTime.getStartTime()));
+            ps2.setTime(4, Time.valueOf(bookingTime.getEndTime()));
+            ps2.setBoolean(5, bookingTime.isWholeDay());
+            ps2.setBoolean(6, bookingTime.isHalfDayEarly());
+            ps2.setBoolean(7, bookingTime.isNoShow());
+            ps2.executeUpdate();
 
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
@@ -55,8 +59,9 @@ public class BookingDaoImpl implements BookingDao {
 
         } catch (SQLException e) {
             con.rollback();
-            e.printStackTrace();
             throw new SQLException(e);
+        } finally {
+            con.close();
         }
     }
 
