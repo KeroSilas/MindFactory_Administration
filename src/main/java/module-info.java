@@ -4,6 +4,8 @@ module group3.mindfactory_administration {
     requires MaterialFX;
     requires com.microsoft.sqlserver.jdbc;
     requires java.sql;
+    requires java.naming;
+    requires java.mail;
 
 
     opens group3.mindfactory_administration to javafx.fxml;
