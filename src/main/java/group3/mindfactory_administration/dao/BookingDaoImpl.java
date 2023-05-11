@@ -1,13 +1,20 @@
 package group3.mindfactory_administration.dao;
 
+import group3.mindfactory_administration.model.Booking;
+import group3.mindfactory_administration.model.BookingTime;
+
 import java.sql.*;
 
 public class BookingDaoImpl implements BookingDao {
+    private final DatabaseConnector databaseConnector;
 
+    public BookingDaoImpl() {
+        databaseConnector = DatabaseConnector.getInstance();
+    }
 
 
     @Override
-    public void editBooking(String Catering, String Activity, String Organization, String ÅbenSkoleForløb, String FirstName, String LastName, String Position, String Afdeling, String Phone, String Email, String Assistance, String TransportType, String TransportArrival, String TransportDeparture, int Participants, java.security.Timestamp BookingDateTime, String MessageToAS, String PersonalNote, String BookingType) throws SQLException {
+    public void editBooking(Booking booking, String Catering, String Activity, String Organization, String ÅbenSkoleForløb, String FirstName, String LastName, String Position, String Afdeling, String Phone, String Email, String Assistance, String TransportType, String TransportArrival, String TransportDeparture, int Participants, java.security.Timestamp BookingDateTime, String MessageToAS, String PersonalNote, String BookingType) throws SQLException {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
@@ -32,7 +39,7 @@ public class BookingDaoImpl implements BookingDao {
             ps.setString(17, booking.getMessageToAS());
             ps.setString(18, booking.getPersonalNote());
             ps.setString(19, booking.getBookingType());
-            ps.setInt(20, booking.getBookingID);
+            ps.setInt(20, booking.getBookingID());
             ps.executeUpdate();
 
             PreparedStatement ps2 = con.prepareStatement("UPDATE BookingTimes SET (?,?,?,?,?,?,?);");
@@ -64,7 +71,7 @@ public class BookingDaoImpl implements BookingDao {
     public void deleteBooking(int bookingID) {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM BookingTimes WHERE BookingID = ?");
             ps.setInt(1, bookingID);
             rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
 
