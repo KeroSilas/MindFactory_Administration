@@ -10,6 +10,7 @@ import java.util.List;
 public class Booking {
 
     private int bookingID;
+    private String bookingType;
     private String catering;
     private String activity;
     private String organization;
@@ -26,20 +27,20 @@ public class Booking {
     private String transportDeparture;
     private int participants;
     private LocalDateTime bookingDateTime;
-    private boolean isEmailSent;
-    private String messageToAS;
-    private String personalNote;
-    private String bookingType;
-    private List<String> equipmentList;
     private LocalDate startDate;
     private LocalTime startTime;
     private LocalTime endTime;
     private boolean isWholeDay;
     private boolean isHalfDayEarly;
     private boolean isNoShow;
+    private boolean isEmailSent;
+    private String messageToAS;
+    private String personalNote;
+    private List<String> equipmentList;
 
-    public Booking(int bookingID, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, boolean isEmailSent, String messageToAS, String personalNote, String bookingType, List<String> equipmentList, LocalDate startDate, LocalTime startTime, LocalTime endTime, boolean isWholeDay, boolean isHalfDayEarly, boolean isNoShow) {
+    public Booking(int bookingID, String bookingType, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, LocalDate startDate, LocalTime startTime, LocalTime endTime, boolean isWholeDay, boolean isHalfDayEarly, boolean isNoShow, boolean isEmailSent, String messageToAS, String personalNote) {
         this.bookingID = bookingID;
+        this.bookingType = bookingType;
         this.catering = catering;
         this.activity = activity;
         this.organization = organization;
@@ -56,17 +57,16 @@ public class Booking {
         this.transportDeparture = transportDeparture;
         this.participants = participants;
         this.bookingDateTime = bookingDateTime;
-        this.isEmailSent = isEmailSent;
-        this.messageToAS = messageToAS;
-        this.personalNote = personalNote;
-        this.bookingType = bookingType;
-        this.equipmentList = equipmentList;
         this.startDate = startDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isWholeDay = isWholeDay;
         this.isHalfDayEarly = isHalfDayEarly;
         this.isNoShow = isNoShow;
+        this.isEmailSent = isEmailSent;
+        this.messageToAS = messageToAS;
+        this.personalNote = personalNote;
+        this.equipmentList = new ArrayList<>();
     }
 
     public int getBookingID() {

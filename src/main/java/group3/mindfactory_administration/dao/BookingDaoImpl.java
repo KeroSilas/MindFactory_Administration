@@ -4,6 +4,8 @@ import group3.mindfactory_administration.model.Booking;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +29,34 @@ public class BookingDaoImpl implements BookingDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int bookingID = rs.getInt(1);
-                String bookingType = rs.getString
+                String bookingType = rs.getString(2);
+                String catering = rs.getString(3);
+                String activity = rs.getString(4);
+                String organizarion = rs.getString(5);
+                String åbenSkoleForløb = rs.getString(6);
+                String firstName = rs.getString(7);
+                String lastName = rs.getString(8);
+                String position = rs.getString(9);
+                String department = rs.getString(10);
+                String phone = rs.getString(11);
+                String email = rs.getString(12);
+                String assistance = rs.getString(13);
+                String transportType = rs.getString(14);
+                String transportArrival = rs.getString(15);
+                String transportDeparture = rs.getString(16);
+                int participants = rs.getInt(17);
+                LocalDateTime bookingDateTime = rs.getTimestamp(18).toLocalDateTime();
+                LocalDate startDate = rs.getDate(19).toLocalDate();
+                LocalTime startTime = rs.getTime(20).toLocalTime();
+                LocalTime endTime = rs.getTime(21).toLocalTime();
+                boolean isWholeDay = rs.getBoolean(22);
+                boolean isHalfDayEarly = rs.getBoolean(23);
+                boolean isNoShow = rs.getBoolean(24);
+                boolean isEmailSent = rs.getBoolean(25);
+                String messageToAS = rs.getString(26);
+                String personalNote = rs.getString(27);
+
+                bookings.add(new Booking(bookingID, bookingType, catering, activity, organizarion, åbenSkoleForløb, firstName, lastName, position, department, phone, email, assistance, transportType, transportArrival, transportDeparture, participants, bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote));
             }
 
         } catch (SQLException e) {
@@ -142,14 +171,6 @@ public class BookingDaoImpl implements BookingDao {
         } catch (SQLException e) {
             throw new SQLException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        BookingDaoImpl bookingDao = new BookingDaoImpl();
-        HashMap<String, Integer> bookingsGroupedByOrg = bookingDao.getBookingsGroupedByOrg();
-        HashMap<String, Integer> bookingsGroupedByActivities = bookingDao.getBookingsGroupedByActivities();
-        System.out.println(bookingsGroupedByOrg);
-        System.out.println(bookingsGroupedByActivities);
     }
 }
 
