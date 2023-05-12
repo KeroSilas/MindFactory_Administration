@@ -21,7 +21,7 @@ public class BookingDaoImpl implements BookingDao {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
+            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET catering = ?, activity = ?, organization = ?, åbenSkoleForløb = ?,firstName = ?, lastName = ?, position = ?, afdeling = ?, phone = ?, email = ?,assistance = ?, transportType = ?, transportArrival = ?,transportDeparture = ?, participants = ?, bookingDateTime = ?, messageToAS = ?, personalNote = ?, bookingType = ? WHERE bookingID = ?);");
 
             ps.setString(1, booking.getBookingType());
             ps.setString(2, booking.getCatering());
@@ -93,15 +93,39 @@ public class BookingDaoImpl implements BookingDao {
             );
             //ps.setInt(1, category.getCategoryID());  change this to reflect Booking search
             ResultSet rs = ps.executeQuery();
+
+            Booking booking;
             while (rs.next()) {
 
-                Booking booking;
                 int bookingID = rs.getInt(1);
-                String name = rs.getString(2);
-                String email = rs.getString(3);
-                LocalDate startDate = rs.getDate(4).toLocalDate();
+                String bookingType = rs.getString(2);
+                String catering = rs.getString(2);
+                String activity = rs.getString(2);
+                String organization = rs.getString(2);
+                String åbenSkoleForløb = rs.getString(2);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(2);
+                String position = rs.getString(2);
+                String afdeling = rs.getString(2);
+                String phone = rs.getString(2);
+                String email = rs.getString(2);
+                String assistance = rs.getString(2);
+                String transportType = rs.getString(2);
+                String transportArrival = rs.getString(2);
+                String transportDeparture = rs.getString(2);
+                int participants = rs.getInt(9);
+                Timestamp bookingDateTime = rs.getTimestamp(2);
+                Date startDate = rs.getDate(2);
+                Time startTime = rs.getTime(2);
+                Time endTime = rs.getTime(9);
+                Boolean isWholeDay = rs.getBoolean(9);
+                Boolean isHalfDayEarly = rs.getBoolean(23);
+                Boolean isNoShow = rs.getBoolean(24);
+                Boolean isEmailSent = rs.getBoolean(25);
+                String messageToAS = rs.getString(26);
+                String personalNote = rs.getString(27);
 
-                booking= new Booking(bookingID, name, email, startDate);
+                booking= new Booking(bookingID, bookingType, catering, activity, organization, åbenSkoleForløb, firstName, lastName, position, afdeling, phone, email, assistance, transportType, transportArrival, transportArrival, transportDeparture, participants, bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote);
                 weeksBookings.add(booking);
             }
 
