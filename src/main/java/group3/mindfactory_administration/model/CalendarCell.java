@@ -53,13 +53,9 @@ public class CalendarCell extends VBox{
         });
         */
 
-        // Pseudocode for actually loading events from database
-        // List<CalendarEvent> events = getEventsFromDatabase();
-        // for (CalendarEvent event : events) {
-        //     if (event.getStartTime().toLocalDate().isEqual(date)) {
-        //         getChildren().add(event);
-        //     }
-        // }
+        for (Booking booking : bookings) {
+            getChildren().add(new CalendarBooking(booking));
+        }
     }
 
     @Override

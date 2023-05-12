@@ -10,6 +10,7 @@ import java.util.List;
 public interface BookingDao {
 
     List<Booking> getAllBookings();
+
     HashMap<String, Integer> countBookingsByOrg();
 
     HashMap<String, Integer> countBookingsByActivity();
@@ -18,4 +19,8 @@ public interface BookingDao {
 
     void deleteBooking (int bookingID) throws SQLException;
 
+    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
+// https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
+// https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
+    List<Booking> getWeeksBookings();
 }
