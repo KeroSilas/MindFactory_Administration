@@ -1,7 +1,9 @@
 package group3.mindfactory_administration.controllers;
 
+import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.CalendarBooking;
 import group3.mindfactory_administration.model.CalendarCell;
+import group3.mindfactory_administration.model.Tasks.GetBookingsTask;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 // Calendar idea inspired by https://gist.github.com/Da9el00/f4340927b8ba6941eb7562a3306e93b6
@@ -82,21 +86,32 @@ public class CalendarController {
     private void drawCalendar() {
         calendarGrid.getChildren().clear();
 
-        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
-        int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
-        int dayOfMonth = 1;
-        for (int i = 0; i < 6; i++) {
-            for (int j = dayOfWeek - 1; j < 7; j++) {
-                if (dayOfMonth > date.lengthOfMonth()) {
-                    break;
+        GetBookingsTask getBookingsTask = new GetBookingsTask();
+        getBookingsTask.setOnSucceeded(e -> {
+            LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+            int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
+            int dayOfMonth = 1;
+            for (int i = 0; i < 6; i++) {
+                for (int j = dayOfWeek - 1; j < 7; j++) {
+                    if (dayOfMonth > date.lengthOfMonth()) {
+                        break;
+                    }
+                    List<Booking> bookingsToday = new ArrayList<>();
+                    for (Booking booking : getBookingsTask.getValue()) {
+                        if (booking.getStartDate().equals(date.withDayOfMonth(dayOfMonth))) {
+                            bookingsToday.add(booking);
+                        }
+                    }
+                    CalendarCell cell = new CalendarCell(date.withDayOfMonth(dayOfMonth), bookingsToday);
+                    calendarGrid.add(cell, j, i);
+
+                    dayOfMonth++;
                 }
-                CalendarCell cell = new CalendarCell(date.withDayOfMonth(dayOfMonth));
-                calendarGrid.add(cell, j, i);
-
-                dayOfMonth++;
+                dayOfWeek = 1;
             }
-            dayOfWeek = 1;
-        }
+        });
+        Thread thread = new Thread(getBookingsTask);
+        thread.setDaemon(true);
+        thread.start();
     }
-
 }

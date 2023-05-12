@@ -15,7 +15,7 @@ public class CountOrgTask extends Task<HashMap<String, Integer>> {
     }
 
     @Override
-    protected HashMap<String, Integer> call() throws Exception {
+    protected HashMap<String, Integer> call() {
         return bookingDao.countBookingsByOrg();
     }
 }

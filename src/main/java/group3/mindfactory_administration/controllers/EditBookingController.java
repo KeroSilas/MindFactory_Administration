@@ -6,8 +6,8 @@ import group3.mindfactory_administration.model.Tasks.DeleteBookingTask;
 public class EditBookingController {
     private Booking booking;
 
-void handleSlet(){
-
+    void handleSlet(){
+/*
     // Sets the statusLabel to empty, shows the progressSpinner and disables the afbrydBtn
     statusLabel.setText("");
     progressSpinner.setVisible(true);
@@ -35,4 +35,6 @@ void handleSlet(){
     thread.setDaemon(true);
     thread.start();
 }
-
+*/
+    }
+}

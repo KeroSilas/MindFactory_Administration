@@ -16,7 +16,7 @@ public class GetBookingsTask extends Task<List<Booking>> {
     }
 
     @Override
-    protected List<Booking> call() throws Exception {
+    protected List<Booking> call() {
         return bookingDao.getAllBookings();
     }
 }
