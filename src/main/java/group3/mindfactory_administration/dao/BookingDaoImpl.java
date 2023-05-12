@@ -67,13 +67,16 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public HashMap<String, Integer> countBookingsByOrg() {
+    public HashMap<String, Integer> countBookingsByOrg(LocalDate startDate, LocalDate endDate) {
         HashMap<String, Integer> bookingsGroupedByOrg = new HashMap<>();
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
                     "SELECT organization, COUNT(*) AS 'Belægning' " +
-                    "FROM Booking GROUP BY organization;"
+                    "FROM Booking WHERE startDate >= ? AND startDate <= ? GROUP BY organization;"
             );
+            ps.setDate(1, Date.valueOf(startDate));
+            ps.setDate(2, Date.valueOf(endDate));
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String organization = rs.getString(1);
@@ -89,13 +92,16 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public HashMap<String, Integer> countBookingsByActivity() {
+    public HashMap<String, Integer> countBookingsByActivity(LocalDate startDate, LocalDate endDate) {
         HashMap<String, Integer> bookingsGroupedByActivities = new HashMap<>();
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
                     "SELECT activity, COUNT(*) AS 'Belægning' " +
-                            "FROM Booking GROUP BY activity;"
+                            "FROM Booking WHERE startDate >= ? AND startDate <= ? GROUP BY activity;"
             );
+            ps.setDate(1, Date.valueOf(startDate));
+            ps.setDate(2, Date.valueOf(endDate));
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String activity = rs.getString(1);

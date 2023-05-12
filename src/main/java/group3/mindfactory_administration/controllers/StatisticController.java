@@ -9,31 +9,35 @@ import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 
-import java.util.HashMap;
+import java.time.LocalDate;
 
 public class StatisticController {
 
-    private HashMap<String, Integer> activityMap;
-    private HashMap<String, Integer> orgMap;
+    private CountOrgTask countOrgTask;
+    private CountActivityTask countActivityTask;
 
-    private String status;
-
-    XYChart.Series<String, Integer> series;
+    XYChart.Series<String, Integer> seriesOrg, seriesAktivitet;
     Axis<String> xAxis;
     Axis<Integer> yAxis;
 
-    @FXML
-    private MFXDatePicker fromDP, toDP;
+    @FXML private BarChart<String, Integer> barChart;
+    @FXML private MFXDatePicker fromDP, toDP;
+    @FXML private MFXButton aktivitetBtn, organisationBtn;
 
     @FXML
-    private BarChart<String, Integer> barChart;
+    void handleFra() {
+        countActivityTask.setStartDate(fromDP.getValue());
+        countOrgTask.setStartDate(fromDP.getValue());
+        countActivityTask.updateData();
+        countOrgTask.updateData();
+    }
 
     @FXML
-    private MFXButton aktivitetBtn, organisationBtn;
-
-    @FXML
-    void handleReset() {
-
+    void handleTil() {
+        countActivityTask.setEndDate(toDP.getValue());
+        countOrgTask.setEndDate(toDP.getValue());
+        countActivityTask.updateData();
+        countOrgTask.updateData();
     }
 
     @FXML
@@ -41,8 +45,8 @@ public class StatisticController {
         aktivitetBtn.setDisable(true);
         organisationBtn.setDisable(false);
 
-        //drawActivityData();
-        status = "aktivitet";
+        barChart.getData().clear();
+        barChart.getData().add(seriesAktivitet);
     }
 
     @FXML
@@ -50,23 +54,28 @@ public class StatisticController {
         organisationBtn.setDisable(true);
         aktivitetBtn.setDisable(false);
 
-        //drawOrgData();
-        status = "organisation";
+        barChart.getData().clear();
+        barChart.getData().add(seriesOrg);
     }
 
     public void initialize() {
-        status = "organisation";
+        toDP.setValue(LocalDate.now().plusDays(7));
+        fromDP.setValue(toDP.getValue().minusDays(365));
 
-        series = new XYChart.Series<>();
+        seriesOrg = new XYChart.Series<>();
+        seriesAktivitet = new XYChart.Series<>();
         xAxis = barChart.getXAxis();
         yAxis = barChart.getYAxis();
+        barChart.setAnimated(false);
+        barChart.getData().add(seriesOrg);
 
-        CountActivityTask countActivityTask = new CountActivityTask();
+        // Starts a new thread that counts the number an activity has appeared in a given time period
+        countActivityTask = new CountActivityTask(fromDP.getValue(), toDP.getValue());
         countActivityTask.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                activityMap = newValue;
-                if (status.equals("aktivitet")) {
-                    drawActivityData();
+                seriesAktivitet.getData().clear();
+                for (String key : newValue.keySet()) {
+                    seriesAktivitet.getData().add(new XYChart.Data<>(key, newValue.get(key)));
                 }
             }
         });
@@ -74,34 +83,19 @@ public class StatisticController {
         thread.setDaemon(true);
         thread.start();
 
-        CountOrgTask countOrgTask = new CountOrgTask();
+        // Starts a new thread that counts the number an organisation has booked in a given time period
+        countOrgTask = new CountOrgTask(fromDP.getValue(), toDP.getValue());
         countOrgTask.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                orgMap = newValue;
-                if (status.equals("organisation")) {
-                    drawOrgData();
+                seriesOrg.getData().clear();
+                for (String key : newValue.keySet()) {
+                    seriesOrg.getData().add(new XYChart.Data<>(key, newValue.get(key)));
                 }
             }
         });
         Thread thread2 = new Thread(countOrgTask);
         thread2.setDaemon(true);
         thread2.start();
-    }
-
-    private void drawActivityData() {
-        series.getData().clear();
-        for (String key : activityMap.keySet()) {
-            series.getData().add(new XYChart.Data<>(key, activityMap.get(key)));
-        }
-        barChart.getData().add(series);
-    }
-
-    private void drawOrgData() {
-        series.getData().clear();
-        for (String key : orgMap.keySet()) {
-            series.getData().add(new XYChart.Data<>(key, orgMap.get(key)));
-        }
-        barChart.getData().add(series);
     }
 
 }

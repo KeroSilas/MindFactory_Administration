@@ -14,10 +14,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 // Calendar idea inspired by https://gist.github.com/Da9el00/f4340927b8ba6941eb7562a3306e93b6
 // Drag and drop inspired by https://stackoverflow.com/questions/38172278/drag-and-drop-a-node-into-another-node

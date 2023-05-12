@@ -4,6 +4,7 @@ import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.BookingTime;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,9 +12,9 @@ public interface BookingDao {
 
     List<Booking> getAllBookings();
 
-    HashMap<String, Integer> countBookingsByOrg();
+    HashMap<String, Integer> countBookingsByOrg(LocalDate startDate, LocalDate endDate);
 
-    HashMap<String, Integer> countBookingsByActivity();
+    HashMap<String, Integer> countBookingsByActivity(LocalDate startDate, LocalDate endDate);
 
     void editBooking (Booking booking) throws SQLException;
 
