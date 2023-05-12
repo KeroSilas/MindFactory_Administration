@@ -1,6 +1,5 @@
 package group3.mindfactory_administration.model.Tasks;
 
-
 import group3.mindfactory_administration.dao.BookingDao;
 import group3.mindfactory_administration.dao.BookingDaoImpl;
 import group3.mindfactory_administration.model.Booking;
