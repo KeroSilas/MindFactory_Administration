@@ -10,6 +10,7 @@ import java.util.List;
 public interface BookingDao {
 
     List<Booking> getAllBookings();
+
     HashMap<String, Integer> countBookingsByOrg();
 
     HashMap<String, Integer> countBookingsByActivity();

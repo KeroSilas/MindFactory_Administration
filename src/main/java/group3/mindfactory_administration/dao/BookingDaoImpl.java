@@ -14,7 +14,6 @@ public class BookingDaoImpl implements BookingDao {
 
     private final DatabaseConnector databaseConnector;
 
-    private Booking booking;
     public BookingDaoImpl() {
         databaseConnector = DatabaseConnector.getInstance();
     }
