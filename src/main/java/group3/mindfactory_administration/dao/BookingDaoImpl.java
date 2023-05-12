@@ -14,6 +14,7 @@ public class BookingDaoImpl implements BookingDao {
 
     private final DatabaseConnector databaseConnector;
 
+    private Booking booking;
     public BookingDaoImpl() {
         databaseConnector = DatabaseConnector.getInstance();
     }
@@ -134,12 +135,12 @@ public class BookingDaoImpl implements BookingDao {
             ps.setString(15, booking.getTransportDeparture());
             ps.setInt(16, booking.getParticipants());
             ps.setTimestamp(17, Timestamp.valueOf(booking.getBookingDateTime()));
-            ps.setDate(18, Date.valueOf(Booking.getInstance().getStartDate()));
-            ps.setTime(19, Time.valueOf(Booking.getInstance().getStartTime()));
-            ps.setTime(20, Time.valueOf(Booking.getInstance().getEndTime()));
-            ps.setBoolean(21, Booking.getInstance().isWholeDay());
-            ps.setBoolean(22, Booking.getInstance().isHalfDayEarly());
-            ps.setBoolean(23, Booking.getInstance().isNoShow());
+            ps.setDate(18, Date.valueOf(booking.getStartDate()));
+            ps.setTime(19, Time.valueOf(booking.getStartTime()));
+            ps.setTime(20, Time.valueOf(booking.getEndTime()));
+            ps.setBoolean(21, booking.isWholeDay());
+            ps.setBoolean(22, booking.isHalfDayEarly());
+            ps.setBoolean(23, booking.isNoShow());
             ps.setString(24, booking.getMessageToAS());
             ps.setString(25, booking.getPersonalNote());
             ps.setInt(26, booking.getBookingID());
