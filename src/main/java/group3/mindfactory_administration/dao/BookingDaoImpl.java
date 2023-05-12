@@ -4,6 +4,9 @@ import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.BookingTime;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookingDaoImpl implements BookingDao {
 
@@ -80,6 +83,42 @@ public class BookingDaoImpl implements BookingDao {
             throw new RuntimeException(e);
         }
     }
+
+
+    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
+    // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
+    // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
+    @Override
+    public List<Booking> getWeeksBookings() {
+
+        List<Booking> weeksBookings = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * from Booking WHERE DATEDIFF(day, CAST(GETDATE() AS DATE),Booking.startDate) < 7;"
+            );
+            //ps.setInt(1, category.getCategoryID());  change this to reflect Booking search
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Booking booking;
+                int bookingID = rs.getInt(1);
+                String name = rs.getString(2);
+                String email = rs.getString(3);
+                LocalDate startDate = rs.getDate(4).toLocalDate();
+
+                booking= new Booking(bookingID, name, email, startDate);
+                weeksBookings.add(booking);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return weeksBookings;
+    }
+
+
+
 }
 
 
