@@ -1,6 +1,7 @@
 package group3.mindfactory_administration.dao;
 
 import group3.mindfactory_administration.model.Booking;
+import group3.mindfactory_administration.model.BookingEmail;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -64,6 +65,41 @@ public class BookingDaoImpl implements BookingDao {
         }
 
         return bookings;
+    }
+
+    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
+    // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
+    // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
+    @Override
+    public List<BookingEmail> getOneWeekOutBookings() {
+
+        List<BookingEmail> oneWeekOutBookings = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE Booking " +
+                            "SET isEmailSent = 1 " +
+                            "OUTPUT INSERTED.bookingID, INSERTED.firstName, INSERTED.email, INSERTED.startDate " +
+                            "FROM Booking " +
+                            "WHERE DATEDIFF(day, CAST(GETDATE() AS DATE), startDate) < 7 AND isEmailSent = 0;"
+            );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                BookingEmail bookingEmail;
+                int bookingID = rs.getInt(1);
+                String name = rs.getString(2);
+                String email = rs.getString(3);
+                LocalDate startDate = rs.getDate(4).toLocalDate();
+
+                bookingEmail = new BookingEmail(bookingID, name, email, startDate);
+                oneWeekOutBookings.add(bookingEmail);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return oneWeekOutBookings;
     }
 
     @Override

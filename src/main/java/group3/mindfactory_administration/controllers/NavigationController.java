@@ -2,6 +2,7 @@ package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Notification;
+import group3.mindfactory_administration.model.tasks.SendReminderEmailTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
 import javafx.fxml.FXML;
@@ -67,6 +68,12 @@ public class NavigationController {
     }
 
     public void initialize() {
+        // Sends reminder emails. Checks every 30 seconds.
+        SendReminderEmailTask sendReminderEmailTask = new SendReminderEmailTask();
+        Thread thread = new Thread(sendReminderEmailTask);
+        thread.setDaemon(true);
+        thread.start();
+
         // Get the views from the FXML files
         FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("dashboard-view.fxml"));
         FXMLLoader view2Loader = new FXMLLoader(AdministrationApplication.class.getResource("calendar-view.fxml"));
