@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_05_23_10_26__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_05_23_10_26__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_05_23_16_32__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_05_23_16_32__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_05_23_09_30__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_05_23_09_30__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_05_23_11_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_05_23_11_09__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/CalendarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/StatisticController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/StatisticController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Booking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarBooking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Tasks/CountActivityTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountActivityTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Tasks/CountOrgTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountOrgTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Tasks/DeleteBookingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/DeleteBookingTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Tasks/EditBookingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/EditBookingTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Tasks/GetBookingsTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/GetBookingsTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/statistic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/statistic-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683884573604</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Changes">
+      <created>1683906080104</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1683906080104</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

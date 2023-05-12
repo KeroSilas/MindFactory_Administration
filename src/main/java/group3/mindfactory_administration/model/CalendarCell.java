@@ -3,12 +3,9 @@ package group3.mindfactory_administration.model;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,31 +31,10 @@ public class CalendarCell extends VBox{
         label.setMouseTransparent(true);
         this.getChildren().add(label);
 
-        /*
-        setOnDragOver(e -> {
-            if (e.getGestureSource() != this && e.getDragboard().hasString()) {
-                e.acceptTransferModes(TransferMode.MOVE);
-            }
-            e.consume();
-        });
-
-        // Adds the event to the cell when it is dropped
-        setOnDragDropped(e -> {
-            Dragboard db = e.getDragboard();
-            // Generated with GitHub Copilot
-            boolean success = false;
-            if (db.hasString()) {
-                getChildren().add(new CalendarBooking(db.getString()));
-                success = true;
-            }
-            e.setDropCompleted(success);
-            e.consume();
-        });
-        */
-
-        Collections.sort(bookings);
+        // Add the bookings to the cell
+        Collections.sort(bookings); // Sort the bookings by time, so they are displayed in the correct order
         for (Booking booking : bookings) {
-            getChildren().add(new CalendarBooking(booking));
+            this.getChildren().add(new CalendarBooking(booking));
         }
     }
 
