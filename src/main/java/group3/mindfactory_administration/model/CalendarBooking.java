@@ -19,7 +19,7 @@ public class CalendarBooking extends HBox {
         setStyle("-fx-background-color: #0051ff; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #0051ff; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
 
         // Temporary code
-        Label eventName = new Label(booking.getOrganization() + " ");
+        Label eventName = new Label(booking.getOrganization());
         eventName.setStyle("-fx-text-fill: #ffffff");
         eventName.setMouseTransparent(true);
 

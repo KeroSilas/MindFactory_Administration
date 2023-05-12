@@ -14,10 +14,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 // Calendar idea inspired by https://gist.github.com/Da9el00/f4340927b8ba6941eb7562a3306e93b6
 // Drag and drop inspired by https://stackoverflow.com/questions/38172278/drag-and-drop-a-node-into-another-node
 public class CalendarController {
+
+    private List<Booking> bookings;
 
     @FXML private GridPane calendarGrid;
     @FXML private MFXComboBox<String> monthComboBox;
@@ -36,6 +42,8 @@ public class CalendarController {
     }
 
     public void initialize() {
+        bookings = new ArrayList<>();
+
         monthComboBox.getItems().addAll("January", "February", "March", "April", "May", "June", "July", "August",
                 "September", "October", "November", "December");
         monthComboBox.selectIndex(date.getMonthValue() - 1);
@@ -51,7 +59,17 @@ public class CalendarController {
             drawCalendar();
         });
 
-        drawCalendar();
+        GetBookingsTask getBookingsTask = new GetBookingsTask();
+        getBookingsTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                bookings = newValue;
+                drawCalendar();
+            }
+        });
+        Thread thread = new Thread(getBookingsTask);
+        thread.setDaemon(true);
+        thread.start();
+
 
         calendarGrid.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof CalendarBooking ce) {
@@ -86,32 +104,26 @@ public class CalendarController {
     private void drawCalendar() {
         calendarGrid.getChildren().clear();
 
-        GetBookingsTask getBookingsTask = new GetBookingsTask();
-        getBookingsTask.setOnSucceeded(e -> {
-            LocalDate firstDayOfMonth = date.withDayOfMonth(1);
-            int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
-            int dayOfMonth = 1;
-            for (int i = 0; i < 6; i++) {
-                for (int j = dayOfWeek - 1; j < 7; j++) {
-                    if (dayOfMonth > date.lengthOfMonth()) {
-                        break;
-                    }
-                    List<Booking> bookingsToday = new ArrayList<>();
-                    for (Booking booking : getBookingsTask.getValue()) {
-                        if (booking.getStartDate().equals(date.withDayOfMonth(dayOfMonth))) {
-                            bookingsToday.add(booking);
-                        }
-                    }
-                    CalendarCell cell = new CalendarCell(date.withDayOfMonth(dayOfMonth), bookingsToday);
-                    calendarGrid.add(cell, j, i);
-
-                    dayOfMonth++;
+        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+        int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
+        int dayOfMonth = 1;
+        for (int i = 0; i < 6; i++) {
+            for (int j = dayOfWeek - 1; j < 7; j++) {
+                if (dayOfMonth > date.lengthOfMonth()) {
+                    break;
                 }
-                dayOfWeek = 1;
+                List<Booking> bookingsToday = new ArrayList<>();
+                for (Booking booking : bookings) {
+                    if (booking.getStartDate().equals(date.withDayOfMonth(dayOfMonth))) {
+                        bookingsToday.add(booking);
+                    }
+                }
+                CalendarCell cell = new CalendarCell(date.withDayOfMonth(dayOfMonth), bookingsToday);
+                calendarGrid.add(cell, j, i);
+
+                dayOfMonth++;
             }
-        });
-        Thread thread = new Thread(getBookingsTask);
-        thread.setDaemon(true);
-        thread.start();
+            dayOfWeek = 1;
+        }
     }
 }

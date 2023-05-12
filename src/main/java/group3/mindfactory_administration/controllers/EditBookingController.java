@@ -3,7 +3,7 @@ package group3.mindfactory_administration.controllers;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.Tasks.DeleteBookingTask;
 
-public class EditBookingController {
+/*public class EditBookingController {
     private Booking booking;
 
     void handleEdit() {
@@ -46,4 +46,4 @@ public class EditBookingController {
     private void setBooking(Booking booking) {
     this.booking = booking;
     }
-}
+}*/

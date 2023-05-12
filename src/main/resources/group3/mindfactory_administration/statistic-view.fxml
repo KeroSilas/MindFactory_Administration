@@ -17,11 +17,11 @@
             <Insets left="12.0" right="12.0" />
          </padding>
          <children>
-            <MFXDatePicker fx:id="fromDP" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
-            <MFXDatePicker fx:id="toDP" maxHeight="35.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
+            <MFXDatePicker fx:id="fromDP" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
+            <MFXDatePicker fx:id="toDP" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXButton onAction="#handleReset" prefHeight="35.0" prefWidth="75.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Reset" />
+                  <MFXButton onAction="#handleReset" prefHeight="40.0" prefWidth="75.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Reset" />
                </children>
             </HBox>
          </children>
@@ -41,4 +41,15 @@
          </children>
       </VBox>
    </center>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="8.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="12.0" right="12.0" />
+         </padding>
+         <children>
+            <MFXButton fx:id="organisationBtn" disable="true" onAction="#handleOrganisation" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Organisation" />
+            <MFXButton fx:id="aktivitetBtn" onAction="#handleAktivitet" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Aktivitet" />
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

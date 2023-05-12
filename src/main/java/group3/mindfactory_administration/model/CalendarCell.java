@@ -8,6 +8,8 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class CalendarCell extends VBox{
@@ -52,7 +54,7 @@ public class CalendarCell extends VBox{
             e.consume();
         });
         */
-
+        Collections.sort(bookings);
         for (Booking booking : bookings) {
             getChildren().add(new CalendarBooking(booking));
         }

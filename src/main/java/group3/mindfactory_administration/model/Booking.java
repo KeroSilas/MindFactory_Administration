@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Booking {
+public class Booking implements Comparable<Booking> {
 
     private int bookingID;
     private String bookingType;
@@ -294,6 +294,11 @@ public class Booking {
     @Override
     public String toString() {
         return startDate + " " + startTime + " - " + endTime;
+    }
+
+    @Override
+    public int compareTo(Booking o) {
+        return this.getStartTime().compareTo(o.getStartTime());
     }
 
 }

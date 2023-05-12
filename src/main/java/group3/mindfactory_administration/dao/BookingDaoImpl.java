@@ -72,7 +72,7 @@ public class BookingDaoImpl implements BookingDao {
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
                     "SELECT organization, COUNT(*) AS 'Belægning' " +
-                    "FROM Booking GROUP BY Organization;"
+                    "FROM Booking GROUP BY organization;"
             );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

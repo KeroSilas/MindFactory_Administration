@@ -16,6 +16,14 @@ public class CountActivityTask extends Task<HashMap<String, Integer>> {
 
     @Override
     protected HashMap<String, Integer> call() {
+        while (!isCancelled()) {
+            updateValue(bookingDao.countBookingsByActivity());
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return bookingDao.countBookingsByActivity();
     }
 }

@@ -17,6 +17,14 @@ public class GetBookingsTask extends Task<List<Booking>> {
 
     @Override
     protected List<Booking> call() {
+        while (!isCancelled()) {
+            updateValue(bookingDao.getAllBookings());
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return bookingDao.getAllBookings();
     }
 }
