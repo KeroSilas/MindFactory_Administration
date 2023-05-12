@@ -293,7 +293,7 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public String toString() {
-        return startDate + " " + startTime + " - " + endTime;
+        return startDate + " (" + startTime + " - " + endTime + ")";
     }
 
     @Override

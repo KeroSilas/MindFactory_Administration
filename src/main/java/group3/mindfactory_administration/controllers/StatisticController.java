@@ -1,7 +1,7 @@
 package group3.mindfactory_administration.controllers;
 
-import group3.mindfactory_administration.model.Tasks.CountActivityTask;
-import group3.mindfactory_administration.model.Tasks.CountOrgTask;
+import group3.mindfactory_administration.model.tasks.CountActivityTask;
+import group3.mindfactory_administration.model.tasks.CountOrgTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.fxml.FXML;
@@ -44,6 +44,7 @@ public class StatisticController {
     void handleAktivitet() {
         aktivitetBtn.setDisable(true);
         organisationBtn.setDisable(false);
+        xAxis.setLabel("Aktiviteter");
 
         barChart.getData().clear();
         barChart.getData().add(seriesAktivitet);
@@ -53,6 +54,7 @@ public class StatisticController {
     void handleOrganisation() {
         organisationBtn.setDisable(true);
         aktivitetBtn.setDisable(false);
+        xAxis.setLabel("Organisationer");
 
         barChart.getData().clear();
         barChart.getData().add(seriesOrg);
@@ -68,6 +70,7 @@ public class StatisticController {
         yAxis = barChart.getYAxis();
         barChart.setAnimated(false);
         barChart.getData().add(seriesOrg);
+        xAxis.setLabel("Organisationer");
 
         // Starts a new thread that counts the number an activity has appeared in a given time period
         countActivityTask = new CountActivityTask(fromDP.getValue(), toDP.getValue());

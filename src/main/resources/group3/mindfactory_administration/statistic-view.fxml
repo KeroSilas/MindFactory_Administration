@@ -25,13 +25,19 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <MFXDatePicker fx:id="fromDP" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleFra" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
+            <MFXDatePicker fx:id="fromDP" animated="false" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleFra" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
+               <font>
+                  <Font size="14.0" />
+               </font></MFXDatePicker>
             <Label text="Til:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <MFXDatePicker fx:id="toDP" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleTil" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;" />
+            <MFXDatePicker fx:id="toDP" animated="false" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleTil" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
+               <font>
+                  <Font size="14.0" />
+               </font></MFXDatePicker>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <MFXButton fx:id="organisationBtn" disable="true" onAction="#handleOrganisation" prefHeight="40.0" prefWidth="110.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Organisation">
                <font>
@@ -47,12 +53,18 @@
    <center>
       <VBox alignment="TOP_CENTER" style="-fx-background-color: white;">
          <children>
-            <BarChart fx:id="barChart" VBox.vgrow="ALWAYS">
+            <BarChart fx:id="barChart" legendVisible="false" VBox.vgrow="ALWAYS">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis side="BOTTOM">
+                     <tickLabelFont>
+                        <Font size="10.0" />
+                     </tickLabelFont></CategoryAxis>
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis label="Belægning" minorTickCount="0" side="LEFT" tickUnit="1.0">
+                     <tickLabelFont>
+                        <Font size="10.0" />
+                     </tickLabelFont></NumberAxis>
               </yAxis>
             </BarChart>
          </children>

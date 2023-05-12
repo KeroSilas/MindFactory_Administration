@@ -18,10 +18,11 @@ public class CalendarCell extends VBox{
 
     public CalendarCell(LocalDate date, List<Booking> bookings) {
         dayOfMonth = String.valueOf(date.getDayOfMonth());
+
         // Styling
-        setAlignment(Pos.TOP_LEFT);
-        setSpacing(4);
-        setPadding(new Insets(4, 4, 4, 4));
+        this.setAlignment(Pos.TOP_LEFT);
+        this.setSpacing(4);
+        this.setPadding(new Insets(4, 4, 4, 4));
         if (date.isEqual(LocalDate.now())) {
             setStyle("-fx-border-color: #0095ff; -fx-border-width: 1px; -fx-background-color: #dbefff;");
         } else {
@@ -31,7 +32,7 @@ public class CalendarCell extends VBox{
         // Add the day of the month to the cell
         Label label = new Label(dayOfMonth);
         label.setMouseTransparent(true);
-        getChildren().add(label);
+        this.getChildren().add(label);
 
         /*
         setOnDragOver(e -> {
@@ -54,14 +55,14 @@ public class CalendarCell extends VBox{
             e.consume();
         });
         */
+
         Collections.sort(bookings);
         for (Booking booking : bookings) {
             getChildren().add(new CalendarBooking(booking));
         }
     }
 
-    @Override
-    public String toString() {
+    public String getDayOfMonth() {
         return dayOfMonth;
     }
 }

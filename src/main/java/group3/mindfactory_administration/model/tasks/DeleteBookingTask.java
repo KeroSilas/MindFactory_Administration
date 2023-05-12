@@ -1,19 +1,17 @@
-package group3.mindfactory_administration.model.Tasks;
-
+package group3.mindfactory_administration.model.tasks;
 
 import group3.mindfactory_administration.dao.BookingDao;
 import group3.mindfactory_administration.dao.BookingDaoImpl;
-import group3.mindfactory_administration.model.Booking;
 import javafx.concurrent.Task;
 
-public class EditBookingTask extends Task<Boolean> {
+public class DeleteBookingTask extends Task<Boolean> {
 
     private final BookingDao bookingDao;
 
-    private final Booking booking;
+    private final int bookingID;
 
-    public EditBookingTask(Booking booking) {
-        this.booking = booking;
+    public DeleteBookingTask(int bookingID) {
+        this.bookingID = bookingID;
         bookingDao = new BookingDaoImpl();
     }
 
@@ -22,7 +20,7 @@ public class EditBookingTask extends Task<Boolean> {
         boolean success = true;
 
         try {
-            bookingDao.editBooking(booking);
+            bookingDao.deleteBooking(bookingID);
         } catch (RuntimeException e) {
             success = false;
         }

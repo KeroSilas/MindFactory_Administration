@@ -3,7 +3,7 @@ package group3.mindfactory_administration.controllers;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.CalendarBooking;
 import group3.mindfactory_administration.model.CalendarCell;
-import group3.mindfactory_administration.model.Tasks.GetBookingsTask;
+import group3.mindfactory_administration.model.tasks.GetBookingsTask;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -68,15 +68,12 @@ public class CalendarController {
 
 
         calendarGrid.setOnMouseClicked(e -> {
-            if (e.getTarget() instanceof CalendarBooking ce) {
-                ce.setClicked(true);
-                CalendarCell cc = (CalendarCell) ce.getParent();
-                Alert alert = new Alert(Alert.AlertType.NONE, ce + "\n" + cc, ButtonType.NO, ButtonType.YES);
+            if (e.getTarget() instanceof CalendarBooking cb) {
+                CalendarCell cc = (CalendarCell) cb.getParent();
+                // Temporary, this will be replaced with an FXML file
+                Alert alert = new Alert(Alert.AlertType.NONE, cb.getBooking().getOrganization() + "\n" + cc.getDayOfMonth(), ButtonType.NO, ButtonType.YES);
                 alert.setTitle("Event Clicked");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent()) {
-                    ce.setClicked(false);
-                }
             }
         });
     }

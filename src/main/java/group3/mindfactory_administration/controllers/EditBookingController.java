@@ -1,8 +1,5 @@
 package group3.mindfactory_administration.controllers;
 
-import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.Tasks.DeleteBookingTask;
-
 /*public class EditBookingController {
     private Booking booking;
 
