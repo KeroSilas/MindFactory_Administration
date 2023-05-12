@@ -3,7 +3,6 @@ package group3.mindfactory_administration.dao;
 import group3.mindfactory_administration.model.Booking;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +85,7 @@ public class BookingDaoImpl implements BookingDao {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
+            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET catering = ?, activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
 
             ps.setString(1, booking.getBookingType());
             ps.setString(2, booking.getCatering());
@@ -151,6 +150,68 @@ public class BookingDaoImpl implements BookingDao {
         System.out.println(bookingsGroupedByOrg);
         System.out.println(bookingsGroupedByActivities);
     }
+
+
+    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
+    // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
+    // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
+    @Override
+    public List<Booking> getWeeksBookings() {
+
+        List<Booking> weeksBookings = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * from Booking WHERE DATEDIFF(day, CAST(GETDATE() AS DATE),Booking.startDate) < 7;"
+            );
+            //ps.setInt(1, category.getCategoryID());  change this to reflect Booking search
+            ResultSet rs = ps.executeQuery();
+
+            Booking booking;
+            while (rs.next()) {
+
+                int bookingID = rs.getInt(1);
+                String bookingType = rs.getString(2);
+                String catering = rs.getString(3);
+                String activity = rs.getString(4);
+                String organization = rs.getString(5);
+                String åbenSkoleForløb = rs.getString(6);
+                String firstName = rs.getString(7);
+                String lastName = rs.getString(8);
+                String position = rs.getString(9);
+                String afdeling = rs.getString(10);
+                String phone = rs.getString(11);
+                String email = rs.getString(12);
+                String assistance = rs.getString(13);
+                String transportType = rs.getString(14);
+                String transportArrival = rs.getString(15);
+                String transportDeparture = rs.getString(16);
+                int participants = rs.getInt(17);
+                Timestamp bookingDateTime = rs.getTimestamp(18);
+                Date startDate = rs.getDate(19);
+                Time startTime = rs.getTime(20);
+                Time endTime = rs.getTime(21);
+                Boolean isWholeDay = rs.getBoolean(22);
+                Boolean isHalfDayEarly = rs.getBoolean(23);
+                Boolean isNoShow = rs.getBoolean(24);
+                Boolean isEmailSent = rs.getBoolean(25);
+                String messageToAS = rs.getString(26);
+                String personalNote = rs.getString(27);
+
+                booking= new Booking(bookingID, catering, activity, organization, åbenSkoleForløb, firstName, lastName, position, afdeling, phone, email, assistance, transportType, transportArrival, transportArrival, transportDeparture, participants, bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote);
+                weeksBookings.add(booking);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return weeksBookings;
+    }
+
+
+
+
+
 }
 
 
