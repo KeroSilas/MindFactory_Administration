@@ -17,44 +17,39 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public void editBooking(Booking booking, BookingTime bookingTime) throws SQLException {
+    public void editBooking(Booking booking) throws SQLException {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
             PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
 
-            ps.setString(1, booking.getCatering());
-            ps.setString(2, booking.getActivity());
-            ps.setString(3, booking.getOrganization());
-            ps.setString(4, booking.getÅbenSkoleForløb());
-            ps.setString(5, booking.getFirstName());
-            ps.setString(6, booking.getLastName());
-            ps.setString(7, booking.getPosition());
-            ps.setString(8, booking.getAfdeling());
-            ps.setString(9, booking.getPhone());
-            ps.setString(10, booking.getEmail());
-            ps.setString(11, booking.getAssistance());
-            ps.setString(12, booking.getTransportType());
-            ps.setString(13, booking.getTransportArrival());
-            ps.setString(14, booking.getTransportDeparture());
-            ps.setInt(15, booking.getParticipants());
-            ps.setTimestamp(16, Timestamp.valueOf(booking.getBookingDateTime()));
-            ps.setString(17, booking.getMessageToAS());
-            ps.setString(18, booking.getPersonalNote());
-            ps.setString(19, booking.getBookingType());
-            ps.setInt(20, booking.getBookingID());
+            ps.setString(1, booking.getBookingType());
+            ps.setString(2, booking.getCatering());
+            ps.setString(3, booking.getActivity());
+            ps.setString(4, booking.getOrganization());
+            ps.setString(5, booking.getÅbenSkoleForløb());
+            ps.setString(6, booking.getFirstName());
+            ps.setString(7, booking.getLastName());
+            ps.setString(8, booking.getPosition());
+            ps.setString(9, booking.getAfdeling());
+            ps.setString(10, booking.getPhone());
+            ps.setString(11, booking.getEmail());
+            ps.setString(12, booking.getAssistance());
+            ps.setString(13, booking.getTransportType());
+            ps.setString(14, booking.getTransportArrival());
+            ps.setString(15, booking.getTransportDeparture());
+            ps.setInt(16, booking.getParticipants());
+            ps.setTimestamp(17, Timestamp.valueOf(booking.getBookingDateTime()));
+            ps.setDate(18, Date.valueOf(Booking.getInstance().getStartDate()));
+            ps.setTime(19, Time.valueOf(Booking.getInstance().getStartTime()));
+            ps.setTime(20, Time.valueOf(Booking.getInstance().getEndTime()));
+            ps.setBoolean(21, Booking.getInstance().isWholeDay());
+            ps.setBoolean(22, Booking.getInstance().isHalfDayEarly());
+            ps.setBoolean(23, Booking.getInstance().isNoShow());
+            ps.setString(24, booking.getMessageToAS());
+            ps.setString(25, booking.getPersonalNote());
+            ps.setInt(26, booking.getBookingID());
             ps.executeUpdate();
-
-            PreparedStatement ps2 = con.prepareStatement("UPDATE BookingTimes SET (?,?,?,?,?,?,?);");
-
-            ps2.setInt(1, booking.getBookingID());
-            ps2.setDate(2, Date.valueOf(bookingTime.getDate()));
-            ps2.setTime(3, Time.valueOf(bookingTime.getStartTime()));
-            ps2.setTime(4, Time.valueOf(bookingTime.getEndTime()));
-            ps2.setBoolean(5, bookingTime.isWholeDay());
-            ps2.setBoolean(6, bookingTime.isHalfDayEarly());
-            ps2.setBoolean(7, bookingTime.isNoShow());
-            ps2.executeUpdate();
 
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();

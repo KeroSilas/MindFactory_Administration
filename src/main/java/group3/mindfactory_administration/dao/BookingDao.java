@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookingDao {
 
-    void editBooking (Booking booking, BookingTime bookingTime) throws SQLException;
+    void editBooking (Booking booking) throws SQLException;
 
     void deleteBooking (int bookingID);
 
