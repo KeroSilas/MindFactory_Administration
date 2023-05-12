@@ -6,8 +6,6 @@ import group3.mindfactory_administration.dao.BookingDaoImpl;
 import group3.mindfactory_administration.model.Booking;
 import javafx.concurrent.Task;
 
-import java.awt.print.Book;
-
 public class EditBookingTask extends Task<Boolean> {
 
     private final BookingDao bookingDao;

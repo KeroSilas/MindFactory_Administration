@@ -1,9 +1,12 @@
 package group3.mindfactory_administration.dao;
 
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.BookingTime;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BookingDaoImpl implements BookingDao {
 
@@ -11,6 +14,71 @@ public class BookingDaoImpl implements BookingDao {
 
     public BookingDaoImpl() {
         databaseConnector = DatabaseConnector.getInstance();
+    }
+
+    @Override
+    public List<Booking> getAllBookings() {
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Booking;"
+            );
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int bookingID = rs.getInt(1);
+                String bookingType = rs.getString
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookings;
+    }
+
+    @Override
+    public HashMap<String, Integer> countBookingsByOrg() {
+        HashMap<String, Integer> bookingsGroupedByOrg = new HashMap<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT organization, COUNT(*) AS 'Belægning' " +
+                    "FROM Booking GROUP BY Organization;"
+            );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String organization = rs.getString(1);
+                int belægning = rs.getInt(2);
+                bookingsGroupedByOrg.put(organization, belægning);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookingsGroupedByOrg;
+    }
+
+    @Override
+    public HashMap<String, Integer> countBookingsByActivity() {
+        HashMap<String, Integer> bookingsGroupedByActivities = new HashMap<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT activity, COUNT(*) AS 'Belægning' " +
+                            "FROM Booking GROUP BY activity;"
+            );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String activity = rs.getString(1);
+                int belægning = rs.getInt(2);
+                bookingsGroupedByActivities.put(activity, belægning);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookingsGroupedByActivities;
     }
 
     @Override
@@ -61,7 +129,7 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public void deleteBooking(int bookingID) {
+    public void deleteBooking(int bookingID) throws SQLException {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
@@ -69,11 +137,19 @@ public class BookingDaoImpl implements BookingDao {
             rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
 
             if (rowsAffected == 0) {
-                throw new RuntimeException("Booking with ID " + bookingID + " does not exist");
+                throw new SQLException("Booking with ID " + bookingID + " does not exist");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        BookingDaoImpl bookingDao = new BookingDaoImpl();
+        HashMap<String, Integer> bookingsGroupedByOrg = bookingDao.getBookingsGroupedByOrg();
+        HashMap<String, Integer> bookingsGroupedByActivities = bookingDao.getBookingsGroupedByActivities();
+        System.out.println(bookingsGroupedByOrg);
+        System.out.println(bookingsGroupedByActivities);
     }
 }
 

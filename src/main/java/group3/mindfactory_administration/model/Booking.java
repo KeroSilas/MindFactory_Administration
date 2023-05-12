@@ -38,17 +38,35 @@ public class Booking {
     private boolean isHalfDayEarly;
     private boolean isNoShow;
 
-    private static Booking instance = null;
-
-    private Booking() {
-        clearBooking();
-    }
-
-    public static Booking getInstance() {
-        if (instance == null) {
-            instance = new Booking();
-        }
-        return instance;
+    public Booking(int bookingID, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, boolean isEmailSent, String messageToAS, String personalNote, String bookingType, List<String> equipmentList, LocalDate startDate, LocalTime startTime, LocalTime endTime, boolean isWholeDay, boolean isHalfDayEarly, boolean isNoShow) {
+        this.bookingID = bookingID;
+        this.catering = catering;
+        this.activity = activity;
+        this.organization = organization;
+        this.åbenSkoleForløb = åbenSkoleForløb;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.department = department;
+        this.phone = phone;
+        this.email = email;
+        this.assistance = assistance;
+        this.transportType = transportType;
+        this.transportArrival = transportArrival;
+        this.transportDeparture = transportDeparture;
+        this.participants = participants;
+        this.bookingDateTime = bookingDateTime;
+        this.isEmailSent = isEmailSent;
+        this.messageToAS = messageToAS;
+        this.personalNote = personalNote;
+        this.bookingType = bookingType;
+        this.equipmentList = equipmentList;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isWholeDay = isWholeDay;
+        this.isHalfDayEarly = isHalfDayEarly;
+        this.isNoShow = isNoShow;
     }
 
     public int getBookingID() {
@@ -269,34 +287,8 @@ public class Booking {
         return isNoShow;
     }
 
-    public void clearBooking() {
-        this.catering = "Ingen";
-        this.activity = "Ingen";
-        this.organization = "";
-        this.åbenSkoleForløb = "Ingen";
-        this.firstName = "";
-        this.lastName = "";
-        this.position = "";
-        this.department = "";
-        this.phone = "";
-        this.email = "";
-        this.assistance = "Ingen";
-        this.transportType = "Ikke valgt";
-        this.transportArrival = "Ikke valgt";
-        this.transportDeparture = "Ikke valgt";
-        this.participants = 0;
-        this.bookingDateTime = null;
-        this.startDate = null;
-        this.startTime = null;
-        this.endTime = null;
-        this.isWholeDay = false;
-        this.isHalfDayEarly = false;
-        this.isNoShow = false;
-        this.isEmailSent = false;
-        this.messageToAS = "";
-        this.personalNote = "";
-        this.bookingType = null;
-        this.equipmentList = new ArrayList<>();
+    public void setNoShow(boolean isNoShow) {
+        this.isNoShow = isNoShow;
     }
 
     @Override
