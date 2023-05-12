@@ -6,6 +6,7 @@ module group3.mindfactory_administration {
     requires java.sql;
     requires java.naming;
     requires java.mail;
+    requires java.desktop;
 
 
     opens group3.mindfactory_administration to javafx.fxml;

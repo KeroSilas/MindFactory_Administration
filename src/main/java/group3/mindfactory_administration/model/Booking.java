@@ -1,7 +1,9 @@
 package group3.mindfactory_administration.model;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,36 +31,24 @@ public class Booking {
     private String personalNote;
     private String bookingType;
     private List<String> equipmentList;
-    private List<BookingTime> bookingTimeList;
-    private List<String> bookingFileList;
+    private LocalDate startDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private boolean isWholeDay;
+    private boolean isHalfDayEarly;
+    private boolean isNoShow;
 
     private static Booking instance = null;
 
-    public Booking(int bookingID, String catering, String activity, String organization, String åbenSkoleForløb, String firstName, String lastName, String position, String department, String phone, String email, String assistance, String transportType, String transportArrival, String transportDeparture, int participants, LocalDateTime bookingDateTime, boolean isEmailSent, String messageToAS, String personalNote, String bookingType, List<String> equipmentList, List<BookingTime> bookingTimeList, List<String> bookingFileList) {
-        this.bookingID = bookingID;
-        this.catering = catering;
-        this.activity = activity;
-        this.organization = organization;
-        this.åbenSkoleForløb = åbenSkoleForløb;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
-        this.department = department;
-        this.phone = phone;
-        this.email = email;
-        this.assistance = assistance;
-        this.transportType = transportType;
-        this.transportArrival = transportArrival;
-        this.transportDeparture = transportDeparture;
-        this.participants = participants;
-        this.bookingDateTime = bookingDateTime;
-        this.isEmailSent = isEmailSent;
-        this.messageToAS = messageToAS;
-        this.personalNote = personalNote;
-        this.bookingType = bookingType;
-        this.equipmentList = equipmentList;
-        this.bookingTimeList = bookingTimeList;
-        this.bookingFileList = bookingFileList;
+    private Booking() {
+        clearBooking();
+    }
+
+    public static Booking getInstance() {
+        if (instance == null) {
+            instance = new Booking();
+        }
+        return instance;
     }
 
     public int getBookingID() {
@@ -237,18 +227,81 @@ public class Booking {
         this.equipmentList = equipmentList;
     }
 
-    public List<BookingTime> getBookingTimesList() {
-        return bookingTimeList;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setBookingTimesList(List<BookingTime> bookingTimeList) {
-        this.bookingTimeList = bookingTimeList;
-    }
-    public List<String> getBookingFilesList() {return bookingFileList; }
-    public void setBookingFilesList(List<String> bookingFileList) {
-        this.bookingFileList = bookingFileList;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
+    public LocalTime getStartTime() {
+        return startTime;
+    }
 
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public boolean isWholeDay() {
+        if (startTime.isBefore(LocalTime.of(12, 0)) && endTime.isAfter(LocalTime.of(12, 0))) {
+            isWholeDay = true;
+        }
+        return isWholeDay;
+    }
+
+    public boolean isHalfDayEarly() {
+        if (endTime.isBefore(LocalTime.of(12, 0))) {
+            isHalfDayEarly = true;
+        }
+        return isHalfDayEarly;
+    }
+
+    public boolean isNoShow() {
+        return isNoShow;
+    }
+
+    public void clearBooking() {
+        this.catering = "Ingen";
+        this.activity = "Ingen";
+        this.organization = "";
+        this.åbenSkoleForløb = "Ingen";
+        this.firstName = "";
+        this.lastName = "";
+        this.position = "";
+        this.department = "";
+        this.phone = "";
+        this.email = "";
+        this.assistance = "Ingen";
+        this.transportType = "Ikke valgt";
+        this.transportArrival = "Ikke valgt";
+        this.transportDeparture = "Ikke valgt";
+        this.participants = 0;
+        this.bookingDateTime = null;
+        this.startDate = null;
+        this.startTime = null;
+        this.endTime = null;
+        this.isWholeDay = false;
+        this.isHalfDayEarly = false;
+        this.isNoShow = false;
+        this.isEmailSent = false;
+        this.messageToAS = "";
+        this.personalNote = "";
+        this.bookingType = null;
+        this.equipmentList = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return startDate + " " + startTime + " - " + endTime;
+    }
 
 }
