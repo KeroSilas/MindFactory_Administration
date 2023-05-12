@@ -8,12 +8,13 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CalendarCell extends VBox{
 
     private final String dayOfMonth;
 
-    public CalendarCell(LocalDate date) {
+    public CalendarCell(LocalDate date, List<Booking> bookings) {
         dayOfMonth = String.valueOf(date.getDayOfMonth());
         // Styling
         setAlignment(Pos.TOP_LEFT);
@@ -30,6 +31,7 @@ public class CalendarCell extends VBox{
         label.setMouseTransparent(true);
         getChildren().add(label);
 
+        /*
         setOnDragOver(e -> {
             if (e.getGestureSource() != this && e.getDragboard().hasString()) {
                 e.acceptTransferModes(TransferMode.MOVE);
@@ -49,10 +51,7 @@ public class CalendarCell extends VBox{
             e.setDropCompleted(success);
             e.consume();
         });
-
-        CalendarBooking booking = new CalendarBooking("Event");
-
-        getChildren().add(booking);
+        */
 
         // Pseudocode for actually loading events from database
         // List<CalendarEvent> events = getEventsFromDatabase();

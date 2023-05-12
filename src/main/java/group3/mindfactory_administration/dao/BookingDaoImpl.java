@@ -1,11 +1,11 @@
 package group3.mindfactory_administration.dao;
 
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.BookingTime;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BookingDaoImpl implements BookingDao {
@@ -17,11 +17,76 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
+    public List<Booking> getAllBookings() {
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM Booking;"
+            );
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int bookingID = rs.getInt(1);
+                String bookingType = rs.getString
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookings;
+    }
+
+    @Override
+    public HashMap<String, Integer> countBookingsByOrg() {
+        HashMap<String, Integer> bookingsGroupedByOrg = new HashMap<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT organization, COUNT(*) AS 'Belægning' " +
+                    "FROM Booking GROUP BY Organization;"
+            );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String organization = rs.getString(1);
+                int belægning = rs.getInt(2);
+                bookingsGroupedByOrg.put(organization, belægning);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookingsGroupedByOrg;
+    }
+
+    @Override
+    public HashMap<String, Integer> countBookingsByActivity() {
+        HashMap<String, Integer> bookingsGroupedByActivities = new HashMap<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT activity, COUNT(*) AS 'Belægning' " +
+                            "FROM Booking GROUP BY activity;"
+            );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String activity = rs.getString(1);
+                int belægning = rs.getInt(2);
+                bookingsGroupedByActivities.put(activity, belægning);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return bookingsGroupedByActivities;
+    }
+
+    @Override
     public void editBooking(Booking booking) throws SQLException {
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET catering = ?, activity = ?, organization = ?, åbenSkoleForløb = ?,firstName = ?, lastName = ?, position = ?, afdeling = ?, phone = ?, email = ?,assistance = ?, transportType = ?, transportArrival = ?,transportDeparture = ?, participants = ?, bookingDateTime = ?, messageToAS = ?, personalNote = ?, bookingType = ? WHERE bookingID = ?);");
+            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
 
             ps.setString(1, booking.getBookingType());
             ps.setString(2, booking.getCatering());
@@ -64,7 +129,7 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public void deleteBooking(int bookingID) {
+    public void deleteBooking(int bookingID) throws SQLException {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
@@ -72,72 +137,20 @@ public class BookingDaoImpl implements BookingDao {
             rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
 
             if (rowsAffected == 0) {
-                throw new RuntimeException("Booking with ID " + bookingID + " does not exist");
+                throw new SQLException("Booking with ID " + bookingID + " does not exist");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 
-
-    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
-    // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
-    // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
-    @Override
-    public List<Booking> getWeeksBookings() {
-
-        List<Booking> weeksBookings = new ArrayList<>();
-        try (Connection con = databaseConnector.getConnection()){
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * from Booking WHERE DATEDIFF(day, CAST(GETDATE() AS DATE),Booking.startDate) < 7;"
-            );
-            //ps.setInt(1, category.getCategoryID());  change this to reflect Booking search
-            ResultSet rs = ps.executeQuery();
-
-            Booking booking;
-            while (rs.next()) {
-
-                int bookingID = rs.getInt(1);
-                String bookingType = rs.getString(2);
-                String catering = rs.getString(2);
-                String activity = rs.getString(2);
-                String organization = rs.getString(2);
-                String åbenSkoleForløb = rs.getString(2);
-                String firstName = rs.getString(2);
-                String lastName = rs.getString(2);
-                String position = rs.getString(2);
-                String afdeling = rs.getString(2);
-                String phone = rs.getString(2);
-                String email = rs.getString(2);
-                String assistance = rs.getString(2);
-                String transportType = rs.getString(2);
-                String transportArrival = rs.getString(2);
-                String transportDeparture = rs.getString(2);
-                int participants = rs.getInt(9);
-                Timestamp bookingDateTime = rs.getTimestamp(2);
-                Date startDate = rs.getDate(2);
-                Time startTime = rs.getTime(2);
-                Time endTime = rs.getTime(9);
-                Boolean isWholeDay = rs.getBoolean(9);
-                Boolean isHalfDayEarly = rs.getBoolean(23);
-                Boolean isNoShow = rs.getBoolean(24);
-                Boolean isEmailSent = rs.getBoolean(25);
-                String messageToAS = rs.getString(26);
-                String personalNote = rs.getString(27);
-
-                booking= new Booking(bookingID, bookingType, catering, activity, organization, åbenSkoleForløb, firstName, lastName, position, afdeling, phone, email, assistance, transportType, transportArrival, transportArrival, transportDeparture, participants, bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote);
-                weeksBookings.add(booking);
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return weeksBookings;
+    public static void main(String[] args) {
+        BookingDaoImpl bookingDao = new BookingDaoImpl();
+        HashMap<String, Integer> bookingsGroupedByOrg = bookingDao.getBookingsGroupedByOrg();
+        HashMap<String, Integer> bookingsGroupedByActivities = bookingDao.getBookingsGroupedByActivities();
+        System.out.println(bookingsGroupedByOrg);
+        System.out.println(bookingsGroupedByActivities);
     }
-
-
-
 }
 
 

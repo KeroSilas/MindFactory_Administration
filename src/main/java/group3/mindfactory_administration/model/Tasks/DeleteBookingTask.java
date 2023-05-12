@@ -6,14 +6,16 @@ import group3.mindfactory_administration.dao.BookingDaoImpl;
 import group3.mindfactory_administration.model.Booking;
 import javafx.concurrent.Task;
 
-public class EditBookingTask extends Task<Boolean> {
+import java.awt.print.Book;
+
+public class DeleteBookingTask extends Task<Boolean> {
 
     private final BookingDao bookingDao;
 
-    private final Booking booking;
+    private final int bookingID;
 
-    public EditBookingTask(Booking booking) {
-        this.booking = booking;
+    public DeleteBookingTask(int bookingID) {
+        this.bookingID = bookingID;
         bookingDao = new BookingDaoImpl();
     }
 
@@ -22,7 +24,7 @@ public class EditBookingTask extends Task<Boolean> {
         boolean success = true;
 
         try {
-            bookingDao.editBooking(booking);
+            bookingDao.deleteBooking(bookingID);
         } catch (RuntimeException e) {
             success = false;
         }

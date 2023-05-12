@@ -8,10 +8,10 @@ import javafx.scene.layout.HBox;
 
 public class CalendarBooking extends HBox {
 
-    private final String name;
+    private final Booking booking;
 
-    public CalendarBooking(String name) {
-        this.name = name;
+    public CalendarBooking(Booking booking) {
+        this.booking = booking;
 
         // Styling
         setPrefHeight(15);
@@ -19,14 +19,14 @@ public class CalendarBooking extends HBox {
         setStyle("-fx-background-color: #0051ff; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #0051ff; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
 
         // Temporary code
-        Label eventName = new Label(name + " ");
+        Label eventName = new Label(booking.getOrganization() + " ");
         eventName.setStyle("-fx-text-fill: #ffffff");
         eventName.setMouseTransparent(true);
 
         getChildren().add(eventName);
 
         // Starts the drag and drop process
-        setOnDragDetected(e -> {
+        /*setOnDragDetected(e -> {
             Dragboard db = startDragAndDrop(TransferMode.ANY);
 
             // Generated with GitHub Copilot
@@ -45,7 +45,7 @@ public class CalendarBooking extends HBox {
                 cell.getChildren().remove(this);
             }
             e.consume();
-        });
+        });*/
     }
 
     public void setClicked(boolean clicked) {
@@ -57,6 +57,6 @@ public class CalendarBooking extends HBox {
 
     @Override
     public String toString() {
-        return name;
+        return booking.getOrganization() + " " + booking.getStartTime() + " - " + booking.getEndTime();
     }
 }
