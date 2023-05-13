@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -28,7 +29,10 @@
             <MFXDatePicker fx:id="fromDP" animated="false" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleFra" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
                <font>
                   <Font size="14.0" />
-               </font></MFXDatePicker>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXDatePicker>
             <Label text="Til:">
                <font>
                   <Font size="14.0" />
@@ -37,16 +41,25 @@
             <MFXDatePicker fx:id="toDP" animated="false" maxHeight="40.0" maxWidth="200.0" minHeight="35.0" minWidth="200.0" onAction="#handleTil" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: lightgrey;">
                <font>
                   <Font size="14.0" />
-               </font></MFXDatePicker>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXDatePicker>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <MFXButton fx:id="organisationBtn" disable="true" onAction="#handleOrganisation" prefHeight="40.0" prefWidth="110.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Organisation">
                <font>
                   <Font size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
             <MFXButton fx:id="aktivitetBtn" onAction="#handleAktivitet" prefHeight="40.0" prefWidth="110.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="Aktivitet">
                <font>
                   <Font size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
          </children>
       </HBox>
    </bottom>

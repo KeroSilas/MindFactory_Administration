@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXNotificationCenter?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -25,18 +26,30 @@
             <MFXButton fx:id="dashboardBtn" minHeight="35.0" minWidth="110.0" onAction="#handleDashboard" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Dashboard">
                <font>
                   <Font size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
             <MFXButton fx:id="kalenderBtn" minHeight="35.0" minWidth="110.0" onAction="#handleKalender" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Kalender">
                <font>
                   <Font size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
             <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="110.0" onAction="#handleStatistik" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Statistik">
                <font>
                   <Font size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
             <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnDismiss="true" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72" />
+                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnDismiss="true" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></MFXNotificationCenter>
                </children>
             </HBox>
          </children>

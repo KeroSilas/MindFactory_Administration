@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,19 +43,31 @@
             <MFXButton onAction="#handlePreviousMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&lt;">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
             <MFXComboBox fx:id="monthComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="160.0" style="-fx-border-color: lightgrey;">
                <font>
                   <Font size="14.0" />
-               </font></MFXComboBox>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXComboBox>
             <MFXComboBox fx:id="yearComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="160.0" style="-fx-border-color: lightgrey;">
                <font>
                   <Font size="14.0" />
-               </font></MFXComboBox>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXComboBox>
             <MFXButton onAction="#handleNextMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&gt;">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></MFXButton>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></MFXButton>
          </children>
       </HBox>
    </bottom>
