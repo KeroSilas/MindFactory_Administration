@@ -57,7 +57,12 @@ public class BookingDaoImpl implements BookingDao {
                 String messageToAS = rs.getString(26);
                 String personalNote = rs.getString(27);
 
-                bookings.add(new Booking(bookingID, bookingType, catering, activity, organizarion, åbenSkoleForløb, firstName, lastName, position, department, phone, email, assistance, transportType, transportArrival, transportDeparture, participants, bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote));
+                bookings.add(new Booking(
+                        bookingID, bookingType, catering, activity, organizarion, åbenSkoleForløb,
+                        firstName, lastName, position, department, phone, email, assistance,
+                        transportType, transportArrival, transportDeparture, participants,
+                        bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly,
+                        isNoShow, isEmailSent, messageToAS, personalNote));
             }
 
         } catch (SQLException e) {
@@ -164,7 +169,11 @@ public class BookingDaoImpl implements BookingDao {
         Connection con = databaseConnector.getConnection();
         try { // Does not work with try-with-resources, because we need to be able to use the connection in the catch block
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
+            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET bookingType = ?, catering = ?, activity = ?, organization = ?, åbenSkoleForløb = ?, " +
+                    "firstName = ?, lastName = ?, position = ?, department = ?, phone = ?, email = ?, assistance = ?, transportType = ?, transportArrival = ?, " +
+                    "transportDeparture = ?, participants = ?, startDate = ?, startTime = ?, endTime = ?, isWholeDay = ?, isHalfDayEarly = ?, isNoShow = ?, " +
+                    "personalNote = ? WHERE bookingID = ?"
+            );
 
             ps.setString(1, booking.getBookingType());
             ps.setString(2, booking.getCatering());
@@ -182,16 +191,14 @@ public class BookingDaoImpl implements BookingDao {
             ps.setString(14, booking.getTransportArrival());
             ps.setString(15, booking.getTransportDeparture());
             ps.setInt(16, booking.getParticipants());
-            ps.setTimestamp(17, Timestamp.valueOf(booking.getBookingDateTime()));
-            ps.setDate(18, Date.valueOf(booking.getStartDate()));
-            ps.setTime(19, Time.valueOf(booking.getStartTime()));
-            ps.setTime(20, Time.valueOf(booking.getEndTime()));
-            ps.setBoolean(21, booking.isWholeDay());
-            ps.setBoolean(22, booking.isHalfDayEarly());
-            ps.setBoolean(23, booking.isNoShow());
-            ps.setString(24, booking.getMessageToAS());
-            ps.setString(25, booking.getPersonalNote());
-            ps.setInt(26, booking.getBookingID());
+            ps.setDate(17, Date.valueOf(booking.getStartDate()));
+            ps.setTime(18, Time.valueOf(booking.getStartTime()));
+            ps.setTime(19, Time.valueOf(booking.getEndTime()));
+            ps.setBoolean(20, booking.isWholeDay());
+            ps.setBoolean(21, booking.isHalfDayEarly());
+            ps.setBoolean(22, booking.isNoShow());
+            ps.setString(23, booking.getPersonalNote());
+            ps.setInt(24, booking.getBookingID());
             ps.executeUpdate();
 
             // con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); // Not needed, because we are only updating one row, and we are not reading from the database, so we don't need to worry about dirty reads
@@ -284,8 +291,6 @@ public class BookingDaoImpl implements BookingDao {
 
         return weeksBookings;
     }
-
-
 }
 
 

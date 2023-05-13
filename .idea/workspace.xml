@@ -4,31 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Moved the SendReminderEmailTask over to this project, along with its dependencies">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/CalendarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/NavigationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/StatisticController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/StatisticController.java" afterDir="false" />
+    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Loads of comments and minor style changes">
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingEmail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarBooking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/CalendarCell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountActivityTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountActivityTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountOrgTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/CountOrgTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/DeleteBookingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/DeleteBookingTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/EditBookingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/EditBookingTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/GetBookingsTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/GetBookingsTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/SendReminderEmailTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/SendReminderEmailTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/services/SendEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/services/SendEmail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/calendar-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/calendar-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/dashboard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/dashboard-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/navigation-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/navigation-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/statistic-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/statistic-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +108,7 @@
       <workItem from="1683564029837" duration="3241000" />
       <workItem from="1683708052392" duration="2089000" />
       <workItem from="1683912695857" duration="1140000" />
-      <workItem from="1683976869000" duration="4937000" />
+      <workItem from="1683976869000" duration="5733000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1683555912951</created>
@@ -196,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683913695968</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Loads of comments and minor style changes">
+      <created>1683981942235</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683981942235</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +200,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
     <MESSAGE value="Moved the SendReminderEmailTask over to this project, along with its dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved the SendReminderEmailTask over to this project, along with its dependencies" />
+    <MESSAGE value="Loads of comments and minor style changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loads of comments and minor style changes" />
   </component>
 </project>
