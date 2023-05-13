@@ -83,6 +83,7 @@ public class CalendarController {
                 CalendarCell cc = (CalendarCell) cb.getParent();
 
                 // TODO: Temporary, this will be replaced with an FXML file
+                // Use this: https://stackoverflow.com/questions/68363535/passing-data-to-another-controller-in-javafx
                 Alert alert = new Alert(Alert.AlertType.NONE, cb.getBooking().getOrganization() + "\n" + cc.getDayOfMonth(), ButtonType.NO, ButtonType.YES);
                 alert.setTitle("Event Clicked");
                 Optional<ButtonType> result = alert.showAndWait();

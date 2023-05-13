@@ -6,6 +6,8 @@ package group3.mindfactory_administration.controllers;
  * The administrator can also see the booking details and add a note and files to the booking.
  */
 
+// Reference:
+// https://stackoverflow.com/questions/68363535/passing-data-to-another-controller-in-javafx
 /*public class EditBookingController {
     private Booking booking;
 
@@ -38,15 +40,13 @@ package group3.mindfactory_administration.controllers;
         sletBtn.setDisable(false);
         sletBtn.setStyle("-fx-background-color: #BD2323FF; -fx-text-fill: #ffffff;");
 
-
-    ;
-    Thread thread = new Thread(deleteBookingTask);
-    thread.setDaemon(true);
-    thread.start();
-}
+        Thread thread = new Thread(deleteBookingTask);
+        thread.setDaemon(true);
+        thread.start();
+    }
 
 
     private void setBooking(Booking booking) {
-    this.booking = booking;
+        this.booking = booking;
     }
 }*/
