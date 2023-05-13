@@ -15,8 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Calendar idea inspired by https://gist.github.com/Da9el00/f4340927b8ba6941eb7562a3306e93b6
-// Drag and drop inspired by https://stackoverflow.com/questions/38172278/drag-and-drop-a-node-into-another-node
+/*
+ * This class controls the calendar view.
+ * It displays a calendar in a grid, and stores a CalendarCell for each day of the month.
+ * Each CalendarCell stores either 1 or 2 CalendarBooking objects inside of it, which are displayed in the cell.
+ * Each CalendarBooking object stores a Booking object inside of it, which contains all the information about the booking.
+ */
+
+// References:
+// https://gist.github.com/Da9el00/f4340927b8ba6941eb7562a3306e93b6
+// https://stackoverflow.com/questions/38172278/drag-and-drop-a-node-into-another-node
 public class CalendarController {
 
     private List<Booking> bookings;
@@ -25,7 +33,7 @@ public class CalendarController {
     @FXML private MFXComboBox<String> monthComboBox;
     @FXML private MFXComboBox<String> yearComboBox;
 
-    private LocalDate date = LocalDate.now();
+    private LocalDate currentDate = LocalDate.now();
 
     @FXML
     private void handleNextMonth() {
@@ -40,21 +48,24 @@ public class CalendarController {
     public void initialize() {
         bookings = new ArrayList<>();
 
-        monthComboBox.getItems().addAll("January", "February", "March", "April", "May", "June", "July", "August",
-                "September", "October", "November", "December");
-        monthComboBox.selectIndex(date.getMonthValue() - 1);
+        monthComboBox.getItems().addAll("Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August",
+                "September", "Oktober", "November", "December");
+        monthComboBox.selectIndex(currentDate.getMonthValue() - 1); // Months are 1-12, not 0-11, so -1 is needed.
+        // When the user selects a month, the calendar is redrawn, and currentDate is updated.
         monthComboBox.setOnAction(event -> {
-            date = date.withMonth(monthComboBox.getSelectionModel().getSelectedIndex() + 1);
+            currentDate = currentDate.withMonth(monthComboBox.getSelectionModel().getSelectedIndex() + 1); // Months are 1-12, not 0-11, so +1 is needed.
             drawCalendar();
         });
         yearComboBox.getItems().addAll("2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027",
                 "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035");
-        yearComboBox.selectIndex(date.getYear() - 2020);
+        yearComboBox.selectIndex(currentDate.getYear() - 2020); // Years are 2020-2035, so -2020 is needed to get the index.
+        // When the user selects a year, the calendar is redrawn, and currentDate is updated.
         yearComboBox.setOnAction(event -> {
-            date = date.withYear(yearComboBox.getSelectionModel().getSelectedIndex() + 2020);
+            currentDate = currentDate.withYear(yearComboBox.getSelectionModel().getSelectedIndex() + 2020); // Years are 2020-2035, so +2020 is needed to get the year.
             drawCalendar();
         });
 
+        // Start a thread to get the bookings from the database. Updates every 3 seconds.
         GetBookingsTask getBookingsTask = new GetBookingsTask();
         getBookingsTask.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -66,11 +77,12 @@ public class CalendarController {
         thread.setDaemon(true);
         thread.start();
 
-
+        // When the user clicks on a CalendarBooking, open the edit booking window.
         calendarGrid.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof CalendarBooking cb) {
                 CalendarCell cc = (CalendarCell) cb.getParent();
-                // Temporary, this will be replaced with an FXML file
+
+                // TODO: Temporary, this will be replaced with an FXML file
                 Alert alert = new Alert(Alert.AlertType.NONE, cb.getBooking().getOrganization() + "\n" + cc.getDayOfMonth(), ButtonType.NO, ButtonType.YES);
                 alert.setTitle("Event Clicked");
                 Optional<ButtonType> result = alert.showAndWait();
@@ -79,44 +91,56 @@ public class CalendarController {
     }
 
     private void nextMonth() {
-        date = date.plusMonths(1);
-        monthComboBox.selectIndex(date.getMonthValue() - 1);
-        if (date.getYear() != yearComboBox.getSelectionModel().getSelectedIndex() + 2020) {
-            yearComboBox.selectIndex(date.getYear() - 2020);
+        currentDate = currentDate.plusMonths(1);
+        monthComboBox.selectIndex(currentDate.getMonthValue() - 1);
+        if (currentDate.getYear() != yearComboBox.getSelectionModel().getSelectedIndex() + 2020) {
+            yearComboBox.selectIndex(currentDate.getYear() - 2020);
         }
     }
 
     private void previousMonth() {
-        date = date.minusMonths(1);
-        monthComboBox.selectIndex(date.getMonthValue() - 1);
-        if (date.getYear() != yearComboBox.getSelectionModel().getSelectedIndex() + 2020) {
-            yearComboBox.selectIndex(date.getYear() - 2020);
+        currentDate = currentDate.minusMonths(1);
+        monthComboBox.selectIndex(currentDate.getMonthValue() - 1);
+        if (currentDate.getYear() != yearComboBox.getSelectionModel().getSelectedIndex() + 2020) {
+            yearComboBox.selectIndex(currentDate.getYear() - 2020);
         }
     }
 
     private void drawCalendar() {
-        calendarGrid.getChildren().clear();
+        calendarGrid.getChildren().clear(); // Clear the grid before drawing the calendar
 
-        LocalDate firstDayOfMonth = date.withDayOfMonth(1);
-        int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
+        // Find the first day of the month and the day of the week it is on, so that we know where on the grid to start drawing the calendar
+        LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1); // First day of the month
+        int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue(); // 1 = Monday, 7 = Sunday
+
         int dayOfMonth = 1;
+        int lengthOfMonth = currentDate.lengthOfMonth();
+
+        // Draws the calendar itself by adding CalendarCells to the grid for each day of the month
+        // The calendar is 6 rows by 7 columns.
         for (int i = 0; i < 6; i++) {
             for (int j = dayOfWeek - 1; j < 7; j++) {
-                if (dayOfMonth > date.lengthOfMonth()) {
-                    break;
+                if (dayOfMonth > lengthOfMonth) {
+                    break; // Reached the end of the month, so stop the loop
                 }
+
+                // Get all the bookings that are on the current dayOfMonth
                 List<Booking> bookingsToday = new ArrayList<>();
                 for (Booking booking : bookings) {
-                    if (booking.getStartDate().equals(date.withDayOfMonth(dayOfMonth))) {
+                    // Takes currentDate together with dayOfMonth and compares it to the bookings startDate.
+                    // This is done because currentDate is only adjusted for the month and year, not the day, and we need a full LocalDate to compare, not just dayOfMonth.
+                    if (booking.getStartDate().equals(currentDate.withDayOfMonth(dayOfMonth))) {
                         bookingsToday.add(booking);
                     }
                 }
-                CalendarCell cell = new CalendarCell(date.withDayOfMonth(dayOfMonth), bookingsToday);
+
+                // Create a new CalendarCell and add it to the grid
+                CalendarCell cell = new CalendarCell(currentDate.withDayOfMonth(dayOfMonth), bookingsToday);
                 calendarGrid.add(cell, j, i);
 
                 dayOfMonth++;
             }
-            dayOfWeek = 1;
+            dayOfWeek = 1; // Reset the day of the week to Monday after the first row has been drawn
         }
     }
 }

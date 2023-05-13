@@ -1,5 +1,11 @@
 package group3.mindfactory_administration.controllers;
 
+/*
+ * This class controls the edit booking view.
+ * This is where the administrator can edit and delete bookings.
+ * The administrator can also see the booking details and add a note and files to the booking.
+ */
+
 /*public class EditBookingController {
     private Booking booking;
 

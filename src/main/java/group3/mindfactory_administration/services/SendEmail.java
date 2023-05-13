@@ -10,9 +10,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+// References:
 // Code is from https://netcorecloud.com/tutorials/send-email-in-java-using-gmail-smtp/#:~:text=How%20To%20Send%20Email%20In%20Java%20Using%20Gmail,Step%204%20-%20Send%20Email%20with%20Attachment.%20
 // Password authentication approach from https://www.youtube.com/watch?v=ugIUObNHZdo (3:00~)
-
 // For the error: https://stackoverflow.com/questions/55276768/how-to-prevent-java-mail-expected-resource-not-found-warnings-from-camel-smtp
 public class SendEmail {
 
@@ -43,6 +43,7 @@ public class SendEmail {
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
+            // CC admin if ccAdmin is true
             if (ccAdmin) {
                 message.addRecipient(Message.RecipientType.CC, new InternetAddress("sillun01@easv365.dk"));
             }

@@ -1,7 +1,6 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
-import group3.mindfactory_administration.model.Notification;
 import group3.mindfactory_administration.model.tasks.SendReminderEmailTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
@@ -12,7 +11,14 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-// Inspired by https://stackoverflow.com/questions/18619394/loading-new-fxml-in-the-same-scene
+/*
+ * This class controls the navigation bar.
+ * Depending on which button the user clicks, the corresponding view is loaded.
+ * The navigation bar also contains a notification center.
+ */
+
+// References:
+// https://stackoverflow.com/questions/18619394/loading-new-fxml-in-the-same-scene
 // Specifically the answer by Clite Tailor and exceptionsAreBad
 public class NavigationController {
 
@@ -35,10 +41,12 @@ public class NavigationController {
 
     @FXML
     void handleDashboard() {
-        kalenderBtn.setDisable(false);
-        dashboardBtn.setDisable(true);
-        statistikBtn.setDisable(false);
+        // Style the buttons to indicate which view is active
+        dashboardBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
+        kalenderBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        statistikBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
 
+        // Clear the stack pane and add the view
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view1);
 
@@ -49,9 +57,10 @@ public class NavigationController {
 
     @FXML
     void handleKalender() {
-        kalenderBtn.setDisable(true);
-        dashboardBtn.setDisable(false);
-        statistikBtn.setDisable(false);
+        // Style the buttons to indicate which view is active
+        dashboardBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        kalenderBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
+        statistikBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
 
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view2);
@@ -59,16 +68,17 @@ public class NavigationController {
 
     @FXML
     void handleStatistik() {
-        kalenderBtn.setDisable(false);
-        dashboardBtn.setDisable(false);
-        statistikBtn.setDisable(true);
+        // Style the buttons to indicate which view is active
+        dashboardBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        kalenderBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        statistikBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
 
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view3);
     }
 
     public void initialize() {
-        // Sends reminder emails. Checks every 30 seconds.
+        // Sends reminder emails to users within 7 days of their booking startDate. Checks every 60 seconds.
         SendReminderEmailTask sendReminderEmailTask = new SendReminderEmailTask();
         Thread thread = new Thread(sendReminderEmailTask);
         thread.setDaemon(true);
@@ -89,7 +99,7 @@ public class NavigationController {
         }
 
         // Insert view1 into the stack pane by default
-        dashboardBtn.setDisable(true);
+        dashboardBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
         stackPane.getChildren().add(view1);
     }
 

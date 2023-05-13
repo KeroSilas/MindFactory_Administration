@@ -67,9 +67,12 @@ public class BookingDaoImpl implements BookingDao {
         return bookings;
     }
 
+    // References:
     // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
     // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
     // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
+
+    // Gets all bookings that are one week out and sets isEmailSent to 1 at the same time
     @Override
     public List<BookingEmail> getOneWeekOutBookings() {
 
@@ -78,9 +81,9 @@ public class BookingDaoImpl implements BookingDao {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE Booking " +
                             "SET isEmailSent = 1 " +
-                            "OUTPUT INSERTED.bookingID, INSERTED.firstName, INSERTED.email, INSERTED.startDate " +
+                            "OUTPUT INSERTED.bookingID, INSERTED.firstName, INSERTED.email, INSERTED.startDate " + // OUTPUT INSERTED returns the value of the column after the update
                             "FROM Booking " +
-                            "WHERE DATEDIFF(day, CAST(GETDATE() AS DATE), startDate) < 7 AND isEmailSent = 0;"
+                            "WHERE DATEDIFF(day, CAST(GETDATE() AS DATE), startDate) < 7 AND isEmailSent = 0;" // Cast GETDATE() to date to remove the time (Yes, GETDATE() returns a datetime/timestamp), then subtract the two dates and check if the difference is less than 7 days
             );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -102,6 +105,8 @@ public class BookingDaoImpl implements BookingDao {
         return oneWeekOutBookings;
     }
 
+    // Counts the number of bookings made by each organization
+    // Uses HashMap to store the organization name and the number of bookings
     @Override
     public HashMap<String, Integer> countBookingsByOrg(LocalDate startDate, LocalDate endDate) {
         HashMap<String, Integer> bookingsGroupedByOrg = new HashMap<>();
@@ -127,6 +132,7 @@ public class BookingDaoImpl implements BookingDao {
         return bookingsGroupedByOrg;
     }
 
+    // Same as above, but for activities
     @Override
     public HashMap<String, Integer> countBookingsByActivity(LocalDate startDate, LocalDate endDate) {
         HashMap<String, Integer> bookingsGroupedByActivities = new HashMap<>();
@@ -152,10 +158,11 @@ public class BookingDaoImpl implements BookingDao {
         return bookingsGroupedByActivities;
     }
 
+    // Updates a given booking
     @Override
     public void editBooking(Booking booking) throws SQLException {
         Connection con = databaseConnector.getConnection();
-        try {
+        try { // Does not work with try-with-resources, because we need to be able to use the connection in the catch block
             con.setAutoCommit(false);
             PreparedStatement ps = con.prepareStatement("UPDATE Booking SET Catering = ?, Activity = ?, Organization = ?, ÅbenSkoleForløb = ?,FirstName = ?, LastName = ?, Position = ?, Afdeling = ?, Phone = ?, Email = ?,Assistance = ?, TransportType = ?, TransportArrival = ?,TransportDeparture = ?, Participants = ?, BookingDateTime = ?, MessageToAS = ?, PersonalNote = ?, BookingType = ? WHERE bookingID = ?);");
 
@@ -187,31 +194,35 @@ public class BookingDaoImpl implements BookingDao {
             ps.setInt(26, booking.getBookingID());
             ps.executeUpdate();
 
-            con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            // con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); // Not needed, because we are only updating one row, and we are not reading from the database, so we don't need to worry about dirty reads
             con.commit();
             con.setAutoCommit(true);
 
         } catch (SQLException e) {
-            con.rollback();
-            throw new SQLException(e);
+            con.rollback(); // Rollback if something goes wrong
+            throw new SQLException(e); // Re-throw exception to be handled by the task that called this method
         } finally {
-            con.close();
+            con.close(); // Close connection manually
         }
     }
 
+    // References:
+    // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
+
+    // Deletes a booking with a given ID
     @Override
     public void deleteBooking(int bookingID) throws SQLException {
         int rowsAffected;
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM Booking WHERE BookingID = ?");
             ps.setInt(1, bookingID);
-            rowsAffected = ps.executeUpdate(); // https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
+            rowsAffected = ps.executeUpdate(); // Returns the number of rows affected by the query, which should be 1 if the booking was deleted
 
-            if (rowsAffected == 0) {
-                throw new SQLException("Booking with ID " + bookingID + " does not exist");
+            if (rowsAffected == 0) { // If no rows were affected, the booking does not exist
+                throw new SQLException(); // Throw exception to be handled by the task that called this method
             }
         } catch (SQLException e) {
-            throw new SQLException(e);
+            throw new SQLException(e); // Re-throw exception to be handled by the task that called this method
         }
     }
 

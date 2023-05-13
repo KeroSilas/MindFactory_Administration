@@ -2,6 +2,10 @@ package group3.mindfactory_administration.model;
 
 import java.time.LocalDate;
 
+/*
+ * This class is used to store the data of a booking that is used to send reminder emails
+ */
+
 public class BookingEmail {
 
     private final int bookingID;

@@ -1,0 +1,27 @@
+/* Adopted from https://github.com/palexdev/MaterialFX/blob/main/demo/src/main/resources/io/github/palexdev/materialfx/demo/css/ */
+
+.mfx-combo-box .caret .mfx-font-icon {
+    -mfx-color: #000000;
+}
+
+.mfx-combo-box .virtual-flow .mfx-combo-box-cell:hover {
+    -fx-background-color: derive(#94c83d, 90%);
+}
+
+.mfx-combo-box .virtual-flow .mfx-combo-box-cell:selected {
+    -fx-background-color: derive(#94c83d, 65%);
+}
+
+.mfx-combo-box .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(145, 145, 145, 0.5);
+}
+
+.mfx-radio-button:selected {
+    -mfx-main: #94c83d;
+}
+
+.mfx-radio-button .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(145, 145, 145, 0.5);
+}
+
+/* I wanted to change the highlight color of text in the text field, but I couldn't find a way to do it. */

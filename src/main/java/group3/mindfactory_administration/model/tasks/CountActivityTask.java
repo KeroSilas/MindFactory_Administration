@@ -7,6 +7,10 @@ import javafx.concurrent.Task;
 import java.time.LocalDate;
 import java.util.HashMap;
 
+/*
+ * This class is run in a separate thread and updates the value of the task with data from the database
+ */
+
 public class CountActivityTask extends Task<HashMap<String, Integer>> {
 
     private final BookingDao bookingDao;
@@ -21,7 +25,7 @@ public class CountActivityTask extends Task<HashMap<String, Integer>> {
     @Override
     protected HashMap<String, Integer> call() {
         while (!isCancelled()) {
-            updateValue(bookingDao.countBookingsByActivity(startDate, endDate));
+            updateValue(bookingDao.countBookingsByActivity(startDate, endDate)); // Update the value of the task with data from the database
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {

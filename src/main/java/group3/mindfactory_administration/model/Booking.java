@@ -1,11 +1,15 @@
 package group3.mindfactory_administration.model;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * This class is used to create a booking object.
+ * The booking object is used to store all the information about a booking.
+ */
 
 public class Booking implements Comparable<Booking> {
 

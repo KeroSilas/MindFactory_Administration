@@ -4,6 +4,12 @@ import group3.mindfactory_administration.dao.BookingDao;
 import group3.mindfactory_administration.dao.BookingDaoImpl;
 import javafx.concurrent.Task;
 
+import java.sql.SQLException;
+
+/*
+ * This class is run in a separate thread and deletes a booking from the database
+ */
+
 public class DeleteBookingTask extends Task<Boolean> {
 
     private final BookingDao bookingDao;
@@ -21,8 +27,8 @@ public class DeleteBookingTask extends Task<Boolean> {
 
         try {
             bookingDao.deleteBooking(bookingID);
-        } catch (RuntimeException e) {
-            success = false;
+        } catch (SQLException e) {
+            success = false; // If the deletion fails or a booking wasn't found, return false
         }
 
         return success;

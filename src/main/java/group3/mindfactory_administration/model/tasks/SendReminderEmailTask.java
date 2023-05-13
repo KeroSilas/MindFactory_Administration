@@ -8,6 +8,10 @@ import javafx.concurrent.Task;
 
 import java.util.List;
 
+/*
+ * This class is run in a separate thread and sends reminder emails to customers with a booking one week out
+ */
+
 public class SendReminderEmailTask extends Task<Void> {
 
     private final BookingDao bookingDao;
@@ -20,15 +24,10 @@ public class SendReminderEmailTask extends Task<Void> {
 
     @Override
     protected Void call() {
-        while (!isCancelled()) { // Keep running until the task is cancelled
-            try {
-                Thread.sleep(30000L); // Sleep for the specified delay
-            } catch (InterruptedException e) {
-                if (isCancelled()) {
-                    break;
-                }
-            }
-            List<BookingEmail> bookingEmailList = bookingDao.getOneWeekOutBookings();
+        while (!isCancelled()) { // Keep task running in a loop until it is cancelled (spoiler: it never is)
+            List<BookingEmail> bookingEmailList = bookingDao.getOneWeekOutBookings(); // Get all bookings one week out from the database
+
+            // Send email to everyone with a booking one week out
             for (BookingEmail bookingEmail : bookingEmailList) {
                 sendEmail.sendEmail(
                         bookingEmail.getEmail(),
@@ -38,6 +37,14 @@ public class SendReminderEmailTask extends Task<Void> {
                         "Din kommende booking.",
                         true
                 );
+            }
+
+            try {
+                Thread.sleep(60000L);
+            } catch (InterruptedException e) {
+                if (isCancelled()) {
+                    break;
+                }
             }
         }
         return null;
