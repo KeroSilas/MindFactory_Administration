@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXNotificationCenter?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
@@ -13,45 +12,49 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.NavigationController">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="12.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="60.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/cropped-cropped-MF_NEGATIVE_WHITE-1.png" />
-               </image>
+            <HBox alignment="CENTER_LEFT" prefWidth="150.0">
                <HBox.margin>
                   <Insets right="12.0" />
                </HBox.margin>
-            </ImageView>
-            <MFXButton fx:id="dashboardBtn" minHeight="35.0" minWidth="110.0" onAction="#handleDashboard" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Dashboard">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-            <MFXButton fx:id="kalenderBtn" minHeight="35.0" minWidth="110.0" onAction="#handleKalender" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Kalender">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-            <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="110.0" onAction="#handleStatistik" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" text="Statistik">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-            <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXNotificationCenter fx:id="notificationCenter" markAsReadOnDismiss="true" markAsReadOnShow="true" scaleX="0.72" scaleY="0.72">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></MFXNotificationCenter>
+                  <ImageView fitHeight="60.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/cropped-cropped-MF_NEGATIVE_WHITE-1.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
+            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <MFXButton fx:id="dashboardBtn" minHeight="35.0" minWidth="110.0" onAction="#handleDashboard" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Dashboard" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+                  <MFXButton fx:id="kalenderBtn" minHeight="35.0" minWidth="110.0" onAction="#handleKalender" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Kalender" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+                  <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="110.0" onAction="#handleStatistik" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Statistik" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefWidth="150.0" />
          </children>
          <padding>
             <Insets left="12.0" right="12.0" />

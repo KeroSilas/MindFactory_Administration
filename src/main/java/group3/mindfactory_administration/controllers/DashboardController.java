@@ -1,7 +1,10 @@
 package group3.mindfactory_administration.controllers;
 
+import group3.mindfactory_administration.model.Booking;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
+
+import java.util.List;
 
 /*
  * This class controls the dashboard view.
@@ -11,8 +14,16 @@ import javafx.scene.chart.BarChart;
 
 public class DashboardController {
 
-    @FXML
-    private BarChart<?, ?> barChart;
+    private List<Booking> bookings;
 
+    @FXML private BarChart<?, ?> barChart;
+
+    public void initialize() {
+
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
 }

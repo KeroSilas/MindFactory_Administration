@@ -1,15 +1,19 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
+import group3.mindfactory_administration.model.Booking;
+import group3.mindfactory_administration.model.tasks.GetBookingsTask;
 import group3.mindfactory_administration.model.tasks.SendReminderEmailTask;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXNotificationCenter;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.util.List;
 
 /*
  * This class controls the navigation bar.
@@ -22,45 +26,35 @@ import java.io.IOException;
 // Specifically the answer by Clite Tailor and exceptionsAreBad
 public class NavigationController {
 
+    private List<Booking> bookings;
+
     private BorderPane view1, view2, view3;
+    private CalendarController calendarController;
+    private DashboardController dashboardController;
 
-    @FXML
-    private MFXNotificationCenter notificationCenter;
-
-    @FXML
-    private MFXButton dashboardBtn;
-
-    @FXML
-    private MFXButton kalenderBtn;
-
-    @FXML
-    private StackPane stackPane;
-
-    @FXML
-    private MFXButton statistikBtn;
+    @FXML private MFXButton dashboardBtn, kalenderBtn, statistikBtn;
+    @FXML private StackPane stackPane;
 
     @FXML
     void handleDashboard() {
         // Style the buttons to indicate which view is active
         dashboardBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
-        kalenderBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
-        statistikBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        kalenderBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
+        statistikBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
+
 
         // Clear the stack pane and add the view
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view1);
-
-        // Test notification
-        //Notification notification = new Notification("Test", "Test");
-        //notificationCenter.getNotifications().add(notification);
     }
 
     @FXML
     void handleKalender() {
         // Style the buttons to indicate which view is active
-        dashboardBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        dashboardBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
         kalenderBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
-        statistikBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        statistikBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
+
 
         stackPane.getChildren().clear();
         stackPane.getChildren().add(view2);
@@ -69,8 +63,8 @@ public class NavigationController {
     @FXML
     void handleStatistik() {
         // Style the buttons to indicate which view is active
-        dashboardBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
-        kalenderBtn.setStyle("-fx-background-color:  #ffffff; -fx-text-fill: #000000");
+        dashboardBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
+        kalenderBtn.setStyle("-fx-background-color:  #111c24; -fx-text-fill: #ffffff");
         statistikBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
 
         stackPane.getChildren().clear();
@@ -78,12 +72,6 @@ public class NavigationController {
     }
 
     public void initialize() {
-        // Sends reminder emails to users within 7 days of their booking startDate. Checks every 60 seconds.
-        SendReminderEmailTask sendReminderEmailTask = new SendReminderEmailTask();
-        Thread thread = new Thread(sendReminderEmailTask);
-        thread.setDaemon(true);
-        thread.start();
-
         // Get the views from the FXML files
         FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("dashboard-view.fxml"));
         FXMLLoader view2Loader = new FXMLLoader(AdministrationApplication.class.getResource("calendar-view.fxml"));
@@ -98,9 +86,36 @@ public class NavigationController {
             e.printStackTrace();
         }
 
+        dashboardController = view1Loader.getController();
+        calendarController = view2Loader.getController();
+
         // Insert view1 into the stack pane by default
         dashboardBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
         stackPane.getChildren().add(view1);
+
+        // Start a thread to get the bookings from the database. Updates every 3 seconds.
+        // Send the bookings to the dashboard and calendar controllers.
+        GetBookingsTask getBookingsTask = new GetBookingsTask();
+        getBookingsTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                bookings = newValue;
+                Platform.runLater(() -> {
+                    dashboardController.setBookings(bookings);
+                    calendarController.setBookings(bookings);
+                    calendarController.drawCalendar();
+                });
+            }
+        });
+        Thread thread = new Thread(getBookingsTask);
+        thread.setDaemon(true);
+        thread.start();
+
+        // Sends reminder emails to users within 7 days of their booking startDate. Checks every 60 seconds.
+        SendReminderEmailTask sendReminderEmailTask = new SendReminderEmailTask();
+        Thread thread2 = new Thread(sendReminderEmailTask);
+        thread2.setDaemon(true);
+        thread2.start();
+
     }
 
 }

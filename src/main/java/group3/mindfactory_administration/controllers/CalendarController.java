@@ -65,18 +65,6 @@ public class CalendarController {
             drawCalendar();
         });
 
-        // Start a thread to get the bookings from the database. Updates every 3 seconds.
-        GetBookingsTask getBookingsTask = new GetBookingsTask();
-        getBookingsTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                bookings = newValue;
-                drawCalendar();
-            }
-        });
-        Thread thread = new Thread(getBookingsTask);
-        thread.setDaemon(true);
-        thread.start();
-
         // When the user clicks on a CalendarBooking, open the edit booking window.
         calendarGrid.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof CalendarBooking cb) {
@@ -107,7 +95,7 @@ public class CalendarController {
         }
     }
 
-    private void drawCalendar() {
+    public void drawCalendar() {
         calendarGrid.getChildren().clear(); // Clear the grid before drawing the calendar
 
         // Find the first day of the month and the day of the week it is on, so that we know where on the grid to start drawing the calendar
@@ -143,5 +131,10 @@ public class CalendarController {
             }
             dayOfWeek = 1; // Reset the day of the week to Monday after the first row has been drawn
         }
+
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
