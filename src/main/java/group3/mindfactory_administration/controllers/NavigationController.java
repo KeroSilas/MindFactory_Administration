@@ -101,6 +101,7 @@ public class NavigationController {
                 bookings = newValue;
                 Platform.runLater(() -> {
                     dashboardController.setBookings(bookings);
+                    //dashboardController.drawUpcomingBookings();
                     calendarController.setBookings(bookings);
                     calendarController.drawCalendar();
                 });
