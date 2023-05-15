@@ -20,7 +20,7 @@ public class EditBookingController {
     private ToggleGroup assistanceType;
 
     @FXML
-    private MFXRadioButton læringsRB, annesofieRB;
+    private MFXRadioButton læringsRB, annesofieRB, ingenRB;
 
     @FXML
     private MFXProgressSpinner progressSpinner;
@@ -78,6 +78,41 @@ public class EditBookingController {
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
 }
 
+    private void ExportToBooking() {
+        organisationCB.selectItem(booking.getOrganization());
+        afdelingTF.setText(booking.getCustomer().getDepartment());
+        stillingTF.setText(booking.getCustomer().getPosition());
+
+        fornavnTF.setText(booking.getCustomer().getFirstName());
+        efternavnTF.setText(booking.getCustomer().getLastName());
+        telefonTF.setText(booking.getCustomer().getPhone());
+        if (booking.getOrganization().getAssistance().equals("Anne-Sofie Didriksen")){
+            annesofieRB.setSelected(true);
+        }
+        if (booking.getOrganization().getAssistance().equals("Læringskonsulent")) {
+            læringsRB.setSelected(true);
+        }
+        if (booking.getOrganization().getAssistance().equals("Ingen")) {
+            ingenRB.setSelected(true);
+        }
+        deltagereTF.setText(String.valueOf(booking.getOrganization().getParticipants()));
+        fraCB.setText(String.valueOf(booking.getStartTime()));
+        tilCB.setText(String.valueOf(booking.getEndTime()));
+        datoCB.setText(String.valueOf(booking.getStartDate()));
+        booking.isNoShow(booking.setNoShow();
+        booking.setPersonalNote();
+        booking.setMessageToAS();
+        aktivitetCB.selectItem(booking.getActivity());
+        forplejningCB.selectItem(booking.getCatering());
+        udstyrLV.getItems().addAll();
+        booking.setFileList();
+
+        forløbCB.selectItem(booking.getÅbenSkoleForløb());
+        afgangTF.setText(String.valueOf(booking.getEndTime()));
+        ankomstTF.setText(String.valueOf(booking.getStartTime()));
+        transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
+
+    }
     private void importToBooking() {
         booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
@@ -90,7 +125,7 @@ public class EditBookingController {
             booking.getOrganization().setAssistance("Læring konsulent");
         } else if (annesofieRB.isSelected()) {
             booking.getOrganization().setAssistance("Anne-Sofie Dideriksen");
-        } else {
+        } else if (ingenRB.isSelected()) {
             booking.getOrganization().setAssistance("Ingen");
         }
         booking.getOrganization().setParticipants(Integer.parseInt(deltagereTF.getText()));
@@ -115,7 +150,7 @@ public class EditBookingController {
         }
 
     @FXML
-    void handleEdit(ActionEvent event) {
+    void handleSave(ActionEvent event) {
         if (isInputValid()) {
             importToBooking();
             // Starts a new thread to edit a booking
