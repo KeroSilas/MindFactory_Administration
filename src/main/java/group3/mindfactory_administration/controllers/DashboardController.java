@@ -24,9 +24,8 @@ import static javafx.stage.Modality.APPLICATION_MODAL;
 
 public class DashboardController {
 
-    private LocalDate currentDate = LocalDate.now();
     private EditBookingController editBookingController;
-    private List<Booking> upcomingBookings;
+
     @FXML
     private HBox hBoxSP;
 
