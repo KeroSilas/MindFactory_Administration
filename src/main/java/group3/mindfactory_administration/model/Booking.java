@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -50,6 +51,8 @@ public class Booking implements Comparable<Booking> {
         this.personalNote = personalNote;
         this.equipmentList = equipmentList;
         this.fileList = fileList;
+        equipmentList = new ArrayList<>();
+        fileList = new ArrayList<>();
     }
 
     public int getBookingID() {
@@ -203,8 +206,6 @@ public class Booking implements Comparable<Booking> {
     public List<File> getFileList() {
         return fileList;
     }
-
-
 
     @Override
     public String toString() {
