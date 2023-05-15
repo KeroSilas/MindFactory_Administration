@@ -12,22 +12,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.DashboardController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.DashboardController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="16.0">
          <children>
             <HBox spacing="16.0">
                <children>
-                  <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                  <VBox spacing="4.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <Label text="Kommende bookinger">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <MFXScrollPane fitToWidth="true" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1;">
+                        <MFXScrollPane fitToHeight="true" maxHeight="202.0" minHeight="202.0" pannable="true" prefHeight="202.0" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;" vbarPolicy="NEVER" VBox.vgrow="NEVER">
                            <content>
-                              <HBox fx:id="hBoxSP" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;" />
+                              <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" spacing="8.0">
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </HBox>
                            </content>
                         </MFXScrollPane>
                      </children>

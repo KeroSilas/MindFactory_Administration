@@ -38,18 +38,26 @@ public class DashboardController {
     }
 
     public void initialize() {
+    }
 
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public void drawUpcomingBookings() {
+        hBoxSP.getChildren().clear();
+        List<Booking> upcomingBookings= new ArrayList<>();
         for(Booking booking : bookings){
             if(booking.getStartDate().isBefore(LocalDate.now().plusDays(7))){
                 upcomingBookings.add(booking);
             }
         }
 
-            for (Booking booking : upcomingBookings) {
-                UpcomingBooking upcomingBooking = new UpcomingBooking(booking);
-                hBoxSP.getChildren().add(upcomingBooking);
-                System.out.println(upcomingBookings);
-            }
+        Collections.sort(upcomingBookings);
+        for (Booking booking : upcomingBookings) {
+            UpcomingBooking upcomingBooking = new UpcomingBooking(booking);
+            hBoxSP.getChildren().add(upcomingBooking);
+        }
 
         hBoxSP.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof UpcomingBooking ub) {

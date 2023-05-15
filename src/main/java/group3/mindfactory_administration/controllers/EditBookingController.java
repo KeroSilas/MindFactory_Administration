@@ -44,7 +44,7 @@ public class EditBookingController {
     private MFXComboBox<Catering> forplejningCB;
 
     @FXML
-    private MFXComboBox<Organization> organisationCB;
+    private MFXComboBox<Organization> skoleVirkCB;
 
     @FXML
     private MFXComboBox<Forløb> forløbCB;
@@ -62,7 +62,7 @@ public class EditBookingController {
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
-            organisationCB.getItems().addAll(organisations);
+            skoleVirkCB.getItems().addAll(organisations);
         });
         Thread thread = new Thread(getOrganisationsTask);
         thread.start();
@@ -76,7 +76,7 @@ public class EditBookingController {
         thread2.start();
 
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
-}
+    }
 
     private void ExportToBooking() {
         organisationCB.selectItem(booking.getOrganization());
@@ -113,8 +113,8 @@ public class EditBookingController {
         transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
 
     }
-    private void importToBooking() {
-        booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
+    /*private void importToBooking() {
+        booking.setOrganization(skoleVirkCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
         booking.getCustomer().setPosition(stillingTF.getText());
         
@@ -147,7 +147,7 @@ public class EditBookingController {
         booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
         booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
         booking.getÅbenSkoleForløb().setTransportType(transportCB.getSelectionModel().getSelectedItem());
-        }
+    }
 
     @FXML
     void handleSave(ActionEvent event) {
@@ -186,7 +186,6 @@ public class EditBookingController {
         thread.start();
     }
 
-
     @FXML
     void handleSletEquip(ActionEvent event) {
         List<String> equipmentList = udstyrLV.getSelectionModel().getSelectedValues();
@@ -194,6 +193,7 @@ public class EditBookingController {
             udstyrLV.getItems().remove(equipment);
         }
     }
+
     @FXML
     void handleTilføjEquip(ActionEvent event) {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
@@ -299,11 +299,11 @@ public class EditBookingController {
             forplejningCB.setStyle("-fx-border-color: lightgrey");
         }
 
-        if (organisationCB.getValue() == null) {
-            organisationCB.setStyle("-fx-border-color: red");
+        if (skoleVirkCB.getValue() == null) {
+            skoleVirkCB.setStyle("-fx-border-color: red");
             success = false;
         } else {
-            organisationCB.setStyle("-fx-border-color: lightgrey");
+            skoleVirkCB.setStyle("-fx-border-color: lightgrey");
         }
 
         if (afdelingTF.getText().isEmpty()) {
@@ -328,5 +328,5 @@ public class EditBookingController {
         }
 
         return success;
-    }
+    }*/
 }
