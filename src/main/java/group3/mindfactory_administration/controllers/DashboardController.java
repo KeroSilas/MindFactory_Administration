@@ -69,6 +69,8 @@ public class DashboardController {
                     Parent root = fxmlLoader.load();
                     dashboardController = fxmlLoader.getController();
                     //dashboardController.setBooking(ub.getBooking());
+                    dashboardController.setBookings(ub.upcomingBookings);
+
                     dashboardController.setBookings(upcomingBookings);
 
 

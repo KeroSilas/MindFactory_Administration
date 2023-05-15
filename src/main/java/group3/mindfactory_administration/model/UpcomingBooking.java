@@ -28,43 +28,43 @@ public class UpcomingBooking extends VBox {
         Label org = new Label(booking.getCustomer().getDepartment());
         org.setFont(Font.font("System", FontWeight.BOLD, 14)); // Bold font for the organization name
         org.setStyle("-fx-text-fill: #ffffff");
-        //orgHB.getChildren().add(org);
+        orgHB.getChildren().add(org);
 
         HBox timeHB = new HBox();
         timeHB.setMouseTransparent(true);
         Label time = new Label(booking.getStartTime().toString());
         time.setStyle("-fx-text-fill: #ffffff");
-        //timeHB.getChildren().add(time);
+        timeHB.getChildren().add(time);
 
         HBox dateHB = new HBox();
         dateHB.setMouseTransparent(true);
         Label date = new Label(booking.getStartDate().toString());
         date.setStyle("-fx-text-fill: #ffffff");
-        //dateHB.getChildren().add(date);
+        dateHB.getChildren().add(date);
 
         HBox nameHB = new HBox();
         nameHB.setMouseTransparent(true);
         Label name = new Label(booking.getCustomer().getFirstName());
         name.setStyle("-fx-text-fill: #ffffff");
-        //nameHB.getChildren().add(name);
+        nameHB.getChildren().add(name);
 
         HBox emailHB = new HBox();
         emailHB.setMouseTransparent(true);
         Label email = new Label(booking.getCustomer().getEmail());
         email.setStyle("-fx-text-fill: #ffffff");
-        //emailHB.getChildren().add(email);
+        emailHB.getChildren().add(email);
 
         HBox phoneHB = new HBox();
         phoneHB.setMouseTransparent(true);
         Label phone = new Label(booking.getCustomer().getPhone());
         phone.setStyle("-fx-text-fill: #ffffff");
-       //phoneHB.getChildren().add(phone);
+        phoneHB.getChildren().add(phone);
 
         HBox persNoteHB = new HBox();
         persNoteHB.setMouseTransparent(true);
         Label persNote = new Label(booking.getPersonalNote());
         persNote.setStyle("-fx-text-fill: #ffffff");
-        //persNoteHB.getChildren().add(persNote);
+        persNoteHB.getChildren().add(persNote);
 
         this.getChildren().addAll(org, time, date, name, email, phone, persNote);
 
