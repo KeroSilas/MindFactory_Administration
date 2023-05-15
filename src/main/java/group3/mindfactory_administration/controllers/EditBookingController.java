@@ -7,8 +7,10 @@ import io.github.palexdev.materialfx.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -32,7 +34,10 @@ public class EditBookingController {
     private Label tilLabel, fraLabel, alertLabel;
 
     @FXML
-    private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn;
+    private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn, sletFilBtn, tilføjFilBtn;
+
+    @FXML
+    private TextArea beskedTA, personligTA;
 
     @FXML
     private MFXComboBox<LocalTime> fraCB, tilCB;
@@ -44,6 +49,9 @@ public class EditBookingController {
     private MFXComboBox<Catering> forplejningCB;
 
     @FXML
+    private MFXCheckbox noShow;
+
+    @FXML
     private MFXComboBox<Organization> organisationCB;
 
     @FXML
@@ -53,6 +61,9 @@ public class EditBookingController {
     private MFXComboBox<Activity> aktivitetCB;
     @FXML
     private MFXComboBox<String> transportCB, udstyrCB;
+
+    @FXML
+    private MFXListView<File> filLV;
 
     @FXML
     private MFXListView<String> udstyrLV;
@@ -99,13 +110,13 @@ public class EditBookingController {
         fraCB.setText(String.valueOf(booking.getStartTime()));
         tilCB.setText(String.valueOf(booking.getEndTime()));
         datoCB.setText(String.valueOf(booking.getStartDate()));
-        booking.isNoShow(booking.setNoShow();
-        booking.setPersonalNote();
-        booking.setMessageToAS();
+        noShow.setSelected(booking.isNoShow());
+        personligTA.setText(booking.getPersonalNote());
+        beskedTA.setText(booking.getMessageToAS());
         aktivitetCB.selectItem(booking.getActivity());
         forplejningCB.selectItem(booking.getCatering());
         udstyrLV.getItems().addAll();
-        booking.setFileList();
+        filLV.getItems().addAll();
 
         forløbCB.selectItem(booking.getÅbenSkoleForløb());
         afgangTF.setText(String.valueOf(booking.getEndTime()));
@@ -132,13 +143,13 @@ public class EditBookingController {
         booking.setStartTime(fraCB.getValue());
         booking.setEndTime(tilCB.getValue());
         booking.setStartDate(datoCB.getValue());
-        booking.isNoShow(booking.setNoShow();
-        booking.setPersonalNote();
-        booking.setMessageToAS();
+        booking.setNoShow(noShow.isSelected());
+        booking.setPersonalNote(personligTA.getText());
+        booking.setMessageToAS(beskedTA.getText());
         booking.setActivity(aktivitetCB.getValue());
         booking.setCatering(forplejningCB.getValue());
         booking.setEquipmentList(udstyrLV.getItems());
-        booking.setFileList();
+        booking.setFileList(filLV.getItems());
         booking.getÅbenSkoleForløb().setTransportType(transportCB.getValue());
         booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
         booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
@@ -148,6 +159,19 @@ public class EditBookingController {
         booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
         booking.getÅbenSkoleForløb().setTransportType(transportCB.getSelectionModel().getSelectedItem());
         }
+
+
+
+    @FXML
+    void handleSletFil(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleTilføjFil(ActionEvent event) {
+
+    }
+
 
     @FXML
     void handleSave(ActionEvent event) {
