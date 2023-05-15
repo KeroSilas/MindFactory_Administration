@@ -25,7 +25,7 @@ import static javafx.stage.Modality.APPLICATION_MODAL;
 public class DashboardController {
 
     private LocalDate currentDate = LocalDate.now();
-    private DashboardController dashboardController;
+    private EditBookingController editBookingController;
     private List<Booking> upcomingBookings;
     @FXML
     private HBox hBoxSP;
@@ -60,8 +60,8 @@ public class DashboardController {
                 FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("editBooking.fxml"));
                 try {
                     Parent root = fxmlLoader.load();
-                    dashboardController = fxmlLoader.getController();
-                    dashboardController.setBooking(ub.getBooking());
+                    editBookingController = fxmlLoader.getController();
+                    editBookingController.setBooking(ub.getBooking());
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
