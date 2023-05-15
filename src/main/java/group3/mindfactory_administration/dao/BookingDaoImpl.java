@@ -94,7 +94,6 @@ public class BookingDaoImpl implements BookingDao {
                     );
                     ps2.setInt(1, bookingID);
                     ResultSet rs2 = ps2.executeQuery();
-
                     List<String> equipment = new ArrayList<>();
                     while (rs2.next()) {
                         equipment.add(rs2.getString(1));
@@ -107,7 +106,6 @@ public class BookingDaoImpl implements BookingDao {
                     );
                     ps3.setInt(1, bookingID);
                     ResultSet rs3 = ps3.executeQuery();
-
                     List<File> fileList = new ArrayList<>();
                     while (rs3.next()) {
                         fileList.add(new File(rs3.getString(1)));
