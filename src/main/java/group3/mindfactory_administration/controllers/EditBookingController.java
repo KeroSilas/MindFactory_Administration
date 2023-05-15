@@ -90,17 +90,19 @@ public class EditBookingController {
         }
 
     @FXML
-    void handleEdit(ActionEvent event){
+    void handleEdit(ActionEvent event) {
+        if (isInputValid()) {
+            importToBooking();
+            // Starts a new thread to edit a booking
+            // Once the thread is done the editBtn will be enabled again
+            EditBookingTask editBookingTask = new EditBookingTask(booking);
+            editBookingTask.setOnSucceeded(e -> {
 
-        // Starts a new thread to edit a booking
-        // Once the thread is done the editBtn will be enabled again
-        EditBookingTask editBookingTask = new EditBookingTask(booking);
-        editBookingTask.setOnSucceeded(e -> {
-
-        });
-        Thread thread = new Thread(editBookingTask);
-        thread.setDaemon(true);
-        thread.start();
+            });
+            Thread thread = new Thread(editBookingTask);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     @FXML
