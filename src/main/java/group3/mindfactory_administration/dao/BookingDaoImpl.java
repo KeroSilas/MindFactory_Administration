@@ -281,6 +281,36 @@ public class BookingDaoImpl implements BookingDao {
                 ps6.executeUpdate();
             }
 
+            String sql = "DELETE FROM BookingEquipment WHERE booking = ?;";
+            PreparedStatement ps6 = con.prepareStatement(sql);
+            ps6.setInt(1, booking.getBookingID());
+            ps6.executeUpdate();
+
+            String sql2 = "INSERT INTO BookingEquipment VALUES(?,?);";
+            PreparedStatement ps7 = con.prepareStatement(sql2);
+
+            for (String equipment : booking.getEquipmentList()) {
+                ps7.setInt(1, booking.getBookingID());
+                ps7.setString(2, equipment);
+                ps7.addBatch();
+            }
+            ps6.executeBatch();
+
+            String sql3 = "DELETE FROM BookingFiles WHERE booking = ?;";
+            PreparedStatement ps8 = con.prepareStatement(sql3);
+            ps8.setInt(1, booking.getBookingID());
+            ps8.executeUpdate();
+
+            String sql4 = "INSERT INTO BookingFiles VALUES(?,?);";
+            PreparedStatement ps9 = con.prepareStatement(sql4);
+
+            for (File file : booking.getFileList()) {
+                ps9.setInt(1, booking.getBookingID());
+                ps9.setString(2, file.getPath());
+                ps9.addBatch();
+            }
+            ps9.executeBatch();
+
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
             con.setAutoCommit(true);
