@@ -17,12 +17,10 @@ public class UpcomingBooking extends VBox {
 
     private final Booking booking;
 
-    //BookingDao bookingDao = new BookingDaoImpl();
 
     public UpcomingBooking(Booking booking) {
         this.booking = booking;
 
-        //List<Booking> upcomingBookings = bookingDao.getOneWeekOutBookings();
 
         // Inserting information
         HBox orgHB = new HBox();
