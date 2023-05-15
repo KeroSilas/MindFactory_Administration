@@ -8,13 +8,14 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.EditBookingController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_booking.controllers.InformationController">
    <center>
       <HBox alignment="TOP_CENTER" spacing="32.0">
          <children>
@@ -151,7 +152,7 @@
                   <HBox alignment="CENTER_RIGHT">
                      <children>
                         <Label text="Organisation" />
-                        <MFXComboBox fx:id="skoleVirkCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" />
+                        <MFXComboBox fx:id="organisationCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT">
@@ -186,9 +187,12 @@
                   </HBox>
                   <VBox alignment="CENTER_LEFT">
                      <children>
-                        <MFXRadioButton fx:id="læringsRB" text="Læringskonsulent" />
-                        <MFXRadioButton fx:id="annesofieRB" text="Anne-Sofie Dideriksen" />
-                        <MFXRadioButton text="Nej tak, jeg klare mig selv" />
+                        <MFXRadioButton fx:id="læringsRB" text="Læringskonsulent">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="assistanceType" />
+                           </toggleGroup></MFXRadioButton>
+                        <MFXRadioButton fx:id="annesofieRB" text="Anne-Sofie Dideriksen" toggleGroup="$assistanceType" />
+                        <MFXRadioButton fx:id="ingenRB" text="Nej tak, jeg klare mig selv" toggleGroup="$assistanceType" />
                      </children>
                   </VBox>
                </children>
@@ -206,7 +210,7 @@
       <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
             <HBox maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" prefHeight="30.0" prefWidth="30.0" />
-            <MFXButton fx:id="editBtn" onAction="#handleEdit" prefHeight="35.0" prefWidth="100.0" text="Rediger" />
+            <MFXButton fx:id="gemBtn" onAction="#handleSave" prefHeight="35.0" prefWidth="100.0" text="Gem" />
             <MFXButton fx:id="sletBtn" onAction="#handleSlet" prefHeight="35.0" prefWidth="100.0" text="Slet" />
             <HBox maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" prefHeight="30.0" prefWidth="30.0">
                <children>
