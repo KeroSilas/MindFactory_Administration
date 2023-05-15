@@ -40,10 +40,6 @@ public class DashboardController {
     public void initialize() {
     }
 
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
     public void drawUpcomingBookings() {
         hBoxSP.getChildren().clear();
         List<Booking> upcomingBookings= new ArrayList<>();
@@ -61,10 +57,6 @@ public class DashboardController {
 
         hBoxSP.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof UpcomingBooking ub) {
-                //CalendarCell cc = (CalendarCell) cb.getParent();
-
-                // TODO: Temporary, this will be replaced with an FXML file
-                // Use this: https://stackoverflow.com/questions/68363535/passing-data-to-another-controller-in-javafx
                 FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("editBooking.fxml"));
                 try {
                     Parent root = fxmlLoader.load();
@@ -84,10 +76,6 @@ public class DashboardController {
             }
         });
     }
-
-    private void setBooking(Booking booking) {
-    }
-
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;

@@ -1,17 +1,12 @@
 package group3.mindfactory_administration.model;
 
-import group3.mindfactory_administration.dao.BookingDao;
-import group3.mindfactory_administration.dao.BookingDaoImpl;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.Collections;
-import java.util.Currency;
-import java.util.List;
 
 public class UpcomingBooking extends VBox {
 
@@ -21,6 +16,16 @@ public class UpcomingBooking extends VBox {
     public UpcomingBooking(Booking booking) {
         this.booking = booking;
 
+        //List<Booking> upcomingBookings = bookingDao.getOneWeekOutBookings();
+        // Styling
+        this.setPrefWidth(170);
+        this.setAlignment(Pos.TOP_LEFT);
+        this.setCursor(Cursor.HAND);
+        if (booking.getBookingType().equals("Skole")) { // Different colors for different booking types
+            this.setStyle("-fx-background-color: #2f56ad; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #2f56ad; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+        } else {
+            this.setStyle("-fx-background-color: #653da1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #653da1; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+        }
 
         // Inserting information
         HBox orgHB = new HBox();
@@ -44,7 +49,7 @@ public class UpcomingBooking extends VBox {
 
         HBox nameHB = new HBox();
         nameHB.setMouseTransparent(true);
-        Label name = new Label(booking.getCustomer().getFirstName() + booking.getCustomer().getLastName());
+        Label name = new Label(booking.getCustomer().getFirstName() + " " + booking.getCustomer().getLastName());
         name.setStyle("-fx-text-fill: #ffffff");
         nameHB.getChildren().add(name);
 
@@ -66,11 +71,8 @@ public class UpcomingBooking extends VBox {
         persNote.setStyle("-fx-text-fill: #ffffff");
         persNoteHB.getChildren().add(persNote);
 
-        this.getChildren().addAll();
+        this.getChildren().addAll(orgHB, timeHB, dateHB, nameHB, emailHB, phoneHB, persNoteHB);
 
-    }
-    public Booking Booking() {
-        return booking;
     }
 
     public Booking getBooking(){

@@ -78,8 +78,8 @@ public class EditBookingController {
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
     }
 
-    private void ExportToBooking() {
-        organisationCB.selectItem(booking.getOrganization());
+    /*private void exportToBooking() {
+        skoleVirkCB.selectItem(booking.getOrganization());
         afdelingTF.setText(booking.getCustomer().getDepartment());
         stillingTF.setText(booking.getCustomer().getPosition());
 
@@ -113,7 +113,7 @@ public class EditBookingController {
         transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
 
     }
-    /*private void importToBooking() {
+    private void importToBooking() {
         booking.setOrganization(skoleVirkCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
         booking.getCustomer().setPosition(stillingTF.getText());
@@ -197,7 +197,7 @@ public class EditBookingController {
     @FXML
     void handleTilføjEquip(ActionEvent event) {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
-    }
+    }*/
 
 
     public void setBooking(Booking booking) {
@@ -328,5 +328,5 @@ public class EditBookingController {
         }
 
         return success;
-    }*/
+    }
 }
