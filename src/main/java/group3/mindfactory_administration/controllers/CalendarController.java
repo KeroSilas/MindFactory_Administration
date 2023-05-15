@@ -76,10 +76,6 @@ public class CalendarController {
         // When the user clicks on a CalendarBooking, open the edit booking window.
         calendarGrid.setOnMouseClicked(e -> {
             if (e.getTarget() instanceof CalendarBooking cb) {
-                CalendarCell cc = (CalendarCell) cb.getParent();
-
-                // TODO: Temporary, this will be replaced with an FXML file
-                // Use this: https://stackoverflow.com/questions/68363535/passing-data-to-another-controller-in-javafx
                 FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("editBooking.fxml"));
                 try {
                     Parent root = fxmlLoader.load();

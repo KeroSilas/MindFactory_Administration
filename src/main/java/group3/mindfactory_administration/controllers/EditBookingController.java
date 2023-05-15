@@ -7,10 +7,8 @@ import io.github.palexdev.materialfx.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -34,10 +32,7 @@ public class EditBookingController {
     private Label tilLabel, fraLabel, alertLabel;
 
     @FXML
-    private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn, sletFilBtn, tilføjFilBtn;
-
-    @FXML
-    private TextArea beskedTA, personligTA;
+    private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn;
 
     @FXML
     private MFXComboBox<LocalTime> fraCB, tilCB;
@@ -49,10 +44,7 @@ public class EditBookingController {
     private MFXComboBox<Catering> forplejningCB;
 
     @FXML
-    private MFXCheckbox noShow;
-
-    @FXML
-    private MFXComboBox<Organization> organisationCB;
+    private MFXComboBox<Organization> skoleVirkCB;
 
     @FXML
     private MFXComboBox<Forløb> forløbCB;
@@ -63,9 +55,6 @@ public class EditBookingController {
     private MFXComboBox<String> transportCB, udstyrCB;
 
     @FXML
-    private MFXListView<File> filLV;
-
-    @FXML
     private MFXListView<String> udstyrLV;
 
 
@@ -73,7 +62,7 @@ public class EditBookingController {
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
-            organisationCB.getItems().addAll(organisations);
+            skoleVirkCB.getItems().addAll(organisations);
         });
         Thread thread = new Thread(getOrganisationsTask);
         thread.start();
@@ -87,10 +76,10 @@ public class EditBookingController {
         thread2.start();
 
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
-}
+    }
 
-    private void ExportToBooking() {
-        organisationCB.selectItem(booking.getOrganization());
+    /*private void exportToBooking() {
+        skoleVirkCB.selectItem(booking.getOrganization());
         afdelingTF.setText(booking.getCustomer().getDepartment());
         stillingTF.setText(booking.getCustomer().getPosition());
 
@@ -110,13 +99,13 @@ public class EditBookingController {
         fraCB.setText(String.valueOf(booking.getStartTime()));
         tilCB.setText(String.valueOf(booking.getEndTime()));
         datoCB.setText(String.valueOf(booking.getStartDate()));
-        noShow.setSelected(booking.isNoShow());
-        personligTA.setText(booking.getPersonalNote());
-        beskedTA.setText(booking.getMessageToAS());
+        booking.isNoShow(booking.setNoShow();
+        booking.setPersonalNote();
+        booking.setMessageToAS();
         aktivitetCB.selectItem(booking.getActivity());
         forplejningCB.selectItem(booking.getCatering());
         udstyrLV.getItems().addAll();
-        filLV.getItems().addAll();
+        booking.setFileList();
 
         forløbCB.selectItem(booking.getÅbenSkoleForløb());
         afgangTF.setText(String.valueOf(booking.getEndTime()));
@@ -125,7 +114,7 @@ public class EditBookingController {
 
     }
     private void importToBooking() {
-        booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
+        booking.setOrganization(skoleVirkCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
         booking.getCustomer().setPosition(stillingTF.getText());
         
@@ -143,13 +132,13 @@ public class EditBookingController {
         booking.setStartTime(fraCB.getValue());
         booking.setEndTime(tilCB.getValue());
         booking.setStartDate(datoCB.getValue());
-        booking.setNoShow(noShow.isSelected());
-        booking.setPersonalNote(personligTA.getText());
-        booking.setMessageToAS(beskedTA.getText());
+        booking.isNoShow(booking.setNoShow();
+        booking.setPersonalNote();
+        booking.setMessageToAS();
         booking.setActivity(aktivitetCB.getValue());
         booking.setCatering(forplejningCB.getValue());
         booking.setEquipmentList(udstyrLV.getItems());
-        booking.setFileList(filLV.getItems());
+        booking.setFileList();
         booking.getÅbenSkoleForløb().setTransportType(transportCB.getValue());
         booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
         booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
@@ -158,20 +147,7 @@ public class EditBookingController {
         booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
         booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
         booking.getÅbenSkoleForløb().setTransportType(transportCB.getSelectionModel().getSelectedItem());
-        }
-
-
-
-    @FXML
-    void handleSletFil(ActionEvent event) {
-
     }
-
-    @FXML
-    void handleTilføjFil(ActionEvent event) {
-
-    }
-
 
     @FXML
     void handleSave(ActionEvent event) {
@@ -210,7 +186,6 @@ public class EditBookingController {
         thread.start();
     }
 
-
     @FXML
     void handleSletEquip(ActionEvent event) {
         List<String> equipmentList = udstyrLV.getSelectionModel().getSelectedValues();
@@ -218,10 +193,11 @@ public class EditBookingController {
             udstyrLV.getItems().remove(equipment);
         }
     }
+
     @FXML
     void handleTilføjEquip(ActionEvent event) {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
-    }
+    }*/
 
 
     public void setBooking(Booking booking) {
@@ -323,11 +299,11 @@ public class EditBookingController {
             forplejningCB.setStyle("-fx-border-color: lightgrey");
         }
 
-        if (organisationCB.getValue() == null) {
-            organisationCB.setStyle("-fx-border-color: red");
+        if (skoleVirkCB.getValue() == null) {
+            skoleVirkCB.setStyle("-fx-border-color: red");
             success = false;
         } else {
-            organisationCB.setStyle("-fx-border-color: lightgrey");
+            skoleVirkCB.setStyle("-fx-border-color: lightgrey");
         }
 
         if (afdelingTF.getText().isEmpty()) {

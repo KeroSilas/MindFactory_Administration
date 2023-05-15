@@ -81,7 +81,7 @@ public class BookingDaoImpl implements BookingDao {
                     String transportArrival = rs.getString(27);
                     String transportDeparture = rs.getString(28);
 
-                    Customer customer = new Customer(firstName, lastName, phone, email, department, position);
+                    Customer customer = new Customer(firstName, lastName, position, department, phone, email);
                     Catering catering = new Catering(cateringID, cateringName);
                     Activity activity = new Activity(activityID, activityName);
                     Organization organisation = new Organization(organisationID, organisationName, participants, assistance);
