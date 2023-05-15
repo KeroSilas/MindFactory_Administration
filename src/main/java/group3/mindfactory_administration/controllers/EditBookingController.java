@@ -1,8 +1,7 @@
 package group3.mindfactory_administration.controllers;
 
-import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.tasks.DeleteBookingTask;
-import group3.mindfactory_administration.model.tasks.EditBookingTask;
+import group3.mindfactory_administration.model.*;
+import group3.mindfactory_administration.model.tasks.*;
 import group3.mindfactory_administration.model.tasks.EditBookingTask;
 import io.github.palexdev.materialfx.controls.*;
 import javafx.fxml.FXML;
@@ -10,6 +9,8 @@ import javafx.scene.control.ToggleGroup;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class EditBookingController {
@@ -34,11 +35,60 @@ public class EditBookingController {
     private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn;
 
     @FXML
-    private MFXComboBox<String> transportCB, udstyrCB, tilCB, organisationCB, fraCB, forplejningCB, forløbCB, datoCB, aktivitetCB;
+    private MFXComboBox<LocalTime> fraCB, tilCB;
+
+    @FXML
+    private MFXComboBox<LocalDate> datoCB;
+
+    @FXML
+    private MFXComboBox<Catering> forplejningCB;
+
+    @FXML
+    private MFXComboBox<Organization> organisationCB;
+
+    @FXML
+    private MFXComboBox<Forløb> forløbCB;
+
+    @FXML
+    private MFXComboBox<Activity> aktivitetCB;
+    @FXML
+    private MFXComboBox<String> transportCB, udstyrCB;
 
     @FXML
     private MFXListView<String> udstyrLV;
 
+
+    public void initialize(){
+        GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
+        getOrganisationsTask.setOnSucceeded(e -> {
+        List<Organization> organisations = getOrganisationsTask.getValue();
+        List<Organization> schools = organisations.subList(4, 8);
+        organisationCB.getItems().addAll(schools);
+    });
+        Thread thread = new Thread(getOrganisationsTask);
+        thread.start();
+
+        GetForløbTask getForløbTask = new GetForløbTask();
+        getForløbTask.setOnSucceeded(e -> {
+        List<Forløb> forløb = getForløbTask.getValue();
+        forløbCB.getItems().addAll(forløb);
+    });
+        Thread thread2 = new Thread(getForløbTask);
+        thread2.start();
+
+        transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
+}
+
+    private void importToBooking() {
+        booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
+        booking.getCustomer().setDepartment(afdelingTF.getText());
+        booking.getCustomer().setPosition(stillingTF.getText());
+
+        booking.setÅbenSkoleForløb(forløbCB.getSelectionModel().getSelectedItem());
+        booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
+        booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
+        booking.getÅbenSkoleForløb().setTransportType(transportCB.getSelectionModel().getSelectedItem());
+        }
 
     @FXML
     void handleSave(ActionEvent event){
