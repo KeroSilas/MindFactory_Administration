@@ -70,8 +70,9 @@ public class UpcomingBooking extends VBox {
 
 
     }
-    public Booking getUpcomingBookings() {
+    public Booking Booking() {
         return booking;
     }
+
 
 }

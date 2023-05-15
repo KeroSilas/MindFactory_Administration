@@ -59,7 +59,7 @@ public class DashboardController {
             }
 
         hBoxSP.setOnMouseClicked(e -> {
-            if (e.getTarget() instanceof UpcomingBooking cb) {
+            if (e.getTarget() instanceof UpcomingBooking ub) {
                 //CalendarCell cc = (CalendarCell) cb.getParent();
 
                 // TODO: Temporary, this will be replaced with an FXML file
@@ -68,7 +68,9 @@ public class DashboardController {
                 try {
                     Parent root = fxmlLoader.load();
                     dashboardController = fxmlLoader.getController();
-                    //dashboardController.setBooking(cb.getBooking());
+                    //dashboardController.setBooking(ub.getBooking());
+                    dashboardController.setBookings(upcomingBookings);
+
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
