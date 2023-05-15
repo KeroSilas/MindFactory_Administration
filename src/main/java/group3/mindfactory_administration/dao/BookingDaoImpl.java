@@ -1,8 +1,8 @@
 package group3.mindfactory_administration.dao;
 
-import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.BookingEmail;
+import group3.mindfactory_administration.model.*;
 
+import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,45 +24,97 @@ public class BookingDaoImpl implements BookingDao {
         List<Booking> bookings = new ArrayList<>();
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Booking;"
+                    "SELECT cu.firstName, cu.lastName, cu.phone, cu.email, cu.department, cu.position, " +
+                            "b.bookingID, b.bookingDateTime, b.startDate, b.startTime, " +
+                            "b.endTime, b.isWholeDay, b.isNoShow, b.messageToAS, b.personalNote, " +
+                            "bc.cateringID, c.catering, " +
+                            "ba.activityID, a.activity," +
+                            "bo.organisationID, o.organisation, bo.assistance, bo.participants," +
+                            "bf.forløbID, f.forløb, bf.transportType, bf.transportArrival, bf.transportDeparture " +
+                            "FROM Booking AS b " +
+                            "FULL JOIN Customer AS cu ON b.customerEmail = cu.email " +
+                            "FULL JOIN BookingCatering AS bc ON b.bookingID = bc.bookingID " +
+                            "FULL JOIN BookingActivity AS ba ON b.bookingID = ba.bookingID " +
+                            "FULL JOIN BookingOrganisation AS bo ON b.bookingID = bo.bookingID " +
+                            "FULL JOIN BookingForløb AS bf ON b.bookingID = bf.bookingID " +
+                            "FULL JOIN Catering AS c ON bc.cateringID = c.cateringID " +
+                            "FULL JOIN Activity AS a ON ba.activityID = a.activityID " +
+                            "FULL JOIN Organisation AS o ON bo.organisationID = o.organisationID " +
+                            "FULL JOIN Forløb AS f ON bf.forløbID = f.forløbID " +
+                            "WHERE b.bookingID IS NOT NULL;"
             );
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int bookingID = rs.getInt(1);
-                String bookingType = rs.getString(2);
-                String catering = rs.getString(3);
-                String activity = rs.getString(4);
-                String organizarion = rs.getString(5);
-                String åbenSkoleForløb = rs.getString(6);
-                String firstName = rs.getString(7);
-                String lastName = rs.getString(8);
-                String position = rs.getString(9);
-                String department = rs.getString(10);
-                String phone = rs.getString(11);
-                String email = rs.getString(12);
-                String assistance = rs.getString(13);
-                String transportType = rs.getString(14);
-                String transportArrival = rs.getString(15);
-                String transportDeparture = rs.getString(16);
-                int participants = rs.getInt(17);
-                LocalDateTime bookingDateTime = rs.getTimestamp(18).toLocalDateTime();
-                LocalDate startDate = rs.getDate(19).toLocalDate();
-                LocalTime startTime = rs.getTime(20).toLocalTime();
-                LocalTime endTime = rs.getTime(21).toLocalTime();
-                boolean isWholeDay = rs.getBoolean(22);
-                boolean isHalfDayEarly = rs.getBoolean(23);
-                boolean isNoShow = rs.getBoolean(24);
-                boolean isEmailSent = rs.getBoolean(25);
-                String messageToAS = rs.getString(26);
-                String personalNote = rs.getString(27);
 
-                bookings.add(new Booking(
-                        bookingID, bookingType, catering, activity, organizarion, åbenSkoleForløb,
-                        firstName, lastName, position, department, phone, email, assistance,
-                        transportType, transportArrival, transportDeparture, participants,
-                        bookingDateTime, startDate, startTime, endTime, isWholeDay, isHalfDayEarly,
-                        isNoShow, isEmailSent, messageToAS, personalNote));
+                    String firstName = rs.getString(1);
+                    String lastName = rs.getString(2);
+                    String phone = rs.getString(3);
+                    String email = rs.getString(4);
+                    String department = rs.getString(5);
+                    String position = rs.getString(6);
+
+                    int bookingID = rs.getInt(7);
+                    LocalDateTime bookingDateTime = rs.getTimestamp(8).toLocalDateTime();
+                    LocalDate startDate = rs.getDate(9).toLocalDate();
+                    LocalTime startTime = rs.getTime(10).toLocalTime();
+                    LocalTime endTime = rs.getTime(11).toLocalTime();
+                    boolean isWholeDay = rs.getBoolean(12);
+                    boolean isNoShow = rs.getBoolean(13);
+                    String messageToAS = rs.getString(14);
+                    String personalNote = rs.getString(15);
+
+                    int cateringID = rs.getInt(16);
+                    String cateringName = rs.getString(17);
+
+                    int activityID = rs.getInt(18);
+                    String activityName = rs.getString(19);
+
+                    int organisationID = rs.getInt(20);
+                    String organisationName = rs.getString(21);
+                    String assistance = rs.getString(22);
+                    int participants = rs.getInt(23);
+
+                    int forløbID = rs.getInt(24);
+                    String forløbName = rs.getString(25);
+                    String transportType = rs.getString(26);
+                    String transportArrival = rs.getString(27);
+                    String transportDeparture = rs.getString(28);
+
+                    Customer customer = new Customer(firstName, lastName, phone, email, department, position);
+                    Catering catering = new Catering(cateringID, cateringName);
+                    Activity activity = new Activity(activityID, activityName);
+                    Organization organisation = new Organization(organisationID, organisationName, participants, assistance);
+                    Forløb forløb = new Forløb(forløbID, forløbName, transportType, transportArrival, transportDeparture);
+
+                    PreparedStatement ps2 = con.prepareStatement(
+                            "SELECT equipment " +
+                                    "FROM BookingEquipment " +
+                                    "WHERE bookingID = ?;"
+                    );
+                    ps2.setInt(1, bookingID);
+                    ResultSet rs2 = ps2.executeQuery();
+
+                    List<String> equipment = new ArrayList<>();
+                    while (rs2.next()) {
+                        equipment.add(rs2.getString(1));
+                    }
+
+                    PreparedStatement ps3 = con.prepareStatement(
+                            "SELECT filePath " +
+                                    "FROM BookingFiles " +
+                                    "WHERE bookingID = ?;"
+                    );
+                    ps3.setInt(1, bookingID);
+                    ResultSet rs3 = ps3.executeQuery();
+
+                    List<File> fileList = new ArrayList<>();
+                    while (rs3.next()) {
+                        fileList.add(new File(rs3.getString(1)));
+                    }
+
+                    Booking booking = new Booking(bookingID, customer, catering, activity, organisation, forløb, bookingDateTime, startDate, startTime, endTime, isWholeDay, isNoShow, messageToAS, personalNote, equipment, fileList);
+                    bookings.add(booking);
             }
 
         } catch (SQLException e) {
@@ -86,7 +138,7 @@ public class BookingDaoImpl implements BookingDao {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE Booking " +
                             "SET isEmailSent = 1 " +
-                            "OUTPUT INSERTED.bookingID, INSERTED.firstName, INSERTED.email, INSERTED.startDate " + // OUTPUT INSERTED returns the value of the column after the update
+                            "OUTPUT INSERTED.bookingID, INSERTED.customerEmail, INSERTED.startDate " + // OUTPUT INSERTED returns the value of the column after the update
                             "FROM Booking " +
                             "WHERE DATEDIFF(day, CAST(GETDATE() AS DATE), startDate) < 7 AND isEmailSent = 0;" // Cast GETDATE() to date to remove the time (Yes, GETDATE() returns a datetime/timestamp), then subtract the two dates and check if the difference is less than 7 days
             );
@@ -95,11 +147,10 @@ public class BookingDaoImpl implements BookingDao {
 
                 BookingEmail bookingEmail;
                 int bookingID = rs.getInt(1);
-                String name = rs.getString(2);
-                String email = rs.getString(3);
-                LocalDate startDate = rs.getDate(4).toLocalDate();
+                String email = rs.getString(2);
+                LocalDate startDate = rs.getDate(3).toLocalDate();
 
-                bookingEmail = new BookingEmail(bookingID, name, email, startDate);
+                bookingEmail = new BookingEmail(bookingID, email, startDate);
                 oneWeekOutBookings.add(bookingEmail);
             }
 
@@ -117,8 +168,11 @@ public class BookingDaoImpl implements BookingDao {
         HashMap<String, Integer> bookingsGroupedByOrg = new HashMap<>();
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT organization, COUNT(*) AS 'Belægning' " +
-                    "FROM Booking WHERE startDate >= ? AND startDate <= ? GROUP BY organization;"
+                    "SELECT o.organisation, COUNT(*) AS 'Belægning' " +
+                    "FROM Booking AS b " +
+                            "JOIN BookingOrganisation AS bo ON b.bookingID = bo.bookingID " +
+                            "JOIN Organisation AS o ON bo.organisationID = o.organisationID " +
+                            "WHERE b.startDate >= ? AND b.startDate <= ? GROUP BY o.organisation;"
             );
             ps.setDate(1, Date.valueOf(startDate));
             ps.setDate(2, Date.valueOf(endDate));
@@ -143,8 +197,11 @@ public class BookingDaoImpl implements BookingDao {
         HashMap<String, Integer> bookingsGroupedByActivities = new HashMap<>();
         try (Connection con = databaseConnector.getConnection()){
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT activity, COUNT(*) AS 'Belægning' " +
-                            "FROM Booking WHERE startDate >= ? AND startDate <= ? GROUP BY activity;"
+                    "SELECT a.activity, COUNT(*) AS 'Belægning' " +
+                            "FROM Booking AS b " +
+                            "JOIN BookingActivity AS ba ON b.bookingID = ba.bookingID " +
+                            "JOIN Activity AS a ON ba.activityID = a.activityID " +
+                            "WHERE b.startDate >= ? AND b.startDate <= ? GROUP BY a.activity;"
             );
             ps.setDate(1, Date.valueOf(startDate));
             ps.setDate(2, Date.valueOf(endDate));
@@ -167,49 +224,72 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public void editBooking(Booking booking) throws SQLException {
         Connection con = databaseConnector.getConnection();
-        try { // Does not work with try-with-resources, because we need to be able to use the connection in the catch block
+        try {
             con.setAutoCommit(false);
-            PreparedStatement ps = con.prepareStatement("UPDATE Booking SET bookingType = ?, catering = ?, activity = ?, organization = ?, åbenSkoleForløb = ?, " +
-                    "firstName = ?, lastName = ?, position = ?, department = ?, phone = ?, email = ?, assistance = ?, transportType = ?, transportArrival = ?, " +
-                    "transportDeparture = ?, participants = ?, startDate = ?, startTime = ?, endTime = ?, isWholeDay = ?, isHalfDayEarly = ?, isNoShow = ?, " +
-                    "personalNote = ? WHERE bookingID = ?"
-            );
 
-            ps.setString(1, booking.getBookingType());
-            ps.setString(2, booking.getCatering());
-            ps.setString(3, booking.getActivity());
-            ps.setString(4, booking.getOrganization());
-            ps.setString(5, booking.getÅbenSkoleForløb());
-            ps.setString(6, booking.getFirstName());
-            ps.setString(7, booking.getLastName());
-            ps.setString(8, booking.getPosition());
-            ps.setString(9, booking.getAfdeling());
-            ps.setString(10, booking.getPhone());
-            ps.setString(11, booking.getEmail());
-            ps.setString(12, booking.getAssistance());
-            ps.setString(13, booking.getTransportType());
-            ps.setString(14, booking.getTransportArrival());
-            ps.setString(15, booking.getTransportDeparture());
-            ps.setInt(16, booking.getParticipants());
-            ps.setDate(17, Date.valueOf(booking.getStartDate()));
-            ps.setTime(18, Time.valueOf(booking.getStartTime()));
-            ps.setTime(19, Time.valueOf(booking.getEndTime()));
-            ps.setBoolean(20, booking.isWholeDay());
-            ps.setBoolean(21, booking.isHalfDayEarly());
-            ps.setBoolean(22, booking.isNoShow());
-            ps.setString(23, booking.getPersonalNote());
-            ps.setInt(24, booking.getBookingID());
+            PreparedStatement ps = con.prepareStatement("UPDATE Customer SET firstName = ?, lastName = ?, phone = ?, department = ?, position = ? WHERE email = ?;");
+
+            ps.setString(1, booking.getCustomer().getFirstName());
+            ps.setString(2, booking.getCustomer().getLastName());
+            ps.setString(3, booking.getCustomer().getPhone());
+            ps.setString(4, booking.getCustomer().getDepartment());
+            ps.setString(5, booking.getCustomer().getPosition());
+            ps.setString(6, booking.getCustomer().getEmail());
             ps.executeUpdate();
 
-            // con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE); // Not needed, because we are only updating one row, and we are not reading from the database, so we don't need to worry about dirty reads
+            PreparedStatement ps2 = con.prepareStatement("UPDATE Booking SET startDate = ?, startTime = ?, endTime = ?, isWholeDay = ?, isNoShow = ?, personalNote = ? WHERE bookingID = ?;");
+
+            ps2.setDate(1, Date.valueOf(booking.getStartDate()));
+            ps2.setTime(2, Time.valueOf(booking.getStartTime()));
+            ps2.setTime(3, Time.valueOf(booking.getEndTime()));
+            ps2.setBoolean(4, booking.isWholeDay());
+            ps2.setBoolean(5, booking.isNoShow());
+            ps2.setString(6, booking.getPersonalNote());
+            ps2.setInt(7, booking.getBookingID());
+            ps2.executeUpdate();
+
+            if (booking.getCatering() != null) {
+                PreparedStatement ps3 = con.prepareStatement("UPDATE BookingCatering SET cateringID = ? WHERE bookingID = ?;");
+                ps3.setInt(1, booking.getCatering().getCateringID());
+                ps3.setInt(2, booking.getBookingID());
+                ps3.executeUpdate();
+            }
+
+            if (booking.getActivity() != null) {
+                PreparedStatement ps4 = con.prepareStatement("UPDATE BookingActivity SET activityID = ? WHERE bookingID = ?;");
+                ps4.setInt(1, booking.getActivity().getActivityID());
+                ps4.setInt(2, booking.getBookingID());
+                ps4.executeUpdate();
+            }
+
+            if (booking.getOrganization() != null) {
+                PreparedStatement ps5 = con.prepareStatement("UPDATE BookingOrganisation SET organisationID = ?, assistance = ?, participants = ? WHERE bookingID = ?;");
+                ps5.setInt(1, booking.getOrganization().getOrganizationID());
+                ps5.setString(2, booking.getOrganization().getAssistance());
+                ps5.setInt(3, booking.getOrganization().getParticipants());
+                ps5.setInt(4, booking.getBookingID());
+                ps5.executeUpdate();
+            }
+
+            if (booking.getÅbenSkoleForløb() != null) {
+                PreparedStatement ps6 = con.prepareStatement("UPDATE BookingForløb SET forløbID = ?, transportType = ?, transportArrival = ?, transportDeparture = ? WHERE bookingID = ?;");
+                ps6.setInt(1, booking.getÅbenSkoleForløb().getForløbID());
+                ps6.setString(2, booking.getÅbenSkoleForløb().getTransportType());
+                ps6.setString(3, booking.getÅbenSkoleForløb().getTransportArrival());
+                ps6.setString(4, booking.getÅbenSkoleForløb().getTransportDeparture());
+                ps6.setInt(5, booking.getBookingID());
+                ps6.executeUpdate();
+            }
+
+            con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
             con.setAutoCommit(true);
 
         } catch (SQLException e) {
-            con.rollback(); // Rollback if something goes wrong
-            throw new SQLException(e); // Re-throw exception to be handled by the task that called this method
+            con.rollback();
+            throw new SQLException(e);
         } finally {
-            con.close(); // Close connection manually
+            con.close();
         }
     }
 
@@ -231,65 +311,6 @@ public class BookingDaoImpl implements BookingDao {
         } catch (SQLException e) {
             throw new SQLException(e); // Re-throw exception to be handled by the task that called this method
         }
-    }
-
-    // https://stackoverflow.com/questions/36296140/subtract-two-dates-in-microsoft-sql-server
-    // https://stackoverflow.com/questions/37559741/convert-timestamp-to-date-in-oracle-sql
-    // https://www.sqlservercentral.com/articles/the-output-clause-for-update-statements
-    @Override
-    public List<Booking> getWeeksBookings() {
-
-        List<Booking> weeksBookings = new ArrayList<>();
-        try (Connection con = databaseConnector.getConnection()){
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * from Booking WHERE DATEDIFF(day, CAST(GETDATE() AS DATE),Booking.startDate) < 7;"
-            );
-            ResultSet rs = ps.executeQuery();
-
-            Booking booking;
-            while (rs.next()) {
-
-                int bookingID = rs.getInt(1);
-                String bookingType = rs.getString(2);
-                String catering = rs.getString(3);
-                String activity = rs.getString(4);
-                String organization = rs.getString(5);
-                String åbenSkoleForløb = rs.getString(6);
-                String firstName = rs.getString(7);
-                String lastName = rs.getString(8);
-                String position = rs.getString(9);
-                String afdeling = rs.getString(10);
-                String phone = rs.getString(11);
-                String email = rs.getString(12);
-                String assistance = rs.getString(13);
-                String transportType = rs.getString(14);
-                String transportArrival = rs.getString(15);
-                String transportDeparture = rs.getString(16);
-                int participants = rs.getInt(17);
-                LocalDateTime bookingDateTime = rs.getTimestamp(18).toLocalDateTime();
-                LocalDate startDate = rs.getDate(19).toLocalDate();
-                LocalTime startTime = rs.getTime(20).toLocalTime();
-                LocalTime endTime = rs.getTime(21).toLocalTime();
-                Boolean isWholeDay = rs.getBoolean(22);
-                Boolean isHalfDayEarly = rs.getBoolean(23);
-                Boolean isNoShow = rs.getBoolean(24);
-                Boolean isEmailSent = rs.getBoolean(25);
-                String messageToAS = rs.getString(26);
-                String personalNote = rs.getString(27);
-
-                booking= new Booking(bookingID, bookingType, catering, activity, organization, åbenSkoleForløb,
-                        firstName, lastName, position, afdeling, phone, email, assistance,
-                        transportType, transportArrival, transportDeparture,
-                        participants, bookingDateTime, startDate, startTime, endTime,
-                        isWholeDay, isHalfDayEarly, isNoShow, isEmailSent, messageToAS, personalNote);
-                weeksBookings.add(booking);
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return weeksBookings;
     }
 }
 

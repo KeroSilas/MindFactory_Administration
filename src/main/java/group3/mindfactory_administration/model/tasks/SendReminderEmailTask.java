@@ -31,7 +31,7 @@ public class SendReminderEmailTask extends Task<Void> {
             for (BookingEmail bookingEmail : bookingEmailList) {
                 sendEmail.sendEmail(
                         bookingEmail.getEmail(),
-                        "Hej " + bookingEmail.getName() + ".\n" +
+                        "Hej.\n" +
                                 "Du har en booking snart her hos os på denne dato: " + bookingEmail.getStartDate() + ".\n" +
                                 "Ønsker du at aflyse din booking, kan du bruge dette booking-nummer i booking applikationen: " + bookingEmail.getBookingID(),
                         "Din kommende booking.",

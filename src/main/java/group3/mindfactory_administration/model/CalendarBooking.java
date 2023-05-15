@@ -39,10 +39,10 @@ public class CalendarBooking extends VBox {
         HBox title = new HBox();
         title.setMouseTransparent(true); // Makes it possible to click on the CalendarBooking object itself, even though the user is clicking on this HBox
         Label org;
-        if (booking.getOrganization().equals("Andet udleje") || booking.getOrganization().equals("Tønder Kommune - organisation") || booking.getOrganization().equals("Tønder Kommune - skole")) {
-            org = new Label(booking.getAfdeling());
+        if (booking.getOrganization().getOrganization().equals("Andet udleje") || booking.getOrganization().getOrganization().equals("Tønder Kommune - organisation") || booking.getOrganization().getOrganization().equals("Tønder Kommune - skole")) {
+            org = new Label(booking.getCustomer().getDepartment());
         } else {
-            org = new Label(booking.getOrganization());
+            org = new Label(booking.getOrganization().getOrganization());
         }
         org.setFont(Font.font("System", FontWeight.BOLD, 14)); // Bold font for the organization name
         org.setStyle("-fx-text-fill: #ffffff");

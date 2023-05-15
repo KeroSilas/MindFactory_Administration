@@ -9,13 +9,11 @@ import java.time.LocalDate;
 public class BookingEmail {
 
     private final int bookingID;
-    private final String name;
     private final String email;
     private final LocalDate startDate;
 
-    public BookingEmail(int bookingID, String name, String email, LocalDate startDate) {
+    public BookingEmail(int bookingID, String email, LocalDate startDate) {
         this.bookingID = bookingID;
-        this.name = name;
         this.email = email;
         this.startDate = startDate;
     }
@@ -30,10 +28,6 @@ public class BookingEmail {
 
     public LocalDate getStartDate() {
         return startDate;
-    }
-
-    public String getName() {
-        return name;
     }
 
 }

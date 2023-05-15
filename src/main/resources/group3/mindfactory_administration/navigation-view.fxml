@@ -12,11 +12,11 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.NavigationController">
    <top>
-      <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="60.0" style="-fx-background-color: #111c24;" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" prefWidth="150.0">
                <HBox.margin>
-                  <Insets right="12.0" />
+                  <Insets />
                </HBox.margin>
                <children>
                   <ImageView fitHeight="60.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
