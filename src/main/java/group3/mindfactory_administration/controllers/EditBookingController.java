@@ -82,6 +82,31 @@ public class EditBookingController {
         booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
         booking.getCustomer().setPosition(stillingTF.getText());
+        
+        booking.getCustomer().setFirstName(fornavnTF.getText());
+        booking.getCustomer().setLastName(efternavnTF.getText());
+        booking.getCustomer().setPhone(telefonTF.getText());
+        if (læringsRB.isSelected()) {
+            booking.getOrganization().setAssistance("Læring konsulent");
+        } else if (annesofieRB.isSelected()) {
+            booking.getOrganization().setAssistance("Anne-Sofie Dideriksen");
+        } else {
+            booking.getOrganization().setAssistance("Ingen");
+        }
+        booking.getOrganization().setParticipants(Integer.parseInt(deltagereTF.getText()));
+        booking.setStartTime(fraCB.getValue());
+        booking.setEndTime(tilCB.getValue());
+        booking.setStartDate(datoCB.getValue());
+        booking.isNoShow(booking.setNoShow();
+        booking.setPersonalNote();
+        booking.setMessageToAS();
+        booking.setActivity(aktivitetCB.getValue());
+        booking.setCatering(forplejningCB.getValue());
+        booking.setEquipmentList(udstyrLV.getItems());
+        booking.setFileList();
+        booking.getÅbenSkoleForløb().setTransportType(transportCB.getValue());
+        booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
+        booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
 
         booking.setÅbenSkoleForløb(forløbCB.getSelectionModel().getSelectedItem());
         booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
@@ -90,17 +115,19 @@ public class EditBookingController {
         }
 
     @FXML
-    void handleEdit(ActionEvent event){
+    void handleEdit(ActionEvent event) {
+        if (isInputValid()) {
+            importToBooking();
+            // Starts a new thread to edit a booking
+            // Once the thread is done the editBtn will be enabled again
+            EditBookingTask editBookingTask = new EditBookingTask(booking);
+            editBookingTask.setOnSucceeded(e -> {
 
-        // Starts a new thread to edit a booking
-        // Once the thread is done the editBtn will be enabled again
-        EditBookingTask editBookingTask = new EditBookingTask(booking);
-        editBookingTask.setOnSucceeded(e -> {
-
-        });
-        Thread thread = new Thread(editBookingTask);
-        thread.setDaemon(true);
-        thread.start();
+            });
+            Thread thread = new Thread(editBookingTask);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     @FXML
