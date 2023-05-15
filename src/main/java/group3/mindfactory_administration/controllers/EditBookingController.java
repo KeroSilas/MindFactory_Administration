@@ -4,11 +4,11 @@ import group3.mindfactory_administration.model.*;
 import group3.mindfactory_administration.model.tasks.*;
 import group3.mindfactory_administration.model.tasks.EditBookingTask;
 import io.github.palexdev.materialfx.controls.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -29,7 +29,7 @@ public class EditBookingController {
     private MFXTextField telefonTF, stillingTF, fornavnTF, emailTF, efternavnTF, deltagereTF, ankomstTF, afgangTF, afdelingTF;
 
     @FXML
-    private Label tilLabel,fraLabel, alertLabel;
+    private Label tilLabel, fraLabel, alertLabel;
 
     @FXML
     private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn;
@@ -61,18 +61,17 @@ public class EditBookingController {
     public void initialize(){
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
-        List<Organization> organisations = getOrganisationsTask.getValue();
-        List<Organization> schools = organisations.subList(4, 8);
-        organisationCB.getItems().addAll(schools);
-    });
+            List<Organization> organisations = getOrganisationsTask.getValue();
+            organisationCB.getItems().addAll(organisations);
+        });
         Thread thread = new Thread(getOrganisationsTask);
         thread.start();
 
         GetForløbTask getForløbTask = new GetForløbTask();
         getForløbTask.setOnSucceeded(e -> {
-        List<Forløb> forløb = getForløbTask.getValue();
-        forløbCB.getItems().addAll(forløb);
-    });
+            List<Forløb> forløb = getForløbTask.getValue();
+            forløbCB.getItems().addAll(forløb);
+        });
         Thread thread2 = new Thread(getForløbTask);
         thread2.start();
 
@@ -91,7 +90,7 @@ public class EditBookingController {
         }
 
     @FXML
-    void handleSave(ActionEvent event){
+    void handleEdit(ActionEvent event){
 
         // Starts a new thread to edit a booking
         // Once the thread is done the editBtn will be enabled again
@@ -116,11 +115,8 @@ public class EditBookingController {
         // Once the thread is done, the progressSpinner will be hidden and the sletBtn will be enabled again
         DeleteBookingTask deleteBookingTask = new DeleteBookingTask((booking.getBookingID()));
         deleteBookingTask.setOnSucceeded(e -> {
-
-
             progressSpinner.setVisible(false);
             sletBtn.setDisable(false);
-            sletBtn.setStyle("-fx-background-color: #BD2323FF; -fx-text-fill: #ffffff;");
 
         });
         Thread thread = new Thread(deleteBookingTask);
@@ -142,7 +138,7 @@ public class EditBookingController {
     }
 
 
-    private void setBooking(Booking booking) {
+    public void setBooking(Booking booking) {
         this.booking = booking;
     }
 

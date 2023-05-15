@@ -1,19 +1,26 @@
 package group3.mindfactory_administration.controllers;
 
+import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.CalendarBooking;
 import group3.mindfactory_administration.model.CalendarCell;
 import group3.mindfactory_administration.model.tasks.GetBookingsTask;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static javafx.stage.Modality.APPLICATION_MODAL;
 
 /*
  * This class controls the calendar view.
@@ -28,6 +35,7 @@ import java.util.Optional;
 public class CalendarController {
 
     private List<Booking> bookings;
+    private EditBookingController editBookingController;
 
     @FXML private GridPane calendarGrid;
     @FXML private MFXComboBox<String> monthComboBox;
@@ -72,9 +80,22 @@ public class CalendarController {
 
                 // TODO: Temporary, this will be replaced with an FXML file
                 // Use this: https://stackoverflow.com/questions/68363535/passing-data-to-another-controller-in-javafx
-                Alert alert = new Alert(Alert.AlertType.NONE, cb.getBooking().getOrganization() + "\n" + cc.getDayOfMonth(), ButtonType.NO, ButtonType.YES);
-                alert.setTitle("Event Clicked");
-                Optional<ButtonType> result = alert.showAndWait();
+                FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("editBooking.fxml"));
+                try {
+                    Parent root = fxmlLoader.load();
+                    editBookingController = fxmlLoader.getController();
+                    editBookingController.setBooking(cb.getBooking());
+
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+
+                    stage.setResizable(false);
+                    stage.setScene(scene);
+                    stage.initModality(APPLICATION_MODAL);
+                    stage.show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
