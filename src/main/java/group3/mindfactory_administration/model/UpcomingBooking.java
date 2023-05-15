@@ -44,7 +44,7 @@ public class UpcomingBooking extends VBox {
 
         HBox nameHB = new HBox();
         nameHB.setMouseTransparent(true);
-        Label name = new Label(booking.getCustomer().getFirstName());
+        Label name = new Label(booking.getCustomer().getFirstName() + booking.getCustomer().getLastName());
         name.setStyle("-fx-text-fill: #ffffff");
         nameHB.getChildren().add(name);
 
@@ -66,13 +66,14 @@ public class UpcomingBooking extends VBox {
         persNote.setStyle("-fx-text-fill: #ffffff");
         persNoteHB.getChildren().add(persNote);
 
-        this.getChildren().addAll(org, time, date, name, email, phone, persNote);
-
+        this.getChildren().addAll();
 
     }
     public Booking Booking() {
         return booking;
     }
 
-
+    public Booking getBooking(){
+        return booking;
+    }
 }

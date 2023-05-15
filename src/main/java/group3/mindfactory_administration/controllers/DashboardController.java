@@ -1,24 +1,17 @@
 package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
-import group3.mindfactory_administration.dao.BookingDao;
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.CalendarBooking;
-import group3.mindfactory_administration.model.CalendarCell;
 import group3.mindfactory_administration.model.UpcomingBooking;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 import static javafx.stage.Modality.APPLICATION_MODAL;
@@ -68,11 +61,7 @@ public class DashboardController {
                 try {
                     Parent root = fxmlLoader.load();
                     dashboardController = fxmlLoader.getController();
-                    //dashboardController.setBooking(ub.getBooking());
-                    dashboardController.setBookings(ub.upcomingBookings);
-
-                    dashboardController.setBookings(upcomingBookings);
-
+                    dashboardController.setBooking(ub.getBooking());
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
@@ -88,7 +77,8 @@ public class DashboardController {
         });
     }
 
-
+    private void setBooking(Booking booking) {
+    }
 
 
     public void setBookings(List<Booking> bookings) {
