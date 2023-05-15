@@ -3,11 +3,14 @@ package group3.mindfactory_administration.controllers;
 import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.UpcomingBooking;
+import group3.mindfactory_administration.model.tasks.CountOrgTask;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -26,17 +29,43 @@ public class DashboardController {
 
     private EditBookingController editBookingController;
 
+    XYChart.Series<String, Integer> series;
+    Axis<String> xAxis;
+    Axis<Integer> yAxis;
+
+    @FXML
+    private BarChart<String, Integer> barChart;
+
     @FXML
     private HBox hBoxSP;
 
-    @FXML
-    private BarChart<?, ?> barChart;
+
     private List<Booking> bookings;
 
     public DashboardController() {
     }
 
     public void initialize() {
+        series = new XYChart.Series<>();
+        xAxis = barChart.getXAxis();
+        yAxis = barChart.getYAxis();
+        barChart.setAnimated(false); // Disabled animations since the labels would otherwise be displayed incorrectly
+        barChart.getData().add(series);
+        xAxis.setLabel("Organisationer");
+
+        // Starts a new thread that counts the number an organisation has booked in a given time period
+        CountOrgTask countOrgTask = new CountOrgTask(LocalDate.now().minusDays(365), LocalDate.now());
+        countOrgTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                series.getData().clear();
+                for (String key : newValue.keySet()) {
+                    series.getData().add(new XYChart.Data<>(key, newValue.get(key)));
+                }
+            }
+        });
+        Thread thread = new Thread(countOrgTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void drawUpcomingBookings() {

@@ -70,7 +70,7 @@ public class EditBookingController {
     private MFXListView<String> udstyrLV;
 
 
-    public void initialize(){
+    /*public void initialize(){
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
@@ -216,7 +216,7 @@ public class EditBookingController {
     @FXML
     void handleTilføjEquip(ActionEvent event) {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
-    }
+    }*/
 
 
     public void setBooking(Booking booking) {

@@ -19,6 +19,7 @@ public class UpcomingBooking extends VBox {
         //List<Booking> upcomingBookings = bookingDao.getOneWeekOutBookings();
         // Styling
         this.setPrefWidth(170);
+        this.setPrefHeight(USE_COMPUTED_SIZE);
         this.setAlignment(Pos.TOP_LEFT);
         this.setCursor(Cursor.HAND);
         if (booking.getBookingType().equals("Skole")) { // Different colors for different booking types
@@ -37,7 +38,7 @@ public class UpcomingBooking extends VBox {
 
         HBox timeHB = new HBox();
         timeHB.setMouseTransparent(true);
-        Label time = new Label(booking.getStartTime().toString());
+        Label time = new Label(booking.getStartTime().toString() + " - " + booking.getEndTime().toString());
         time.setStyle("-fx-text-fill: #ffffff");
         timeHB.getChildren().add(time);
 

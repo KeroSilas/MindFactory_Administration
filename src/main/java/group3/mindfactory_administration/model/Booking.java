@@ -209,12 +209,15 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public String toString() {
-        return startDate + " " + startTime + " - " + endTime;
+        return startDate + "  (" + startTime + " - " + endTime + ")";
     }
 
     @Override
     public int compareTo(Booking o) {
-        return this.getStartTime().compareTo(o.getStartTime());
+        LocalDateTime thisDateTime = LocalDateTime.of(this.getStartDate(), this.getStartTime());
+        LocalDateTime otherDateTime = LocalDateTime.of(o.getStartDate(), o.getStartTime());
+
+        return thisDateTime.compareTo(otherDateTime);
     }
 
 }
