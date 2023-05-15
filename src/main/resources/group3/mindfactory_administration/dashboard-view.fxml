@@ -22,7 +22,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <MFXScrollPane fitToHeight="true" fitToWidth="true" maxHeight="232.0" maxWidth="1.7976931348623157E308" minHeight="232.0" pannable="true" prefHeight="232.0" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                  <MFXScrollPane fitToHeight="true" maxHeight="232.0" minHeight="232.0" pannable="true" prefHeight="232.0" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                      <content>
                         <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="220.0" minHeight="220.0" prefHeight="220.0" spacing="8.0">
                            <padding>

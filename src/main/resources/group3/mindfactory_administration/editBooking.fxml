@@ -9,6 +9,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
@@ -23,171 +24,156 @@
          <children>
             <VBox alignment="TOP_CENTER" spacing="12.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" />
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
                         <Label text="Fornavn" />
-                        <MFXTextField fx:id="fornavnTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
+                        <MFXTextField fx:id="fornavnTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
                         <Label text="Efternavn" />
-                        <MFXTextField fx:id="efternavnTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
+                        <MFXTextField fx:id="efternavnTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
                         <Label text="Telefon" />
-                        <MFXTextField fx:id="telefonTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;" textLimit="8">
+                        <MFXTextField fx:id="telefonTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;" textLimit="8">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
                         <Label text="Email" />
-                        <MFXTextField fx:id="emailTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
+                        <MFXTextField fx:id="emailTF" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER_RIGHT" spacing="8.0">
-                     <padding>
-                        <Insets top="8.0" />
-                     </padding>
-                  </VBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Forløb" />
-                        <MFXComboBox fx:id="forløbCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label text="Dato" />
+                        <MFXComboBox fx:id="datoCB" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </MFXComboBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Tranport type" />
-                        <MFXComboBox fx:id="transportCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label fx:id="fraLabel" disable="true" text="Fra" />
+                        <MFXComboBox fx:id="fraCB" disable="true" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </MFXComboBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Ankomst" />
-                        <MFXTextField fx:id="ankomstTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label fx:id="tilLabel" disable="true" text="Til" />
+                        <MFXComboBox fx:id="tilCB" disable="true" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </MFXComboBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Afgang" />
-                        <MFXTextField fx:id="afgangTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label text="Organisation" />
+                        <MFXComboBox fx:id="organisationCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Deltagere" />
-                        <MFXTextField fx:id="deltagereTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label text="Afdeling" />
+                        <MFXTextField fx:id="afdelingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Forplejning" />
-                        <MFXComboBox fx:id="forplejningCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label text="Stilling" />
+                        <MFXTextField fx:id="stillingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
                </children>
             </VBox>
             <VBox alignment="TOP_RIGHT" spacing="12.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" />
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label text="Dato" />
-                        <MFXComboBox fx:id="datoCB" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </MFXComboBox>
+                        <Label text="Forløb" />
+                        <MFXComboBox fx:id="forløbCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label fx:id="fraLabel" disable="true" text="Fra" />
-                        <MFXComboBox fx:id="fraCB" disable="true" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </MFXComboBox>
+                        <Label text="Tranport type" />
+                        <MFXComboBox fx:id="transportCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="5.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label fx:id="tilLabel" disable="true" text="Til" />
-                        <MFXComboBox fx:id="tilCB" disable="true" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: lightgrey;">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </MFXComboBox>
+                        <Label text="Ankomst" />
+                        <MFXTextField fx:id="ankomstTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <Label fx:id="alertLabel" prefWidth="200.0" text="En tid og dato er lige blevet optaget. Prøv venligst igen." textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
-                     </children>
-                     <padding>
-                        <Insets top="8.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets left="32.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT">
-                     <children>
-                        <Label text="Organisation" />
-                        <MFXComboBox fx:id="organisationCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <Label text="Afgang" />
+                        <MFXTextField fx:id="afgangTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
-                     <children>
-                        <Label text="Afdeling" />
-                        <MFXTextField fx:id="afdelingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT">
-                     <children>
-                        <Label text="Stilling" />
-                        <MFXTextField fx:id="stillingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
                         <Label text="Aktivitet" />
-                        <MFXComboBox fx:id="aktivitetCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
+                        <MFXComboBox fx:id="aktivitetCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <MFXComboBox fx:id="udstyrCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
-                        <MFXButton fx:id="tilføjBtn" onAction="#handleTilføjEquip" text="Tilføj" />
+                        <Label text="Deltagere" />
+                        <MFXTextField fx:id="deltagereTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
-                        <MFXListView fx:id="udstyrLV" prefWidth="150.0" />
-                        <MFXButton fx:id="sletEquipBtn" onAction="#handleSletEquip" text="Slet" />
+                        <Label text="Forplejning" />
+                        <MFXComboBox fx:id="forplejningCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER_LEFT">
+                  <HBox alignment="CENTER_RIGHT" spacing="4.0">
+                     <children>
+                        <MFXComboBox fx:id="udstyrCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                        <MFXButton fx:id="tilføjBtn" onAction="#handleTilføjEquip" prefHeight="30.0" prefWidth="60.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="Tilføj" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                     <children>
+                        <MFXListView fx:id="udstyrLV" depthLevel="LEVEL0" maxHeight="125.0" minHeight="125.0" prefHeight="125.0" prefWidth="170.0" style="-fx-border-color: lightgrey;" />
+                        <MFXButton fx:id="sletEquipBtn" onAction="#handleSletEquip" prefHeight="30.0" prefWidth="60.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="Slet" />
+                     </children>
+                  </HBox>
+                  <VBox alignment="CENTER_LEFT" spacing="8.0">
                      <children>
                         <MFXRadioButton fx:id="læringsRB" text="Læringskonsulent">
                            <toggleGroup>
@@ -196,23 +182,42 @@
                         <MFXRadioButton fx:id="annesofieRB" text="Anne-Sofie Dideriksen" toggleGroup="$assistanceType" />
                         <MFXRadioButton fx:id="ingenRB" text="Nej tak, jeg klare mig selv" toggleGroup="$assistanceType" />
                      </children>
+                     <padding>
+                        <Insets left="24.0" />
+                     </padding>
                   </VBox>
                </children>
             </VBox>
-            <VBox prefHeight="548.0" prefWidth="210.0">
+            <VBox spacing="12.0">
                <children>
-                  <Label text="Personlig Note" />
-                  <TextArea fx:id="personligTA" prefHeight="128.0" prefWidth="186.0" />
-                  <Label text="Besked til AS" />
-                  <TextArea fx:id="beskedTA" prefHeight="123.0" prefWidth="186.0" />
-                  <MFXCheckbox fx:id="noShow" text="NoShow" />
-                  <MFXButton fx:id="tilføjFilBtn" onAction="#handleTilføjFil" text="Tilføj Fil" />
+                  <VBox>
+                     <children>
+                        <Label text="Besked fra kunden:" />
+                        <TextArea fx:id="beskedTA" editable="false" prefHeight="123.0" prefWidth="186.0" />
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Personlig note:" />
+                        <TextArea fx:id="personligTA" prefHeight="128.0" prefWidth="186.0" />
+                     </children>
+                  </VBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXListView fx:id="filLV" prefHeight="100.0" prefWidth="145.0" />
-                        <MFXButton fx:id="sletFilBtn" onAction="#handleSletFil" text="Slet Fil" />
+                        <VBox>
+                           <children>
+                              <MFXListView fx:id="filLV" depthLevel="LEVEL0" maxHeight="125.0" minHeight="125.0" prefHeight="125.0" prefWidth="170.0" style="-fx-border-color: lightgrey;" />
+                              <HBox>
+                                 <children>
+                                    <MFXButton fx:id="tilføjFilBtn" onAction="#handleTilføjFil" prefHeight="30.0" prefWidth="60.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="Tilføj Fil" />
+                                    <MFXButton fx:id="sletFilBtn" onAction="#handleSletFil" prefHeight="30.0" prefWidth="60.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5;" text="Slet Fil" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
+                  <MFXCheckbox fx:id="noShow" text="NoShow" />
                </children>
             </VBox>
          </children>
@@ -221,32 +226,27 @@
          </padding>
       </HBox>
    </center>
-   <top>
-      <VBox alignment="CENTER" prefHeight="60.0" BorderPane.alignment="CENTER" />
-   </top>
    <bottom>
       <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" prefHeight="30.0" prefWidth="30.0" />
-            <MFXButton fx:id="gemBtn" onAction="#handleSave" prefHeight="35.0" prefWidth="100.0" text="Gem" />
-            <MFXButton fx:id="sletBtn" onAction="#handleSlet" prefHeight="35.0" prefWidth="100.0" text="Slet" />
-            <HBox maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" prefHeight="30.0" prefWidth="30.0">
+            <Label fx:id="alertLabel" prefWidth="200.0" text="En tid og dato er lige blevet optaget. Prøv venligst igen." textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
+            <MFXButton fx:id="gemBtn" buttonType="RAISED" onAction="#handleSave" prefHeight="35.0" prefWidth="100.0" text="Gem" />
+            <MFXButton fx:id="sletBtn" buttonType="RAISED" onAction="#handleSlet" prefHeight="35.0" prefWidth="100.0" text="Slet" />
+            <HBox maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <MFXProgressSpinner />
-                  <MFXProgressSpinner fx:id="progressSpinner" visible="false">
+                  <MFXProgressSpinner visible="false">
                      <color1>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
                      </color1>
                      <color2>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
                      </color2>
                      <color3>
-                        <Color red="1.0" green="1.0" blue="1.0" />
+                        <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
                      </color3>
                      <color4>
-                        <Color red="1.0" green="1.0" blue="1.0" />
-                     </color4>
-                  </MFXProgressSpinner>
+                        <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
+                     </color4></MFXProgressSpinner>
                </children>
             </HBox>
          </children>
