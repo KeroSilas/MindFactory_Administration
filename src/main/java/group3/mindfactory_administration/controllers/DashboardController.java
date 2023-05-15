@@ -59,7 +59,7 @@ public class DashboardController {
             }
 
         hBoxSP.setOnMouseClicked(e -> {
-            if (e.getTarget() instanceof CalendarBooking cb) {
+            if (e.getTarget() instanceof UpcomingBooking cb) {
                 //CalendarCell cc = (CalendarCell) cb.getParent();
 
                 // TODO: Temporary, this will be replaced with an FXML file
