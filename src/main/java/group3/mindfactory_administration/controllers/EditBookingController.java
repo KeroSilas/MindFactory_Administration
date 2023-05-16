@@ -306,27 +306,27 @@ public class EditBookingController {
 
             EditBookingTask editBookingTask = new EditBookingTask(booking);
             editBookingTask.setOnSucceeded(e -> {
-                        if (editBookingTask.getValue()) {
-                            Alert alert = new Alert(Alert.AlertType.NONE, "Du har lige lavet en ændring i denne booking, du bedes derfor sende kunden en e-mail med opdateret information.", ButtonType.OK);
-                            alert.setTitle("E-mail påmindelse");
-                            alert.initOwner(gemBtn.getScene().getWindow()); //Retrieves the title bar icon from the main window by setting the alerts owner to that window.
-                            alert.showAndWait();
-                        } else {
-                            System.out.println("Booking failed to edit");
+                if (!editBookingTask.getValue()) {
+                    System.out.println("Booking failed to edit");
 
-                            // If the booking fails to save, the user is notified
-                            alertLabel.setVisible(true);
+                    // If the booking fails to save, the user is notified
+                    alertLabel.setVisible(true);
 
-                            // Clear the ListView and ComboBoxes
-                            datoCB.clear();
-                            fraCB.clear();
-                            tilCB.clear();
-                            startTimeList.clear();
-                            endTimeList.clear();
-                        }
-                        progressSpinner.setVisible(false);
-                        gemBtn.setDisable(false);
-                    });
+                    // Clear the ListView and ComboBoxes
+                    datoCB.clear();
+                    fraCB.clear();
+                    tilCB.clear();
+                    startTimeList.clear();
+                    endTimeList.clear();
+                }
+                progressSpinner.setVisible(false);
+                gemBtn.setDisable(false);
+
+                Alert alert = new Alert(Alert.AlertType.NONE, "Du har lige lavet en ændring i denne booking, du bedes derfor sende kunden en e-mail med opdateret information.", ButtonType.OK);
+                alert.setTitle("E-mail påmindelse");
+                alert.initOwner(gemBtn.getScene().getWindow()); //Retrieves the title bar icon from the main window by setting the alerts owner to that window.
+                alert.showAndWait();
+            });
             Thread thread = new Thread(editBookingTask);
             thread.setDaemon(true);
             thread.start();
