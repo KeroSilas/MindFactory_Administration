@@ -221,7 +221,6 @@ public class BookingDaoImpl implements BookingDao {
     // Updates a given booking
     @Override
     public void editBooking(Booking booking) throws SQLException {
-        System.out.println("DAO");
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
@@ -247,68 +246,89 @@ public class BookingDaoImpl implements BookingDao {
             ps2.setInt(7, booking.getBookingID());
             ps2.executeUpdate();
 
-            if (booking.getCatering() != null) {
+            if (booking.getCatering().getCatering() != null) {
                 PreparedStatement ps3 = con.prepareStatement("UPDATE BookingCatering SET cateringID = ? WHERE bookingID = ?;");
                 ps3.setInt(1, booking.getCatering().getCateringID());
                 ps3.setInt(2, booking.getBookingID());
-                ps3.executeUpdate();
+                int rowsAffected = ps3.executeUpdate();
+                if (rowsAffected == 0) {
+                    PreparedStatement ps4 = con.prepareStatement("INSERT INTO BookingCatering VALUES(?,?);");
+                    ps4.setInt(1, booking.getBookingID());
+                    ps4.setInt(2, booking.getCatering().getCateringID());
+                    ps4.executeUpdate();
+                }
             }
 
-            if (booking.getActivity() != null) {
-                PreparedStatement ps4 = con.prepareStatement("UPDATE BookingActivity SET activityID = ? WHERE bookingID = ?;");
-                ps4.setInt(1, booking.getActivity().getActivityID());
-                ps4.setInt(2, booking.getBookingID());
-                ps4.executeUpdate();
+            if (booking.getActivity().getActivity() != null) {
+                PreparedStatement ps5 = con.prepareStatement("UPDATE BookingActivity SET activityID = ? WHERE bookingID = ?;");
+                ps5.setInt(1, booking.getActivity().getActivityID());
+                ps5.setInt(2, booking.getBookingID());
+                int rowsAffected = ps5.executeUpdate();
+                if (rowsAffected == 0) {
+                    PreparedStatement ps6 = con.prepareStatement("INSERT INTO BookingActivity VALUES(?,?);");
+                    ps6.setInt(1, booking.getBookingID());
+                    ps6.setInt(2, booking.getActivity().getActivityID());
+                    ps6.executeUpdate();
+                }
             }
 
-            if (booking.getOrganization() != null) {
-                PreparedStatement ps5 = con.prepareStatement("UPDATE BookingOrganisation SET organisationID = ?, assistance = ?, participants = ? WHERE bookingID = ?;");
-                ps5.setInt(1, booking.getOrganization().getOrganizationID());
-                ps5.setString(2, booking.getOrganization().getAssistance());
-                ps5.setInt(3, booking.getOrganization().getParticipants());
-                ps5.setInt(4, booking.getBookingID());
-                ps5.executeUpdate();
+            if (booking.getOrganization().getOrganization() != null) {
+                PreparedStatement ps7 = con.prepareStatement("UPDATE BookingOrganisation SET organisationID = ?, assistance = ?, participants = ? WHERE bookingID = ?;");
+                ps7.setInt(1, booking.getOrganization().getOrganizationID());
+                ps7.setString(2, booking.getOrganization().getAssistance());
+                ps7.setInt(3, booking.getOrganization().getParticipants());
+                ps7.setInt(4, booking.getBookingID());
+                ps7.executeUpdate();
             }
 
-            if (booking.getÅbenSkoleForløb() != null) {
-                PreparedStatement ps6 = con.prepareStatement("UPDATE BookingForløb SET forløbID = ?, transportType = ?, transportArrival = ?, transportDeparture = ? WHERE bookingID = ?;");
-                ps6.setInt(1, booking.getÅbenSkoleForløb().getForløbID());
-                ps6.setString(2, booking.getÅbenSkoleForløb().getTransportType());
-                ps6.setString(3, booking.getÅbenSkoleForløb().getTransportArrival());
-                ps6.setString(4, booking.getÅbenSkoleForløb().getTransportDeparture());
-                ps6.setInt(5, booking.getBookingID());
-                ps6.executeUpdate();
+            if (booking.getÅbenSkoleForløb().getÅbenSkoleForløb() != null) {
+                PreparedStatement ps8 = con.prepareStatement("UPDATE BookingForløb SET forløbID = ?, transportType = ?, transportArrival = ?, transportDeparture = ? WHERE bookingID = ?;");
+                ps8.setInt(1, booking.getÅbenSkoleForløb().getForløbID());
+                ps8.setString(2, booking.getÅbenSkoleForløb().getTransportType());
+                ps8.setString(3, booking.getÅbenSkoleForløb().getTransportArrival());
+                ps8.setString(4, booking.getÅbenSkoleForløb().getTransportDeparture());
+                ps8.setInt(5, booking.getBookingID());
+                int rowsAffected = ps8.executeUpdate();
+                if (rowsAffected == 0) {
+                    PreparedStatement ps9 = con.prepareStatement("INSERT INTO BookingForløb VALUES(?,?,?,?,?);");
+                    ps9.setInt(1, booking.getBookingID());
+                    ps9.setInt(2, booking.getÅbenSkoleForløb().getForløbID());
+                    ps9.setString(3, booking.getÅbenSkoleForløb().getTransportType());
+                    ps9.setString(4, booking.getÅbenSkoleForløb().getTransportArrival());
+                    ps9.setString(5, booking.getÅbenSkoleForløb().getTransportDeparture());
+                    ps9.executeUpdate();
+                }
             }
 
             String sql = "DELETE FROM BookingEquipment WHERE bookingID = ?;";
-            PreparedStatement ps7 = con.prepareStatement(sql);
-            ps7.setInt(1, booking.getBookingID());
-            ps7.executeUpdate();
+            PreparedStatement ps10 = con.prepareStatement(sql);
+            ps10.setInt(1, booking.getBookingID());
+            ps10.executeUpdate();
 
             String sql2 = "INSERT INTO BookingEquipment VALUES(?,?);";
-            PreparedStatement ps8 = con.prepareStatement(sql2);
+            PreparedStatement ps11 = con.prepareStatement(sql2);
 
             for (String equipment : booking.getEquipmentList()) {
-                ps8.setInt(1, booking.getBookingID());
-                ps8.setString(2, equipment);
-                ps8.addBatch();
+                ps11.setInt(1, booking.getBookingID());
+                ps11.setString(2, equipment);
+                ps11.addBatch();
             }
-            ps8.executeBatch();
+            ps11.executeBatch();
 
             String sql3 = "DELETE FROM BookingFiles WHERE bookingID = ?;";
-            PreparedStatement ps9 = con.prepareStatement(sql3);
-            ps9.setInt(1, booking.getBookingID());
-            ps9.executeUpdate();
+            PreparedStatement ps12 = con.prepareStatement(sql3);
+            ps12.setInt(1, booking.getBookingID());
+            ps12.executeUpdate();
 
             String sql4 = "INSERT INTO BookingFiles VALUES(?,?);";
-            PreparedStatement ps10 = con.prepareStatement(sql4);
+            PreparedStatement ps13 = con.prepareStatement(sql4);
 
             for (File file : booking.getFileList()) {
-                ps10.setInt(1, booking.getBookingID());
-                ps10.setString(2, file.getPath());
-                ps10.addBatch();
+                ps13.setInt(1, booking.getBookingID());
+                ps13.setString(2, file.getPath());
+                ps13.addBatch();
             }
-            ps10.executeBatch();
+            ps13.executeBatch();
 
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
@@ -316,6 +336,7 @@ public class BookingDaoImpl implements BookingDao {
 
         } catch (SQLException e) {
             con.rollback();
+            e.printStackTrace();
             throw new SQLException(e);
         } finally {
             con.close();

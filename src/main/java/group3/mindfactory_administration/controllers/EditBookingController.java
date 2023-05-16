@@ -9,9 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -20,68 +19,45 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class EditBookingController {
     private Booking booking;
+
+    private String bookingType;
 
     private List<BookingTime> bookedTimes;
     private final ObservableList<LocalDate> dateList = FXCollections.observableArrayList();
     private final ObservableList<LocalTime> startTimeList = FXCollections.observableArrayList();
     private final ObservableList<LocalTime> endTimeList = FXCollections.observableArrayList();
 
-    @FXML
-    private ToggleGroup assistanceType;
-
-    @FXML
-    private MFXRadioButton læringsRB, annesofieRB, ingenRB;
-
-    @FXML
-    private MFXProgressSpinner progressSpinner;
-
-    @FXML
-    private MFXTextField telefonTF, stillingTF, fornavnTF, emailTF, efternavnTF, deltagereTF, ankomstTF, afgangTF, afdelingTF;
-
-    @FXML
-    private Label tilLabel, fraLabel, alertLabel;
-
-    @FXML
-    private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn, tilføjFilBtn, sletFilBtn;
-
-    @FXML
-    private MFXComboBox<LocalTime> fraCB, tilCB;
-
-    @FXML
-    private MFXComboBox<LocalDate> datoCB;
-
-    @FXML
-    private TextArea beskedTA, personligTA;
-
-    @FXML
-    private MFXListView<File> filLV;
-
-
-    @FXML
-    private MFXCheckbox noShow;
-
-    @FXML
-    private MFXComboBox<Catering> forplejningCB;
-
-    @FXML
-    private MFXComboBox<Organization> organisationCB;
-
-    @FXML
-    private MFXComboBox<Forløb> forløbCB;
-
-    @FXML
-    private MFXComboBox<Activity> aktivitetCB;
-    @FXML
-    private MFXComboBox<String> transportCB, udstyrCB;
-
-    @FXML
-    private MFXListView<String> udstyrLV;
+    @FXML private VBox skoleVBox, virksomhedVBox;
+    @FXML private MFXRadioButton læringsRB, annesofieRB, ingenRB;
+    @FXML private MFXProgressSpinner progressSpinner;
+    @FXML private MFXTextField telefonTF, stillingTF, fornavnTF, emailTF, efternavnTF, deltagereTF, ankomstTF, afgangTF, afdelingTF, bookingNummerTF;
+    @FXML private Label tilLabel, fraLabel, alertLabel;
+    @FXML private MFXButton tilføjBtn, sletEquipBtn, sletBtn, gemBtn, tilføjFilBtn, sletFilBtn;
+    @FXML private MFXComboBox<LocalTime> fraCB, tilCB;
+    @FXML private MFXComboBox<LocalDate> datoCB;
+    @FXML private TextArea beskedTA, personligTA;
+    @FXML private MFXListView<File> filLV;
+    @FXML private MFXCheckbox noShow, åbenSkoleCheckBox;
+    @FXML private MFXComboBox<Catering> forplejningCB;
+    @FXML private MFXComboBox<Organization> organisationCB;
+    @FXML private MFXComboBox<Forløb> forløbCB;
+    @FXML private MFXComboBox<Activity> aktivitetCB;
+    @FXML private MFXComboBox<String> transportCB, udstyrCB;
+    @FXML private MFXListView<String> udstyrLV;
 
 
     public void initialize(){
+        transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
+        udstyrCB.getItems().addAll("Robotter", "Sakse");
+
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
@@ -113,9 +89,6 @@ public class EditBookingController {
         });
         Thread thread4 = new Thread(getCateringTask);
         thread4.start();
-
-        transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
-        udstyrCB.getItems().addAll("Robotter", "Sakse");
 
         // Add the ObservableLists to the ComboBoxes
         datoCB.setItems(dateList);
@@ -156,8 +129,8 @@ public class EditBookingController {
 
         datoCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                fraCB.getSelectionModel().clearSelection();
-                tilCB.getSelectionModel().clearSelection();
+                fraCB.clear();
+                tilCB.clear();
                 startTimeList.clear();
                 endTimeList.clear();
 
@@ -188,7 +161,7 @@ public class EditBookingController {
         // If the selected time is a halfday booking before 12, then don't add the hours for the first half of the day
         fraCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                tilCB.getSelectionModel().clearSelection();
+                tilCB.clear();
                 endTimeList.clear();
 
                 tilCB.setDisable(false);
@@ -214,21 +187,49 @@ public class EditBookingController {
 
             }
         });
+
+        organisationCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            loadBookingTypeOptions(newValue.getOrganization());
+        });
     }
 
     public void exportFromBooking() {
+        loadBookingTypeOptions(booking.getOrganization().getOrganization());
 
-        organisationCB.setText(booking.getOrganization().getOrganization() == null ? "" : booking.getOrganization().getOrganization());
-        aktivitetCB.setText(booking.getActivity().getActivity() == null ? "" : booking.getActivity().getActivity());
-        forplejningCB.setText(booking.getCatering().getCatering() == null ? "" : booking.getCatering().getCatering());
-        forløbCB.setText(booking.getÅbenSkoleForløb().getÅbenSkoleForløb() == null ? "" : booking.getÅbenSkoleForløb().getÅbenSkoleForløb());
-
-        afdelingTF.setText(booking.getCustomer().getDepartment());
-        stillingTF.setText(booking.getCustomer().getPosition());
+        bookingNummerTF.setText(String.valueOf(booking.getBookingID()));
 
         fornavnTF.setText(booking.getCustomer().getFirstName());
         efternavnTF.setText(booking.getCustomer().getLastName());
         telefonTF.setText(booking.getCustomer().getPhone());
+        emailTF.setText(booking.getCustomer().getEmail());
+        afdelingTF.setText(booking.getCustomer().getDepartment());
+        stillingTF.setText(booking.getCustomer().getPosition());
+
+        fraCB.setValue(booking.getStartTime());
+        tilCB.setValue(booking.getEndTime());
+        datoCB.setValue(booking.getStartDate());
+        noShow.setSelected(booking.isNoShow());
+        personligTA.setText(booking.getPersonalNote());
+        beskedTA.setText(booking.getMessageToAS());
+        filLV.getItems().addAll(booking.getFileList());
+
+        if (booking.getÅbenSkoleForløb().getÅbenSkoleForløb() != null) {
+            åbenSkoleCheckBox.setSelected(true);
+            forløbCB.setValue(booking.getÅbenSkoleForløb());
+            transportCB.setValue(booking.getÅbenSkoleForløb().getTransportType());
+            afgangTF.setText(booking.getÅbenSkoleForløb().getTransportDeparture());
+            ankomstTF.setText(booking.getÅbenSkoleForløb().getTransportArrival());
+        }
+
+        organisationCB.setValue(booking.getOrganization());
+
+        if (booking.getActivity().getActivity() != null) {
+            aktivitetCB.setValue(booking.getActivity());
+            forplejningCB.setText(booking.getCatering().getCatering() == null ? "" : booking.getCatering().getCatering());
+            deltagereTF.setText(String.valueOf(booking.getOrganization().getParticipants()));
+            udstyrLV.getItems().addAll(booking.getEquipmentList());
+        }
+
         if (booking.getOrganization().getAssistance() == null || booking.getOrganization().getAssistance().equals("Ingen")) {
             ingenRB.setSelected(true);
         } else if (booking.getOrganization().getAssistance().equals("Anne-Sofie Didriksen")){
@@ -236,68 +237,59 @@ public class EditBookingController {
         } else if (booking.getOrganization().getAssistance().equals("Læringskonsulent")) {
             læringsRB.setSelected(true);
         }
-        emailTF.setText(booking.getCustomer().getEmail());
-        deltagereTF.setText(String.valueOf(booking.getOrganization().getParticipants()));
-        fraCB.setText(String.valueOf(booking.getStartTime()));
-        tilCB.setText(String.valueOf(booking.getEndTime()));
-        datoCB.setText(String.valueOf(booking.getStartDate()));
-        noShow.setSelected(booking.isNoShow());
-        personligTA.setText(booking.getPersonalNote());
-        beskedTA.setText(booking.getMessageToAS());
-        udstyrLV.getItems().addAll(booking.getEquipmentList());
-        filLV.getItems().addAll(booking.getFileList());
-        afgangTF.setText(booking.getÅbenSkoleForløb().getTransportDeparture());
-        ankomstTF.setText(booking.getÅbenSkoleForløb().getTransportArrival());
-
-        transportCB.setText(booking.getÅbenSkoleForløb().getTransportType());
 
     }
 
     private void importToBooking() {
-        System.out.println("IMPORT");
-        booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
-        booking.getCustomer().setDepartment(afdelingTF.getText());
-        booking.getCustomer().setPosition(stillingTF.getText());
         
         booking.getCustomer().setFirstName(fornavnTF.getText());
         booking.getCustomer().setLastName(efternavnTF.getText());
         booking.getCustomer().setPhone(telefonTF.getText());
-        if (læringsRB.isSelected()) {
-            booking.getOrganization().setAssistance("Læring konsulent");
-        } else if (annesofieRB.isSelected()) {
-            booking.getOrganization().setAssistance("Anne-Sofie Dideriksen");
-        } else if (ingenRB.isSelected()) {
-            booking.getOrganization().setAssistance("Ingen");
-        }
-        booking.getOrganization().setParticipants(Integer.parseInt(deltagereTF.getText()));
+        booking.getCustomer().setDepartment(afdelingTF.getText());
+        booking.getCustomer().setPosition(stillingTF.getText());
+
         booking.setStartTime(fraCB.getValue());
         booking.setEndTime(tilCB.getValue());
         booking.setStartDate(datoCB.getValue());
         booking.setNoShow(noShow.isSelected());
         booking.setPersonalNote(personligTA.getText());
         booking.setMessageToAS(beskedTA.getText());
-        booking.setActivity(aktivitetCB.getValue());
-        booking.setCatering(forplejningCB.getValue());
-        booking.setEquipmentList(udstyrLV.getItems());
         booking.setFileList(filLV.getItems());
 
-        booking.setÅbenSkoleForløb(forløbCB.getSelectionModel().getSelectedItem());
-        booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
-        booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
-        booking.getÅbenSkoleForløb().setTransportType(transportCB.getSelectionModel().getSelectedItem());
+        if (bookingType.equals("Skole") && åbenSkoleCheckBox.isSelected()) {
+            booking.setÅbenSkoleForløb(forløbCB.getValue());
+            booking.getÅbenSkoleForløb().setTransportDeparture(afgangTF.getText());
+            booking.getÅbenSkoleForløb().setTransportArrival(ankomstTF.getText());
+            booking.getÅbenSkoleForløb().setTransportType(transportCB.getValue());
+
+        } else if (bookingType.equals("Virksomhed")) {
+            booking.setOrganization(organisationCB.getValue());
+            booking.getOrganization().setParticipants(Integer.parseInt(deltagereTF.getText()));
+            booking.setActivity(aktivitetCB.getValue());
+            booking.setCatering(forplejningCB.getValue());
+            booking.setEquipmentList(udstyrLV.getItems());
+
+            if (læringsRB.isSelected()) {
+                booking.getOrganization().setAssistance("Læring konsulent");
+            } else if (annesofieRB.isSelected()) {
+                booking.getOrganization().setAssistance("Anne-Sofie Dideriksen");
+            } else if (ingenRB.isSelected()) {
+                booking.getOrganization().setAssistance("Ingen");
+            }
+        }
+
     }
 
     @FXML
-    void handleTilføjFil(ActionEvent event) {
+    void handleTilføjFil() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a file");
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
         filLV.getItems().addAll(files);
     }
 
-
     @FXML
-    void handleSletFil(ActionEvent event) {
+    void handleSletFil() {
         List<File> filesList = filLV.getSelectionModel().getSelectedValues();
         for (File file : filesList) {
             filLV.getItems().remove(file);
@@ -305,45 +297,74 @@ public class EditBookingController {
     }
 
     @FXML
-    void handleSave(ActionEvent event) {
+    void handleSave() {
         if (isInputValid()) {
+            progressSpinner.setVisible(true);
+            gemBtn.setDisable(true);
+            alertLabel.setVisible(false);
             importToBooking();
-            // Starts a new thread to edit a booking
-            // Once the thread is done the editBtn will be enabled again
+
             EditBookingTask editBookingTask = new EditBookingTask(booking);
             editBookingTask.setOnSucceeded(e -> {
-                System.out.println("DONE");
-            });
+                        if (editBookingTask.getValue()) {
+                            Alert alert = new Alert(Alert.AlertType.NONE, "Du har lige lavet en ændring i denne booking, du bedes derfor sende kunden en e-mail med opdateret information.", ButtonType.OK);
+                            alert.setTitle("E-mail påmindelse");
+                            alert.initOwner(gemBtn.getScene().getWindow()); //Retrieves the title bar icon from the main window by setting the alerts owner to that window.
+                            alert.showAndWait();
+                        } else {
+                            System.out.println("Booking failed to edit");
+
+                            // If the booking fails to save, the user is notified
+                            alertLabel.setVisible(true);
+
+                            // Clear the ListView and ComboBoxes
+                            datoCB.clear();
+                            fraCB.clear();
+                            tilCB.clear();
+                            startTimeList.clear();
+                            endTimeList.clear();
+                        }
+                        progressSpinner.setVisible(false);
+                        gemBtn.setDisable(false);
+                    });
             Thread thread = new Thread(editBookingTask);
             thread.setDaemon(true);
             thread.start();
-            System.out.println("SAVE");
         }
     }
 
     @FXML
-    void handleSlet(ActionEvent event) {
+    void handleSlet() {
+        Alert alert = new Alert(Alert.AlertType.NONE, "Er du sikker på at du vil slette denne booking?", ButtonType.NO, ButtonType.YES);
+        alert.setTitle("Slet booking");
+        alert.initOwner(gemBtn.getScene().getWindow()); //Retrieves the title bar icon from the main window by setting the alerts owner to that window.
+        Optional<ButtonType> result = alert.showAndWait();
 
-        // Shows the progressSpinner and disables the sletBtn
-        progressSpinner.setVisible(true);
-        sletBtn.setDisable(true);
-        sletBtn.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000;");
+        if (result.isPresent() && result.get() == ButtonType.YES) {
+            // Shows the progressSpinner and disables the sletBtn
+            progressSpinner.setVisible(true);
+            sletBtn.setDisable(true);
+            sletBtn.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000;");
 
-        // Starts a new thread to delete the booking
-        // Once the thread is done, the progressSpinner will be hidden and the sletBtn will be enabled again
-        DeleteBookingTask deleteBookingTask = new DeleteBookingTask((booking.getBookingID()));
-        deleteBookingTask.setOnSucceeded(e -> {
-            progressSpinner.setVisible(false);
-            sletBtn.setDisable(false);
+            // Starts a new thread to delete the booking
+            // Once the thread is done, the progressSpinner will be hidden and the sletBtn will be enabled again
+            DeleteBookingTask deleteBookingTask = new DeleteBookingTask((booking.getBookingID()));
+            deleteBookingTask.setOnSucceeded(e -> {
+                progressSpinner.setVisible(false);
+                sletBtn.setDisable(false);
+                sletBtn.setStyle("-fx-background-color: #BD2323FF; -fx-text-fill: #ffffff;");
 
-        });
-        Thread thread = new Thread(deleteBookingTask);
-        thread.setDaemon(true);
-        thread.start();
+                Stage stage = (Stage) sletBtn.getScene().getWindow();
+                stage.close();
+            });
+            Thread thread = new Thread(deleteBookingTask);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     @FXML
-    void handleSletEquip(ActionEvent event) {
+    void handleSletEquip() {
         List<String> equipmentList = udstyrLV.getSelectionModel().getSelectedValues();
         for (String equipment : equipmentList) {
             udstyrLV.getItems().remove(equipment);
@@ -351,7 +372,7 @@ public class EditBookingController {
     }
 
     @FXML
-    void handleTilføjEquip(ActionEvent event) {
+    void handleTilføjEquip() {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
     }
 
@@ -413,46 +434,48 @@ public class EditBookingController {
             tilCB.setStyle("-fx-border-color: lightgrey");
         }
 
-        if (forløbCB.getValue() == null) {
-            forløbCB.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            forløbCB.setStyle("-fx-border-color: lightgrey");
-        }
+        if (bookingType.equals("Skole") && åbenSkoleCheckBox.isSelected()) {
+            if (forløbCB.getValue() == null) {
+                forløbCB.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                forløbCB.setStyle("-fx-border-color: lightgrey");
+            }
 
-        if (transportCB.getValue() == null) {
-            transportCB.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            transportCB.setStyle("-fx-border-color: lightgrey");
-        }
+            if (transportCB.getValue() == null) {
+                transportCB.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                transportCB.setStyle("-fx-border-color: lightgrey");
+            }
 
-        if (ankomstTF.getText().isEmpty()) {
-            ankomstTF.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            ankomstTF.setStyle("-fx-border-color: lightgrey");
-        }
+            if (ankomstTF.getText().isEmpty()) {
+                ankomstTF.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                ankomstTF.setStyle("-fx-border-color: lightgrey");
+            }
 
-        if (afgangTF.getText().isEmpty()) {
-            afgangTF.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            afgangTF.setStyle("-fx-border-color: lightgrey");
-        }
+            if (afgangTF.getText().isEmpty()) {
+                afgangTF.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                afgangTF.setStyle("-fx-border-color: lightgrey");
+            }
+        } else if (bookingType.equals("Virksomhed")) {
+            if (deltagereTF.getText().isEmpty()) {
+                deltagereTF.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                deltagereTF.setStyle("-fx-border-color: lightgrey");
+            }
 
-        if (deltagereTF.getText().isEmpty()) {
-            deltagereTF.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            deltagereTF.setStyle("-fx-border-color: lightgrey");
-        }
-
-        if (forplejningCB.getValue() == null) {
-            forplejningCB.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            forplejningCB.setStyle("-fx-border-color: lightgrey");
+            if (forplejningCB.getValue() == null) {
+                forplejningCB.setStyle("-fx-border-color: red");
+                success = false;
+            } else {
+                forplejningCB.setStyle("-fx-border-color: lightgrey");
+            }
         }
 
         if (organisationCB.getValue() == null) {
@@ -476,13 +499,30 @@ public class EditBookingController {
             stillingTF.setStyle("-fx-border-color: lightgrey");
         }
 
-        if (aktivitetCB.getValue() == null) {
-            aktivitetCB.setStyle("-fx-border-color: red");
-            success = false;
-        } else {
-            aktivitetCB.setStyle("-fx-border-color: lightgrey");
-        }
-
         return success;
+    }
+
+    private void loadBookingTypeOptions(String organisationName) {
+        if (organisationName.equals("Tønder Gymnasium") || organisationName.equals("Det Blå Gymnasium") || organisationName.equals("EUC Syd") || organisationName.equals("Tønder Kommune - skole")) {
+            bookingType = "Skole";
+            skoleVBox.setVisible(true);
+            virksomhedVBox.setVisible(false);
+
+            skoleVBox.setMinHeight(USE_COMPUTED_SIZE);
+            skoleVBox.setPrefHeight(USE_COMPUTED_SIZE);
+
+            virksomhedVBox.setMinHeight(0);
+            virksomhedVBox.setPrefHeight(0);
+        } else {
+            bookingType = "Virksomhed";
+            skoleVBox.setVisible(false);
+            virksomhedVBox.setVisible(true);
+
+            virksomhedVBox.setMinHeight(USE_COMPUTED_SIZE);
+            virksomhedVBox.setPrefHeight(USE_COMPUTED_SIZE);
+
+            skoleVBox.setMinHeight(0);
+            skoleVBox.setPrefHeight(0);
+        }
     }
 }

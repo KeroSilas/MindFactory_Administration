@@ -23,21 +23,24 @@ public class UpcomingBooking extends VBox {
 
         //List<Booking> upcomingBookings = bookingDao.getOneWeekOutBookings();
         // Styling
-        this.setPrefWidth(170);
+        this.setPrefWidth(190);
         this.setPrefHeight(USE_COMPUTED_SIZE);
         this.setAlignment(Pos.TOP_LEFT);
         this.setCursor(Cursor.HAND);
-        if (booking.getBookingType().equals("Skole")) { // Different colors for different booking types
-            this.setStyle("-fx-background-color: #2f56ad; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #2f56ad; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+        if (!booking.isNoShow()) {
+            if (booking.getBookingType().equals("Skole")) { // Different colors for different booking types
+                this.setStyle("-fx-background-color: #2f56ad; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #2f56ad; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+            } else {
+                this.setStyle("-fx-background-color: #653da1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #653da1; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+            }
         } else {
-            this.setStyle("-fx-background-color: #653da1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #653da1; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+            this.setStyle("-fx-background-color: #737373; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #737373; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
         }
 
         // Inserting information
         HBox orgHB = new HBox();
-
         HBox logoHB = new HBox();
-        logoHB.setPadding(new Insets(0, 4, 0, 0));
+        logoHB.setSpacing(4);
 
         File notepadFile = new File("src/main/resources/group3/mindfactory_administration/icons/notepad.png");
         File ideaFile = new File("src/main/resources/group3/mindfactory_administration/icons/idea.png");
@@ -47,20 +50,20 @@ public class UpcomingBooking extends VBox {
         File vacuumFile = new File("src/main/resources/group3/mindfactory_administration/icons/vacuum-cleaner.png");
         File robotFile = new File("src/main/resources/group3/mindfactory_administration/icons/robot.png");
 
-        ImageView notepadImageView = new ImageView(new Image(notepadFile.toURI().toString(), 20, 20, true, true));
-        ImageView ideaImageView = new ImageView(new Image(ideaFile.toURI().toString(), 20, 20, true, true));
-        ImageView planetImageView = new ImageView(new Image(planetFile.toURI().toString(), 20, 20, true, true));
-        ImageView shieldImageView = new ImageView(new Image(shieldFile.toURI().toString(), 20, 20, true, true));
-        ImageView virtualImageView = new ImageView(new Image(virtualFile.toURI().toString(), 20, 20, true, true));
-        ImageView vacuumImageView = new ImageView(new Image(vacuumFile.toURI().toString(), 20, 20, true, true));
-        ImageView robotImageView = new ImageView(new Image(robotFile.toURI().toString(), 20, 20, true, true));
-
+        ImageView notepadImageView = new ImageView(new Image(notepadFile.toURI().toString(), 18, 18, true, true));
+        ImageView ideaImageView = new ImageView(new Image(ideaFile.toURI().toString(), 18, 18, true, true));
+        ImageView planetImageView = new ImageView(new Image(planetFile.toURI().toString(), 18, 18, true, true));
+        ImageView shieldImageView = new ImageView(new Image(shieldFile.toURI().toString(), 18, 18, true, true));
+        ImageView virtualImageView = new ImageView(new Image(virtualFile.toURI().toString(), 18, 18, true, true));
+        ImageView vacuumImageView = new ImageView(new Image(vacuumFile.toURI().toString(), 18, 18, true, true));
+        ImageView robotImageView = new ImageView(new Image(robotFile.toURI().toString(), 18, 18, true, true));
 
         if (booking.getPersonalNote() != null) {
             logoHB.getChildren().add(notepadImageView);
         }
 
         if (booking.getÅbenSkoleForløb().getÅbenSkoleForløb() != null) {
+            orgHB.setSpacing(6);
             switch (booking.getÅbenSkoleForløb().getÅbenSkoleForløb()) {
                 case "Idéfabrikken" -> logoHB.getChildren().add(ideaImageView);
                 case "Digital fabrikation med laserskærer" -> logoHB.getChildren().add(virtualImageView);
@@ -118,6 +121,7 @@ public class UpcomingBooking extends VBox {
         persNoteHB.setMouseTransparent(true);
         Label persNote = new Label(booking.getPersonalNote());
         persNote.setStyle("-fx-text-fill: #ffffff");
+        persNote.setWrapText(true);
         persNoteHB.getChildren().add(persNote);
 
         this.getChildren().addAll(orgHB, timeHB, dateHB, nameHB, emailHB, phoneHB, persNoteHB);
