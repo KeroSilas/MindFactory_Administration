@@ -4,6 +4,7 @@ import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.UpcomingBooking;
 import group3.mindfactory_administration.model.tasks.CountOrgTask;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -38,7 +42,11 @@ public class DashboardController {
 
     @FXML
     private HBox hBoxSP;
+    @FXML
+    private ImageView imageView;
 
+    @FXML
+    Button chooseImageBtn;
 
     private List<Booking> bookings;
 
@@ -105,9 +113,25 @@ public class DashboardController {
         });
     }
 
+    // Adapted from: https://edencoding.com/how-to-add-an-image-to-a-button/#:~:text=To%20set%20an%20image%20on,method%20of%20the%20scene's%20controller.
+    @FXML
+    void chooseImage(ActionEvent event) {
+
+        //ImageView imageView = new ImageView(getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm());
+        imageView.getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm();
+        chooseImageBtn.setGraphic(imageView);
+        chooseImageBtn.setContentDisplay(ContentDisplay.TOP);
+        imageView.fitWidthProperty().bind(chooseImageBtn.widthProperty().divide(10));
+        imageView.setPreserveRatio(true);
+        //Important otherwise button will wrap to text + graphic size (no resizing on scaling).
+        chooseImageBtn.setMaxWidth(Double.MAX_VALUE);
+    }
+
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 
 }
+
+
 
