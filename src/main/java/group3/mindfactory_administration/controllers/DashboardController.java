@@ -2,7 +2,7 @@ package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.UpcomingBooking;
+import group3.mindfactory_administration.model.nodes.UpcomingBooking;
 import group3.mindfactory_administration.model.tasks.CountOrgTask;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,8 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -23,7 +21,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 

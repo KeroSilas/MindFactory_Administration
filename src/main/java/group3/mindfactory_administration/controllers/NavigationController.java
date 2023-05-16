@@ -15,6 +15,8 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /*
  * This class controls the navigation bar.
@@ -112,8 +114,8 @@ public class NavigationController {
                 bookings = newValue;
                 Platform.runLater(() -> {
                     dashboardController.setBookings(bookings);
-                    dashboardController.drawUpcomingBookings();
                     calendarController.setBookings(bookings);
+                    dashboardController.drawUpcomingBookings();
                     calendarController.drawCalendar();
                 });
 

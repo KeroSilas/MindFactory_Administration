@@ -1,5 +1,6 @@
-package group3.mindfactory_administration.model;
+package group3.mindfactory_administration.model.nodes;
 
+import group3.mindfactory_administration.model.Booking;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;

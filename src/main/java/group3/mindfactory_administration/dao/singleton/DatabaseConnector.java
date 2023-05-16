@@ -1,4 +1,4 @@
-package group3.mindfactory_administration.dao;
+package group3.mindfactory_administration.dao.singleton;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;

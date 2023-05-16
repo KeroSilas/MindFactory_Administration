@@ -2,17 +2,14 @@ package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.CalendarBooking;
-import group3.mindfactory_administration.model.CalendarCell;
-import group3.mindfactory_administration.model.tasks.GetBookingsTask;
+import group3.mindfactory_administration.model.nodes.CalendarBooking;
+import group3.mindfactory_administration.model.nodes.CalendarCell;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -20,7 +17,6 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static javafx.stage.Modality.APPLICATION_MODAL;
 

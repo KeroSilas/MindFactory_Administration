@@ -1,5 +1,6 @@
 package group3.mindfactory_administration.dao;
 
+import group3.mindfactory_administration.dao.singleton.DatabaseConnector;
 import group3.mindfactory_administration.model.*;
 
 import java.io.File;

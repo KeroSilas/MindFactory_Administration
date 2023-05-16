@@ -1,5 +1,6 @@
-package group3.mindfactory_administration.model;
+package group3.mindfactory_administration.model.nodes;
 
+import group3.mindfactory_administration.model.Booking;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -29,12 +30,12 @@ public class UpcomingBooking extends VBox {
         this.setCursor(Cursor.HAND);
         if (!booking.isNoShow()) {
             if (booking.getBookingType().equals("Skole")) { // Different colors for different booking types
-                this.setStyle("-fx-background-color: #2f56ad; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #2f56ad; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+                this.setStyle("-fx-background-color: #2f56ad; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #2f56ad; -fx-border-width: 1px; -fx-padding: 4px 4px 4px 4px;");
             } else {
-                this.setStyle("-fx-background-color: #653da1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #653da1; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+                this.setStyle("-fx-background-color: #653da1; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #653da1; -fx-border-width: 1px; -fx-padding: 4px 4px 4px 4px;");
             }
         } else {
-            this.setStyle("-fx-background-color: #737373; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #737373; -fx-border-width: 1px; -fx-padding: 2px 5px 2px 5px;");
+            this.setStyle("-fx-background-color: #737373; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: #737373; -fx-border-width: 1px; -fx-padding: 4px 4px 4px 4px;");
         }
 
         // Inserting information
@@ -43,6 +44,7 @@ public class UpcomingBooking extends VBox {
         logoHB.setSpacing(4);
         logoHB.setMouseTransparent(true);
 
+        // Getting icons for the different types of bookings
         File notepadFile = new File("src/main/resources/group3/mindfactory_administration/icons/notepad.png");
         File ideaFile = new File("src/main/resources/group3/mindfactory_administration/icons/idea.png");
         File planetFile = new File("src/main/resources/group3/mindfactory_administration/icons/planet-earth.png");
@@ -50,7 +52,6 @@ public class UpcomingBooking extends VBox {
         File virtualFile = new File("src/main/resources/group3/mindfactory_administration/icons/virtual.png");
         File vacuumFile = new File("src/main/resources/group3/mindfactory_administration/icons/vacuum-cleaner.png");
         File robotFile = new File("src/main/resources/group3/mindfactory_administration/icons/robot.png");
-
         ImageView notepadImageView = new ImageView(new Image(notepadFile.toURI().toString(), 18, 18, true, true));
         ImageView ideaImageView = new ImageView(new Image(ideaFile.toURI().toString(), 18, 18, true, true));
         ImageView planetImageView = new ImageView(new Image(planetFile.toURI().toString(), 18, 18, true, true));
@@ -114,16 +115,23 @@ public class UpcomingBooking extends VBox {
 
         HBox phoneHB = new HBox();
         phoneHB.setMouseTransparent(true);
+        phoneHB.setPadding(new Insets(0, 0, 4, 0));
         Label phone = new Label(booking.getCustomer().getPhone());
         phone.setStyle("-fx-text-fill: #ffffff");
         phoneHB.getChildren().add(phone);
 
         HBox persNoteHB = new HBox();
+        persNoteHB.setPadding(new Insets(4, 4, 4, 4));
         persNoteHB.setMouseTransparent(true);
         Label persNote = new Label(booking.getPersonalNote());
         persNote.setStyle("-fx-text-fill: #ffffff");
+        persNote.setAlignment(Pos.TOP_LEFT);
         persNote.setWrapText(true);
         persNoteHB.getChildren().add(persNote);
+
+        if (booking.getPersonalNote() != null) {
+            persNoteHB.setStyle("-fx-background-color: rgba(21,21,21,0.38); -fx-background-radius: 5px;");
+        }
 
         this.getChildren().addAll(orgHB, timeHB, dateHB, nameHB, emailHB, phoneHB, persNoteHB);
 

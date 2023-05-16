@@ -4,10 +4,8 @@ import group3.mindfactory_administration.model.*;
 import group3.mindfactory_administration.model.tasks.*;
 import group3.mindfactory_administration.model.tasks.EditBookingTask;
 import io.github.palexdev.materialfx.controls.*;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -20,8 +18,6 @@ import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -61,7 +57,13 @@ public class EditBookingController {
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
-            organisationCB.getItems().addAll(organisations);
+            if (booking.getBookingType().equals("Skole")) {
+                List<Organization> schools = organisations.subList(4, 8);
+                organisationCB.getItems().addAll(schools);
+            } else {
+                List<Organization> virksomheder = organisations.subList(0, 4);
+                organisationCB.getItems().addAll(virksomheder);
+            }
         });
         Thread thread = new Thread(getOrganisationsTask);
         thread.start();
