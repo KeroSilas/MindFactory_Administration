@@ -7,6 +7,7 @@ import group3.mindfactory_administration.model.tasks.CountOrgTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.Axis;
@@ -14,10 +15,14 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -115,17 +120,34 @@ public class DashboardController {
 
     // Adapted from: https://edencoding.com/how-to-add-an-image-to-a-button/#:~:text=To%20set%20an%20image%20on,method%20of%20the%20scene's%20controller.
     @FXML
-    void chooseImage(ActionEvent event) {
+    void chooseImage(ActionEvent event) throws IOException {
+       // return chooseImageBtn.setOnAction(e -> {
 
-        //ImageView imageView = new ImageView(getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm());
-        imageView.getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm();
-        chooseImageBtn.setGraphic(imageView);
-        chooseImageBtn.setContentDisplay(ContentDisplay.TOP);
-        imageView.fitWidthProperty().bind(chooseImageBtn.widthProperty().divide(10));
-        imageView.setPreserveRatio(true);
-        //Important otherwise button will wrap to text + graphic size (no resizing on scaling).
-        chooseImageBtn.setMaxWidth(Double.MAX_VALUE);
+            FileChooser fileChooser = new FileChooser();
+            //fileChooser.setTitle("Select file resource");
+            fileChooser.getExtensionFilters().addAll();
+            new FileChooser.ExtensionFilter("jpeg File", ".jpg");
+
+            Node source = (Node) event.getSource();
+            File file = fileChooser.showOpenDialog(source.getScene().getWindow());
+
+            if (file != null) {
+                Image image = new Image(file.toURI().toString());
+                imageView.setImage(image);
+            }
+
+            //ImageView imageView = new ImageView(getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm());
+            imageView.getClass().getResource("C:\\Users\\chris\\IdeaProjects\\MindFactory_Administration\\src\\main\\resources\\group3\\mindfactory_administration\\images").toExternalForm();
+            chooseImageBtn.setGraphic(imageView);
+            chooseImageBtn.setContentDisplay(ContentDisplay.TOP);
+            imageView.fitWidthProperty().bind(chooseImageBtn.widthProperty().divide(10));
+            imageView.setPreserveRatio(true);
+            //Important otherwise button will wrap to text + graphic size (no resizing on scaling).
+            chooseImageBtn.setMaxWidth(Double.MAX_VALUE);
+
     }
+
+
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
