@@ -181,7 +181,7 @@
                                              </toggleGroup>
                                           </MFXRadioButton>
                                           <MFXRadioButton fx:id="annesofieRB" text="Anne-Sofie Dideriksen" toggleGroup="$assistanceType" />
-                                          <MFXRadioButton fx:id="ingenRB" text="Nej tak, jeg klare mig selv" toggleGroup="$assistanceType" />
+                                          <MFXRadioButton fx:id="ingenRB" text="Nej tak, jeg klarer mig selv" toggleGroup="$assistanceType" />
                                        </children>
                                        <padding>
                                           <Insets left="24.0" />
