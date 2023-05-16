@@ -217,10 +217,11 @@ public class EditBookingController {
     }
 
     public void exportFromBooking() {
-        /*organisationCB.selectItem(booking.getOrganization());
-        aktivitetCB.selectItem(booking.getActivity());
-        forplejningCB.selectItem(booking.getCatering());
-        forløbCB.selectItem(booking.getÅbenSkoleForløb());*/
+
+        organisationCB.setText(booking.getOrganization().getOrganization() == null ? "" : booking.getOrganization().getOrganization());
+        aktivitetCB.setText(booking.getActivity().getActivity() == null ? "" : booking.getActivity().getActivity());
+        forplejningCB.setText(booking.getCatering().getCatering() == null ? "" : booking.getCatering().getCatering());
+        forløbCB.setText(booking.getÅbenSkoleForløb().getÅbenSkoleForløb() == null ? "" : booking.getÅbenSkoleForløb().getÅbenSkoleForløb());
 
         afdelingTF.setText(booking.getCustomer().getDepartment());
         stillingTF.setText(booking.getCustomer().getPosition());
@@ -245,10 +246,10 @@ public class EditBookingController {
         beskedTA.setText(booking.getMessageToAS());
         udstyrLV.getItems().addAll(booking.getEquipmentList());
         filLV.getItems().addAll(booking.getFileList());
-        afgangTF.setText(String.valueOf(booking.getEndTime()));
-        ankomstTF.setText(String.valueOf(booking.getStartTime()));
+        afgangTF.setText(booking.getÅbenSkoleForløb().getTransportDeparture());
+        ankomstTF.setText(booking.getÅbenSkoleForløb().getTransportArrival());
 
-        //transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
+        transportCB.setText(booking.getÅbenSkoleForløb().getTransportType());
 
     }
 
