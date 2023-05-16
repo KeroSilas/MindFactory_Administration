@@ -114,7 +114,7 @@
                         </MFXComboBox>
                      </children>
                   </HBox>
-                  <MFXCheckbox fx:id="noShow" text="NoShow" />
+                  <MFXCheckbox fx:id="noShow" text="Mødte ikke op" />
                </children>
             </VBox>
             <VBox alignment="TOP_RIGHT" spacing="12.0">
@@ -234,7 +234,7 @@
             <MFXButton fx:id="sletBtn" buttonType="RAISED" onAction="#handleSlet" prefHeight="35.0" prefWidth="100.0" text="Slet" />
             <HBox maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <MFXProgressSpinner visible="false">
+                  <MFXProgressSpinner fx:id="progressSpinner" visible="false">
                      <color1>
                         <Color red="0.501960813999176" green="0.501960813999176" blue="0.501960813999176" />
                      </color1>

@@ -22,4 +22,6 @@ public interface BookingDao {
     void editBooking (Booking booking) throws SQLException;
 
     void deleteBooking (int bookingID) throws SQLException;
+
+    List<BookingTime> getBookingTimeList();
 }

@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/tasks/GetBookingTimesTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/dao/BookingDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/BookingTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/UpcomingBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/UpcomingBooking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/editBooking.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/editBooking.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,8 +87,8 @@
       <recent name="group3.mindfactory_administration" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="group3.mindfactory_administration.model" />
       <recent name="group3.mindfactory_administration.model.tasks" />
+      <recent name="group3.mindfactory_administration.model" />
       <recent name="group3.mindfactory_administration.dao" />
     </key>
   </component>
@@ -305,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684176498488</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Changes">
+      <created>1684221646982</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1684221646982</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

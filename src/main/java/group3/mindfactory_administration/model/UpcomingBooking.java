@@ -1,12 +1,17 @@
 package group3.mindfactory_administration.model;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.File;
 
 public class UpcomingBooking extends VBox {
 
@@ -30,6 +35,44 @@ public class UpcomingBooking extends VBox {
 
         // Inserting information
         HBox orgHB = new HBox();
+
+        HBox logoHB = new HBox();
+        logoHB.setPadding(new Insets(0, 4, 0, 0));
+
+        File notepadFile = new File("src/main/resources/group3/mindfactory_administration/icons/notepad.png");
+        File ideaFile = new File("src/main/resources/group3/mindfactory_administration/icons/idea.png");
+        File planetFile = new File("src/main/resources/group3/mindfactory_administration/icons/planet-earth.png");
+        File shieldFile = new File("src/main/resources/group3/mindfactory_administration/icons/shield.png");
+        File virtualFile = new File("src/main/resources/group3/mindfactory_administration/icons/virtual.png");
+        File vacuumFile = new File("src/main/resources/group3/mindfactory_administration/icons/vacuum-cleaner.png");
+        File robotFile = new File("src/main/resources/group3/mindfactory_administration/icons/robot.png");
+
+        ImageView notepadImageView = new ImageView(new Image(notepadFile.toURI().toString(), 20, 20, true, true));
+        ImageView ideaImageView = new ImageView(new Image(ideaFile.toURI().toString(), 20, 20, true, true));
+        ImageView planetImageView = new ImageView(new Image(planetFile.toURI().toString(), 20, 20, true, true));
+        ImageView shieldImageView = new ImageView(new Image(shieldFile.toURI().toString(), 20, 20, true, true));
+        ImageView virtualImageView = new ImageView(new Image(virtualFile.toURI().toString(), 20, 20, true, true));
+        ImageView vacuumImageView = new ImageView(new Image(vacuumFile.toURI().toString(), 20, 20, true, true));
+        ImageView robotImageView = new ImageView(new Image(robotFile.toURI().toString(), 20, 20, true, true));
+
+
+        if (booking.getPersonalNote() != null) {
+            logoHB.getChildren().add(notepadImageView);
+        }
+
+        if (booking.getÅbenSkoleForløb().getÅbenSkoleForløb() != null) {
+            switch (booking.getÅbenSkoleForløb().getÅbenSkoleForløb()) {
+                case "Idéfabrikken" -> logoHB.getChildren().add(ideaImageView);
+                case "Digital fabrikation med laserskærer" -> logoHB.getChildren().add(virtualImageView);
+                case "Robot på job" -> logoHB.getChildren().add(robotImageView);
+                case "Robotten rydder op" -> logoHB.getChildren().add(vacuumImageView);
+                case "Naturturisme ved Vadehavet" -> logoHB.getChildren().add(planetImageView);
+                case "Skab sikkerhed i Vadehavet" -> logoHB.getChildren().add(shieldImageView);
+            }
+        }
+
+        orgHB.getChildren().add(logoHB);
+
         orgHB.setMouseTransparent(true); // Makes it possible to click on the upcomingBooking object itself, even though the user is clicking on this HBox
         Label org;
         if (booking.getOrganization().getOrganization().equals("Andet udleje") || booking.getOrganization().getOrganization().equals("Tønder Kommune - organisation") || booking.getOrganization().getOrganization().equals("Tønder Kommune - skole")) {

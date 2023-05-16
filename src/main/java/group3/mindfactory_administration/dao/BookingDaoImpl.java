@@ -221,6 +221,7 @@ public class BookingDaoImpl implements BookingDao {
     // Updates a given booking
     @Override
     public void editBooking(Booking booking) throws SQLException {
+        System.out.println("DAO");
         Connection con = databaseConnector.getConnection();
         try {
             con.setAutoCommit(false);
@@ -279,35 +280,35 @@ public class BookingDaoImpl implements BookingDao {
                 ps6.executeUpdate();
             }
 
-            String sql = "DELETE FROM BookingEquipment WHERE booking = ?;";
-            PreparedStatement ps6 = con.prepareStatement(sql);
-            ps6.setInt(1, booking.getBookingID());
-            ps6.executeUpdate();
+            String sql = "DELETE FROM BookingEquipment WHERE bookingID = ?;";
+            PreparedStatement ps7 = con.prepareStatement(sql);
+            ps7.setInt(1, booking.getBookingID());
+            ps7.executeUpdate();
 
             String sql2 = "INSERT INTO BookingEquipment VALUES(?,?);";
-            PreparedStatement ps7 = con.prepareStatement(sql2);
+            PreparedStatement ps8 = con.prepareStatement(sql2);
 
             for (String equipment : booking.getEquipmentList()) {
-                ps7.setInt(1, booking.getBookingID());
-                ps7.setString(2, equipment);
-                ps7.addBatch();
+                ps8.setInt(1, booking.getBookingID());
+                ps8.setString(2, equipment);
+                ps8.addBatch();
             }
-            ps6.executeBatch();
+            ps8.executeBatch();
 
-            String sql3 = "DELETE FROM BookingFiles WHERE booking = ?;";
-            PreparedStatement ps8 = con.prepareStatement(sql3);
-            ps8.setInt(1, booking.getBookingID());
-            ps8.executeUpdate();
+            String sql3 = "DELETE FROM BookingFiles WHERE bookingID = ?;";
+            PreparedStatement ps9 = con.prepareStatement(sql3);
+            ps9.setInt(1, booking.getBookingID());
+            ps9.executeUpdate();
 
             String sql4 = "INSERT INTO BookingFiles VALUES(?,?);";
-            PreparedStatement ps9 = con.prepareStatement(sql4);
+            PreparedStatement ps10 = con.prepareStatement(sql4);
 
             for (File file : booking.getFileList()) {
-                ps9.setInt(1, booking.getBookingID());
-                ps9.setString(2, file.getPath());
-                ps9.addBatch();
+                ps10.setInt(1, booking.getBookingID());
+                ps10.setString(2, file.getPath());
+                ps10.addBatch();
             }
-            ps9.executeBatch();
+            ps10.executeBatch();
 
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             con.commit();
@@ -339,6 +340,27 @@ public class BookingDaoImpl implements BookingDao {
         } catch (SQLException e) {
             throw new SQLException(e); // Re-throw exception to be handled by the task that called this method
         }
+    }
+
+    @Override
+    public List<BookingTime> getBookingTimeList() {
+        List<BookingTime> bookingTimeList = new ArrayList<>();
+        try (Connection con = databaseConnector.getConnection()){
+            PreparedStatement ps = con.prepareStatement("SELECT startDate, startTime, endTime, isWholeDay FROM Booking;");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+                LocalTime startTime = rs.getTime("startTime").toLocalTime();
+                LocalTime endTime = rs.getTime("endTime").toLocalTime();
+                boolean isWholeDay = rs.getBoolean("isWholeDay");
+                bookingTimeList.add(new BookingTime(startDate, startTime, endTime, isWholeDay));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookingTimeList;
     }
 }
 

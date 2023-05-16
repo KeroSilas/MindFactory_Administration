@@ -4,6 +4,9 @@ import group3.mindfactory_administration.model.*;
 import group3.mindfactory_administration.model.tasks.*;
 import group3.mindfactory_administration.model.tasks.EditBookingTask;
 import io.github.palexdev.materialfx.controls.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,10 +16,16 @@ import javafx.scene.control.ToggleGroup;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Iterator;
 import java.util.List;
 
 public class EditBookingController {
     private Booking booking;
+
+    private List<BookingTime> bookedTimes;
+    private final ObservableList<LocalDate> dateList = FXCollections.observableArrayList();
+    private final ObservableList<LocalTime> startTimeList = FXCollections.observableArrayList();
+    private final ObservableList<LocalTime> endTimeList = FXCollections.observableArrayList();
 
     @FXML
     private ToggleGroup assistanceType;
@@ -87,26 +96,143 @@ public class EditBookingController {
         Thread thread2 = new Thread(getForløbTask);
         thread2.start();
 
+        GetActivitiesTask getActivitiesTask = new GetActivitiesTask();
+        getActivitiesTask.setOnSucceeded(e -> {
+            List<Activity> activities = getActivitiesTask.getValue();
+            aktivitetCB.getItems().addAll(activities);
+        });
+        Thread thread3 = new Thread(getActivitiesTask);
+        thread3.start();
+
+        GetCateringTask getCateringTask = new GetCateringTask();
+        getCateringTask.setOnSucceeded(e -> {
+            List<Catering> catering = getCateringTask.getValue();
+            forplejningCB.getItems().addAll(catering);
+        });
+        Thread thread4 = new Thread(getCateringTask);
+        thread4.start();
+
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
+
+        // Add the ObservableLists to the ComboBoxes
+        datoCB.setItems(dateList);
+        fraCB.setItems(startTimeList);
+        tilCB.setItems(endTimeList);
+
+        // Gets the already booked times from the database every 5 seconds
+        GetBookingTimesTask getBookingTimesTask = new GetBookingTimesTask();
+        getBookingTimesTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                bookedTimes = newValue;
+
+                // Clear the dateList and add all the dates from today to 365 days from now
+                // This is added inside the listener because a booking time can be deleted, and that needs to be added back to the dateList
+                if (oldValue == null || newValue.size() != oldValue.size()) { // This is to prevent the dateList from being cleared every 5 seconds, if nothing has changed. But it still needs to be populated the first time
+                    dateList.clear();
+                    for (int i = 0; i < 365; i++) {
+                        dateList.add(LocalDate.now().plusDays((1 + i)));
+                    }
+                }
+
+                Iterator<LocalDate> dateIterator = dateList.iterator();
+                while (dateIterator.hasNext()) {
+                    LocalDate ld = dateIterator.next();
+                    for (BookingTime bt : bookedTimes) {
+                        if (bt.isWholeDay() && bt.getStartDate().equals(ld)) {
+                            dateIterator.remove();
+                            break;
+                        }
+                    }
+                }
+
+            }
+        });
+        Thread thread5 = new Thread(getBookingTimesTask);
+        thread5.setDaemon(true);
+        thread5.start();
+
+        datoCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                fraCB.getSelectionModel().clearSelection();
+                tilCB.getSelectionModel().clearSelection();
+                startTimeList.clear();
+                endTimeList.clear();
+
+                fraCB.setDisable(false);
+                fraLabel.setDisable(false);
+                tilCB.setDisable(true);
+                tilLabel.setDisable(true);
+
+                for (int i = 7; i < 23; i++) {
+                    startTimeList.add(LocalTime.of(i,0));
+                }
+                Iterator<LocalTime> startTimeIterator = startTimeList.iterator();
+                while (startTimeIterator.hasNext()) {
+                    LocalTime lt = startTimeIterator.next();
+                    for (BookingTime bt : bookedTimes) {
+                        if (datoCB.getValue().equals(bt.getStartDate())) {
+                            if ((lt.isAfter(bt.getStartTime()) || lt.equals(bt.getStartTime())) && (lt.isBefore(bt.getEndTime()) || lt.equals(bt.getEndTime()))) {
+                                startTimeIterator.remove();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
+
+        // If the selected time is a halfday booking before 12, then don't add the hours for the first half of the day
+        fraCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                tilCB.getSelectionModel().clearSelection();
+                endTimeList.clear();
+
+                tilCB.setDisable(false);
+                tilLabel.setDisable(false);
+
+                // I heard you like spaghetti, so I put spaghetti in your spaghetti
+                int hour = newValue.plusHours(1).getHour();
+                for (int i = hour; i < 24; i++) {
+                    endTimeList.add(LocalTime.of(i,0));
+                }
+                Iterator<LocalTime> endTimeIterator = endTimeList.iterator();
+                while (endTimeIterator.hasNext()) {
+                    LocalTime lt = endTimeIterator.next();
+                    for (BookingTime bt : bookedTimes) {
+                        if (newValue.isBefore(bt.getStartTime()) && datoCB.getValue().equals(bt.getStartDate())) {
+                            if ((lt.isAfter(bt.getStartTime()))) {
+                                endTimeIterator.remove();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
     }
 
-    private void exportToBooking() {
-        organisationCB.selectItem(booking.getOrganization());
+    public void exportFromBooking() {
+        /*organisationCB.selectItem(booking.getOrganization());
+        aktivitetCB.selectItem(booking.getActivity());
+        forplejningCB.selectItem(booking.getCatering());
+        forløbCB.selectItem(booking.getÅbenSkoleForløb());*/
+
         afdelingTF.setText(booking.getCustomer().getDepartment());
         stillingTF.setText(booking.getCustomer().getPosition());
 
         fornavnTF.setText(booking.getCustomer().getFirstName());
         efternavnTF.setText(booking.getCustomer().getLastName());
         telefonTF.setText(booking.getCustomer().getPhone());
-        if (booking.getOrganization().getAssistance().equals("Anne-Sofie Didriksen")){
+        if (booking.getOrganization().getAssistance() == null || booking.getOrganization().getAssistance().equals("Ingen")) {
+            ingenRB.setSelected(true);
+        } else if (booking.getOrganization().getAssistance().equals("Anne-Sofie Didriksen")){
             annesofieRB.setSelected(true);
-        }
-        if (booking.getOrganization().getAssistance().equals("Læringskonsulent")) {
+        } else if (booking.getOrganization().getAssistance().equals("Læringskonsulent")) {
             læringsRB.setSelected(true);
         }
-        if (booking.getOrganization().getAssistance().equals("Ingen")) {
-            ingenRB.setSelected(true);
-        }
+        emailTF.setText(booking.getCustomer().getEmail());
         deltagereTF.setText(String.valueOf(booking.getOrganization().getParticipants()));
         fraCB.setText(String.valueOf(booking.getStartTime()));
         tilCB.setText(String.valueOf(booking.getEndTime()));
@@ -114,19 +240,17 @@ public class EditBookingController {
         noShow.setSelected(booking.isNoShow());
         personligTA.setText(booking.getPersonalNote());
         beskedTA.setText(booking.getMessageToAS());
-        aktivitetCB.selectItem(booking.getActivity());
-        forplejningCB.selectItem(booking.getCatering());
-        udstyrLV.getItems().addAll();
-        filLV.getItems().addAll();
-
-        forløbCB.selectItem(booking.getÅbenSkoleForløb());
+        udstyrLV.getItems().addAll(booking.getEquipmentList());
+        filLV.getItems().addAll(booking.getFileList());
         afgangTF.setText(String.valueOf(booking.getEndTime()));
         ankomstTF.setText(String.valueOf(booking.getStartTime()));
-        transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
+
+        //transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
 
     }
 
     private void importToBooking() {
+        System.out.println("IMPORT");
         booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
         booking.getCustomer().setPosition(stillingTF.getText());
@@ -177,11 +301,12 @@ public class EditBookingController {
             // Once the thread is done the editBtn will be enabled again
             EditBookingTask editBookingTask = new EditBookingTask(booking);
             editBookingTask.setOnSucceeded(e -> {
-
+                System.out.println("DONE");
             });
             Thread thread = new Thread(editBookingTask);
             thread.setDaemon(true);
             thread.start();
+            System.out.println("SAVE");
         }
     }
 
