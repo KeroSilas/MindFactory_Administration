@@ -262,7 +262,6 @@ public class EditBookingController {
         booking.setStartDate(datoCB.getValue());
         booking.setNoShow(noShow.isSelected());
         booking.setWholeDay(booking.getStartTime().isBefore(LocalTime.of(12, 0)) && booking.getEndTime().isAfter(LocalTime.of(12, 0)));
-        System.out.println(booking.isWholeDay());
         booking.setPersonalNote(personligTA.getText());
         booking.setMessageToAS(beskedTA.getText());
         booking.setFileList(filLV.getItems());
