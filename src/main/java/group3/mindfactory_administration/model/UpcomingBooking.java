@@ -41,6 +41,7 @@ public class UpcomingBooking extends VBox {
         HBox orgHB = new HBox();
         HBox logoHB = new HBox();
         logoHB.setSpacing(4);
+        logoHB.setMouseTransparent(true);
 
         File notepadFile = new File("src/main/resources/group3/mindfactory_administration/icons/notepad.png");
         File ideaFile = new File("src/main/resources/group3/mindfactory_administration/icons/idea.png");

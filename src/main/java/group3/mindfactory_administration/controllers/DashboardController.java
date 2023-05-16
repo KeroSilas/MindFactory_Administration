@@ -62,7 +62,7 @@ public class DashboardController {
         xAxis.setLabel("Organisationer");
 
         // Starts a new thread that counts the number an organisation has booked in a given time period
-        CountOrgTask countOrgTask = new CountOrgTask(LocalDate.now().minusDays(365), LocalDate.now());
+        CountOrgTask countOrgTask = new CountOrgTask(LocalDate.now().minusDays(365), LocalDate.now().plusDays(31));
         countOrgTask.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 series.getData().clear();
@@ -108,6 +108,8 @@ public class DashboardController {
 
                     stage.setResizable(false);
                     stage.setScene(scene);
+                    stage.setTitle("Rediger booking");
+                    stage.getIcons().add(new Image("file:src/main/resources/group3/mindfactory_administration/icons/settings.png"));
                     stage.initModality(APPLICATION_MODAL);
                     stage.show();
                 } catch (Exception ex) {

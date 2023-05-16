@@ -71,8 +71,8 @@ public class StatisticController {
 
     public void initialize() {
         // Set the data pickers to be from a year ago to a week from now by default
-        toDP.setValue(LocalDate.now().plusDays(7));
-        fromDP.setValue(toDP.getValue().minusDays(365));
+        toDP.setValue(LocalDate.now().plusDays(31));
+        fromDP.setValue(toDP.getValue().minusDays(400));
 
         seriesOrg = new XYChart.Series<>();
         seriesAktivitet = new XYChart.Series<>();

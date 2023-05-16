@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -89,6 +90,8 @@ public class CalendarController {
 
                     stage.setResizable(false);
                     stage.setScene(scene);
+                    stage.setTitle("Rediger booking");
+                    stage.getIcons().add(new Image("file:src/main/resources/group3/mindfactory_administration/icons/settings.png"));
                     stage.initModality(APPLICATION_MODAL);
                     stage.show();
                 } catch (Exception ex) {
