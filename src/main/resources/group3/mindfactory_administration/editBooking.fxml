@@ -67,6 +67,25 @@
                   <Separator prefWidth="200.0" />
                   <HBox alignment="CENTER_RIGHT" spacing="8.0">
                      <children>
+                        <Label text="Organisation" />
+                        <MFXComboBox fx:id="organisationCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                     <children>
+                        <Label text="Afdeling" />
+                        <MFXTextField fx:id="afdelingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                     <children>
+                        <Label text="Stilling" />
+                        <MFXTextField fx:id="stillingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                     <children>
                         <Label text="Dato" />
                         <MFXComboBox fx:id="datoCB" floatMode="DISABLED" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: lightgrey;">
                            <font>
@@ -95,25 +114,7 @@
                         </MFXComboBox>
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                     <children>
-                        <Label text="Organisation" />
-                        <MFXComboBox fx:id="organisationCB" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                     <children>
-                        <Label text="Afdeling" />
-                        <MFXTextField fx:id="afdelingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                     <children>
-                        <Label text="Stilling" />
-                        <MFXTextField fx:id="stillingTF" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="170.0" />
-                     </children>
-                  </HBox>
+                  <MFXCheckbox fx:id="noShow" text="NoShow" />
                </children>
             </VBox>
             <VBox alignment="TOP_RIGHT" spacing="12.0">
@@ -217,7 +218,6 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <MFXCheckbox fx:id="noShow" text="NoShow" />
                </children>
             </VBox>
          </children>
