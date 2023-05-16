@@ -131,6 +131,12 @@ public class EditBookingController {
             if (newValue != null) {
                 fraCB.clear();
                 tilCB.clear();
+                // Prevents these fields from passing isInputValid() if they are not selected, because exportFromBooking() sets these values.
+                fraCB.setValue(null);
+                tilCB.setValue(null);
+                fraCB.getSelectionModel().clearSelection();
+                tilCB.getSelectionModel().clearSelection();
+
                 startTimeList.clear();
                 endTimeList.clear();
 
@@ -162,6 +168,8 @@ public class EditBookingController {
         fraCB.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 tilCB.clear();
+                tilCB.setValue(null);
+                tilCB.getSelectionModel().clearSelection();
                 endTimeList.clear();
 
                 tilCB.setDisable(false);
@@ -316,6 +324,9 @@ public class EditBookingController {
                     datoCB.clear();
                     fraCB.clear();
                     tilCB.clear();
+                    datoCB.getSelectionModel().clearSelection();
+                    fraCB.getSelectionModel().clearSelection();
+                    tilCB.getSelectionModel().clearSelection();
                     startTimeList.clear();
                     endTimeList.clear();
                 }
