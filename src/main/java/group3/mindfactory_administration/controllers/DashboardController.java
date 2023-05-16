@@ -118,32 +118,19 @@ public class DashboardController {
         });
     }
 
-    // Adapted from: https://edencoding.com/how-to-add-an-image-to-a-button/#:~:text=To%20set%20an%20image%20on,method%20of%20the%20scene's%20controller.
     @FXML
     void chooseImage(ActionEvent event) throws IOException {
-       // return chooseImageBtn.setOnAction(e -> {
 
             FileChooser fileChooser = new FileChooser();
-            //fileChooser.setTitle("Select file resource");
             fileChooser.getExtensionFilters().addAll();
             new FileChooser.ExtensionFilter("jpeg File", ".jpg");
 
             Node source = (Node) event.getSource();
             File file = fileChooser.showOpenDialog(source.getScene().getWindow());
-
             if (file != null) {
                 Image image = new Image(file.toURI().toString());
                 imageView.setImage(image);
             }
-
-            //ImageView imageView = new ImageView(getClass().getResource("/com/edencoding/images/EdenCodingIcon.png").toExternalForm());
-            imageView.getClass().getResource("C:\\Users\\chris\\IdeaProjects\\MindFactory_Administration\\src\\main\\resources\\group3\\mindfactory_administration\\images").toExternalForm();
-            chooseImageBtn.setGraphic(imageView);
-            chooseImageBtn.setContentDisplay(ContentDisplay.TOP);
-            imageView.fitWidthProperty().bind(chooseImageBtn.widthProperty().divide(10));
-            imageView.setPreserveRatio(true);
-            //Important otherwise button will wrap to text + graphic size (no resizing on scaling).
-            chooseImageBtn.setMaxWidth(Double.MAX_VALUE);
 
     }
 

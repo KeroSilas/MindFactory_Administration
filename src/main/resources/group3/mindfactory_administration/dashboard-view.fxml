@@ -1,51 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.DashboardController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.DashboardController">
    <center>
-      <VBox spacing="16.0">
+      <VBox alignment="TOP_CENTER" spacing="16.0">
          <children>
-            <VBox spacing="4.0">
+            <HBox spacing="16.0">
                <children>
-                  <Label text="Kommende bookinger">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <MFXScrollPane fitToHeight="true" maxHeight="232.0" minHeight="232.0" pannable="true" prefHeight="232.0" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
-                     <content>
-                        <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="220.0" minHeight="220.0" prefHeight="220.0" spacing="8.0">
+                  <VBox spacing="4.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Label text="Kommende bookinger">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <MFXScrollPane fitToHeight="true" maxHeight="202.0" minHeight="202.0" pannable="true" prefHeight="202.0" style="-fx-background-radius: 5; -fx-background-insets: 1,1,1,1; -fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5;" vbarPolicy="NEVER">
+                           <content>
+                              <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" spacing="8.0" />
+                           </content>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                            <padding>
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </padding>
+                        </MFXScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox fillWidth="false" spacing="4.0">
+                     <children>
+                        <Label text="Dagens billede">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <MFXButton onAction="#chooseImage" prefHeight="150.0" prefWidth="200.0">
+                                       <graphic>
+                                          <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                    </MFXButton>
+                                 </children>
+                              </StackPane>
+                           </children>
                         </HBox>
-                     </content>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </MFXScrollPane>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
             <VBox spacing="4.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Årets belægning">
+                  <Label text="Årets statistik">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
                   <HBox style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                      <children>
-                        <BarChart fx:id="barChart" legendVisible="false" HBox.hgrow="ALWAYS">
+                        <BarChart fx:id="barChart" HBox.hgrow="ALWAYS">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
