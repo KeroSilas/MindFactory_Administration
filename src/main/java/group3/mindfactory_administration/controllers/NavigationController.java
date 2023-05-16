@@ -8,6 +8,8 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -30,7 +32,9 @@ public class NavigationController {
     private BorderPane view1, view2, view3;
     private CalendarController calendarController;
     private DashboardController dashboardController;
+    private Image notificationOn, notificationOff;
 
+    @FXML private ImageView notificationImageView;
     @FXML private MFXButton dashboardBtn, kalenderBtn, statistikBtn;
     @FXML private StackPane stackPane;
 
@@ -70,6 +74,11 @@ public class NavigationController {
         stackPane.getChildren().add(view3);
     }
 
+    @FXML
+    void handleNotification() {
+        notificationImageView.setImage(notificationOff);
+    }
+
     public void initialize() {
         // Get the views from the FXML files
         FXMLLoader view1Loader = new FXMLLoader(AdministrationApplication.class.getResource("dashboard-view.fxml"));
@@ -92,6 +101,9 @@ public class NavigationController {
         dashboardBtn.setStyle("-fx-background-color:  #94c83d; -fx-text-fill: #ffffff");
         stackPane.getChildren().add(view1);
 
+        notificationOff = new Image("file:src/main/resources/group3/mindfactory_administration/icons/notification-off.png");
+        notificationOn = new Image("file:src/main/resources/group3/mindfactory_administration/icons/notification-on.png");
+
         // Start a thread to get the bookings from the database. Updates every 3 seconds.
         // Send the bookings to the dashboard and calendar controllers.
         GetBookingsTask getBookingsTask = new GetBookingsTask();
@@ -104,6 +116,10 @@ public class NavigationController {
                     calendarController.setBookings(bookings);
                     calendarController.drawCalendar();
                 });
+
+                if (oldValue != null && newValue.size() > oldValue.size()) {
+                    notificationImageView.setImage(notificationOn);
+                }
             }
         });
         Thread thread = new Thread(getBookingsTask);

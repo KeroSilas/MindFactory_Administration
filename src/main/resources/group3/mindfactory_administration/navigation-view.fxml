@@ -28,7 +28,7 @@
             </HBox>
             <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                <children>
-                  <MFXButton fx:id="dashboardBtn" minHeight="35.0" minWidth="110.0" onAction="#handleDashboard" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Dashboard" textFill="WHITE">
+                  <MFXButton fx:id="dashboardBtn" minHeight="40.0" minWidth="110.0" onAction="#handleDashboard" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Dashboard" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -36,7 +36,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </MFXButton>
-                  <MFXButton fx:id="kalenderBtn" minHeight="35.0" minWidth="110.0" onAction="#handleKalender" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Kalender" textFill="WHITE">
+                  <MFXButton fx:id="kalenderBtn" minHeight="40.0" minWidth="110.0" onAction="#handleKalender" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Kalender" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -44,7 +44,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </MFXButton>
-                  <MFXButton fx:id="statistikBtn" minHeight="35.0" minWidth="110.0" onAction="#handleStatistik" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Statistik" textFill="WHITE">
+                  <MFXButton fx:id="statistikBtn" minHeight="40.0" minWidth="110.0" onAction="#handleStatistik" prefHeight="40.0" prefWidth="110.0" rippleColor="WHITE" style="-fx-background-color: #111c24;" text="Statistik" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -54,7 +54,18 @@
                   </MFXButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefWidth="150.0" />
+            <HBox alignment="CENTER_RIGHT" prefWidth="150.0">
+               <children>
+                  <MFXButton ellipsisString="" minHeight="40.0" minWidth="40.0" onAction="#handleNotification" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #111c24;" text=" ">
+                     <graphic>
+                        <ImageView fx:id="notificationImageView" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" translateX="-6.0">
+                           <image>
+                              <Image url="@icons/notification-off.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MFXButton>
+               </children></HBox>
          </children>
          <padding>
             <Insets left="12.0" right="12.0" />
