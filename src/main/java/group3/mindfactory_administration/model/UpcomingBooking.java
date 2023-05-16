@@ -31,7 +31,12 @@ public class UpcomingBooking extends VBox {
         // Inserting information
         HBox orgHB = new HBox();
         orgHB.setMouseTransparent(true); // Makes it possible to click on the upcomingBooking object itself, even though the user is clicking on this HBox
-        Label org = new Label(booking.getCustomer().getDepartment());
+        Label org;
+        if (booking.getOrganization().getOrganization().equals("Andet udleje") || booking.getOrganization().getOrganization().equals("Tønder Kommune - organisation") || booking.getOrganization().getOrganization().equals("Tønder Kommune - skole")) {
+            org = new Label(booking.getCustomer().getDepartment());
+        } else {
+            org = new Label(booking.getOrganization().getOrganization());
+        }
         org.setFont(Font.font("System", FontWeight.BOLD, 14)); // Bold font for the organization name
         org.setStyle("-fx-text-fill: #ffffff");
         orgHB.getChildren().add(org);

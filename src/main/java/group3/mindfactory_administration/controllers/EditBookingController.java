@@ -70,7 +70,7 @@ public class EditBookingController {
     private MFXListView<String> udstyrLV;
 
 
-    /*public void initialize(){
+    public void initialize(){
         GetOrganisationsTask getOrganisationsTask = new GetOrganisationsTask();
         getOrganisationsTask.setOnSucceeded(e -> {
             List<Organization> organisations = getOrganisationsTask.getValue();
@@ -111,7 +111,7 @@ public class EditBookingController {
         fraCB.setText(String.valueOf(booking.getStartTime()));
         tilCB.setText(String.valueOf(booking.getEndTime()));
         datoCB.setText(String.valueOf(booking.getStartDate()));
-        booking.isNoShow(booking.setNoShow();
+        noShow.setSelected(booking.isNoShow());
         personligTA.setText(booking.getPersonalNote());
         beskedTA.setText(booking.getMessageToAS());
         aktivitetCB.selectItem(booking.getActivity());
@@ -125,6 +125,7 @@ public class EditBookingController {
         transportCB.selectItem(String.valueOf(booking.getÅbenSkoleForløb()));
 
     }
+
     private void importToBooking() {
         booking.setOrganization(organisationCB.getSelectionModel().getSelectedItem());
         booking.getCustomer().setDepartment(afdelingTF.getText());
@@ -144,7 +145,7 @@ public class EditBookingController {
         booking.setStartTime(fraCB.getValue());
         booking.setEndTime(tilCB.getValue());
         booking.setStartDate(datoCB.getValue());
-        booking.isNoShow(noShow.setSelected());
+        booking.setNoShow(noShow.isSelected());
         booking.setPersonalNote(personligTA.getText());
         booking.setMessageToAS(beskedTA.getText());
         booking.setActivity(aktivitetCB.getValue());
@@ -216,7 +217,7 @@ public class EditBookingController {
     @FXML
     void handleTilføjEquip(ActionEvent event) {
         udstyrLV.getItems().add(udstyrCB.getSelectionModel().getSelectedItem());
-    }*/
+    }
 
 
     public void setBooking(Booking booking) {
