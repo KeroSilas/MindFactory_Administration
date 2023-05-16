@@ -120,10 +120,11 @@ public class Booking implements Comparable<Booking> {
     }
 
     public boolean isWholeDay() {
-        if (startTime.isBefore(LocalTime.of(12, 0)) && endTime.isAfter(LocalTime.of(12, 0))) {
-            isWholeDay = true;
-        }
         return isWholeDay;
+    }
+
+    public void setWholeDay(boolean isWholeDay) {
+        this.isWholeDay = isWholeDay;
     }
 
     public boolean isNoShow() {
