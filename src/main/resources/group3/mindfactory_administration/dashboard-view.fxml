@@ -25,7 +25,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;">
+                        <HBox fx:id="hBoxSP" alignment="CENTER_LEFT" maxHeight="200.0" maxWidth="1.7976931348623157E308" minHeight="200.0" prefHeight="200.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: lightgrey; -fx-border-radius: 5;">
                            <padding>
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </padding>

@@ -225,16 +225,16 @@ public class EditBookingController {
 
         if (booking.getActivity().getActivity() != null) {
             aktivitetCB.setValue(booking.getActivity());
-            forplejningCB.setText(booking.getCatering().getCatering() == null ? "" : booking.getCatering().getCatering());
+            forplejningCB.setValue(booking.getCatering());
             deltagereTF.setText(String.valueOf(booking.getOrganization().getParticipants()));
             udstyrLV.getItems().addAll(booking.getEquipmentList());
         }
 
         if (booking.getOrganization().getAssistance() == null || booking.getOrganization().getAssistance().equals("Ingen")) {
             ingenRB.setSelected(true);
-        } else if (booking.getOrganization().getAssistance().equals("Anne-Sofie Didriksen")){
+        } else if (booking.getOrganization().getAssistance().equals("Anne-Sofie Dideriksen")){
             annesofieRB.setSelected(true);
-        } else if (booking.getOrganization().getAssistance().equals("Læringskonsulent")) {
+        } else if (booking.getOrganization().getAssistance().equals("Læring konsulent")) {
             læringsRB.setSelected(true);
         }
 

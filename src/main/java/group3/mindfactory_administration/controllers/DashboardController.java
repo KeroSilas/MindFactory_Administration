@@ -51,13 +51,7 @@ public class DashboardController {
     @FXML
     private ImageView imageView;
 
-    @FXML
-    Button chooseImageBtn;
-
     private List<Booking> bookings;
-
-    public DashboardController() {
-    }
 
     public void initialize() {
         series = new XYChart.Series<>();
@@ -86,7 +80,10 @@ public class DashboardController {
         hBoxSP.getChildren().clear();
         List<Booking> upcomingBookings= new ArrayList<>();
         for(Booking booking : bookings){
-            if(booking.getStartDate().isBefore(LocalDate.now().plusDays(7))){
+            if(booking.getStartDate().isBefore(LocalDate.now().plusDays(7))) {
+                if (upcomingBookings.size() == 5) {
+                    break;
+                }
                 upcomingBookings.add(booking);
             }
         }
@@ -121,7 +118,7 @@ public class DashboardController {
     }
 
     @FXML
-    void chooseImage(ActionEvent event) throws IOException {
+    void chooseImage(ActionEvent event) {
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll();

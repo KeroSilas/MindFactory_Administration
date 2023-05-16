@@ -14,9 +14,9 @@ public class AdministrationApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("navigation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.getIcons().add(new Image("file:src/main/resources/group3/mindfactory_administration/images/MF_POSITVE_LOGO_BLACK.png"));
-        stage.setWidth(1250);
+        stage.setWidth(1273);
         stage.setHeight(950);
-        stage.setMinWidth(1250);
+        stage.setMinWidth(1273);
         stage.setMinHeight(950);
         stage.setTitle("Mind Factory Administration");
         stage.setScene(scene);
