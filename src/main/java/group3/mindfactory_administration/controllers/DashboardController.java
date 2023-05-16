@@ -4,6 +4,7 @@ import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
 import group3.mindfactory_administration.model.UpcomingBooking;
 import group3.mindfactory_administration.model.tasks.CountOrgTask;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,6 +104,7 @@ public class DashboardController {
                     Parent root = fxmlLoader.load();
                     editBookingController = fxmlLoader.getController();
                     editBookingController.setBooking(ub.getBooking());
+                    Platform.runLater(() -> editBookingController.exportFromBooking());
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);

@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -113,6 +115,7 @@ public class EditBookingController {
         thread4.start();
 
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
+        udstyrCB.getItems().addAll("Robotter", "Sakse");
 
         // Add the ObservableLists to the ComboBoxes
         datoCB.setItems(dateList);
@@ -285,14 +288,21 @@ public class EditBookingController {
 
     @FXML
     void handleTilføjFil(ActionEvent event) {
-
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select a file");
+        List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
+        filLV.getItems().addAll(files);
     }
 
 
     @FXML
     void handleSletFil(ActionEvent event) {
-
+        List<File> filesList = filLV.getSelectionModel().getSelectedValues();
+        for (File file : filesList) {
+            filLV.getItems().remove(file);
+        }
     }
+
     @FXML
     void handleSave(ActionEvent event) {
         if (isInputValid()) {

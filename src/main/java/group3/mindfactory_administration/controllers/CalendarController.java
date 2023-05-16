@@ -6,6 +6,7 @@ import group3.mindfactory_administration.model.CalendarBooking;
 import group3.mindfactory_administration.model.CalendarCell;
 import group3.mindfactory_administration.model.tasks.GetBookingsTask;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -81,6 +82,7 @@ public class CalendarController {
                     Parent root = fxmlLoader.load();
                     editBookingController = fxmlLoader.getController();
                     editBookingController.setBooking(cb.getBooking());
+                    Platform.runLater(() -> editBookingController.exportFromBooking());
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
