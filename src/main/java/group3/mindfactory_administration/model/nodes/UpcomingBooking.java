@@ -22,7 +22,6 @@ public class UpcomingBooking extends VBox {
     public UpcomingBooking(Booking booking) {
         this.booking = booking;
 
-        //List<Booking> upcomingBookings = bookingDao.getOneWeekOutBookings();
         // Styling
         this.setPrefWidth(190);
         this.setPrefHeight(USE_COMPUTED_SIZE);

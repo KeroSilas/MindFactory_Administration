@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Initial notification implementation">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d5b9a90c-3b0c-418f-8a98-ea0a9d178916" name="Changes" comment="Newer JDBC version">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/mssql-jdbc-12.2.0.jre11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/controllers/EditBookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/editBooking.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/group3/mindfactory_administration/editBooking.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/nodes/UpcomingBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/group3/mindfactory_administration/model/nodes/UpcomingBooking.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -365,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684261822893</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Newer JDBC version">
+      <created>1684314200283</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1684314200283</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,6 +395,7 @@
     <MESSAGE value="Label changes" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Initial notification implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial notification implementation" />
+    <MESSAGE value="Newer JDBC version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Newer JDBC version" />
   </component>
 </project>

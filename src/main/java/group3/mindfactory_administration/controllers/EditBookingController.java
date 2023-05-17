@@ -318,6 +318,9 @@ public class EditBookingController {
 
             EditBookingTask editBookingTask = new EditBookingTask(booking);
             editBookingTask.setOnSucceeded(e -> {
+                progressSpinner.setVisible(false);
+                gemBtn.setDisable(false);
+
                 if (editBookingTask.getValue()) {
                     Alert alert = new Alert(Alert.AlertType.NONE, "Du har lige lavet en ændring i denne booking, du bedes derfor sende kunden en e-mail med opdateret information.", ButtonType.OK);
                     alert.setTitle("E-mail påmindelse");
@@ -339,8 +342,6 @@ public class EditBookingController {
                     startTimeList.clear();
                     endTimeList.clear();
                 }
-                progressSpinner.setVisible(false);
-                gemBtn.setDisable(false);
             });
             Thread thread = new Thread(editBookingTask);
             thread.setDaemon(true);
