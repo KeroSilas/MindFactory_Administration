@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group3.mindfactory_administration.controllers.CalendarController">
@@ -34,94 +35,100 @@
         </rowConstraints>
       </GridPane>
    </center>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="60.0" spacing="8.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets left="12.0" right="12.0" />
-         </padding>
-         <children>
-            <MFXButton onAction="#handlePreviousMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&lt;">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-            <MFXComboBox fx:id="monthComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="160.0" style="-fx-border-color: lightgrey;">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXComboBox>
-            <MFXComboBox fx:id="yearComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="160.0" style="-fx-border-color: lightgrey;">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXComboBox>
-            <MFXButton onAction="#handleNextMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&gt;">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-         </children>
-      </HBox>
-   </bottom>
    <top>
-      <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="40.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" text="Mandag" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <HBox alignment="CENTER" prefHeight="60.0" spacing="8.0">
                <padding>
-                  <Insets bottom="4.0" />
+                  <Insets left="12.0" right="12.0" />
                </padding>
-            </Label>
-            <Label alignment="CENTER" text="Tirsdag" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER" text="Onsdag" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER" text="Torsdag" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER" text="Fredag" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER" text="Lørdag" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
-            <Label alignment="CENTER" text="Søndag" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-               <padding>
-                  <Insets bottom="4.0" />
-               </padding>
-            </Label>
+               <children>
+                  <MFXButton onAction="#handlePreviousMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&lt;">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+                  <MFXComboBox fx:id="monthComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="130.0" style="-fx-border-color: lightgrey;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXComboBox>
+                  <MFXComboBox fx:id="yearComboBox" floatMode="DISABLED" minHeight="40.0" minWidth="160.0" prefHeight="40.0" prefWidth="130.0" style="-fx-border-color: lightgrey;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXComboBox>
+                  <MFXButton onAction="#handleNextMonth" prefHeight="40.0" prefWidth="40.0" style="-fx-border-color: lightgrey; -fx-border-radius: 5; -fx-background-radius: 5;" text="&gt;">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+               </children>
+            </HBox>
+            <GridPane alignment="CENTER" style="-fx-border-color: lightgrey; -fx-border-insets: -1,0,0,-1;">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" text="Mandag" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Tirsdag" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Onsdag" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Torsdag" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Fredag" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Lørdag" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" text="Søndag" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                     <padding>
+                        <Insets bottom="4.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </GridPane>
          </children>
-      </GridPane>
+      </VBox>
    </top>
 </BorderPane>
