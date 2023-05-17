@@ -323,7 +323,7 @@ public class EditBookingController {
 
                 if (editBookingTask.getValue()) {
                     Alert alert = new Alert(Alert.AlertType.NONE, "Du har lige lavet en ændring i denne booking, du bedes derfor sende kunden en e-mail med opdateret information.", ButtonType.OK);
-                    alert.setTitle("E-mail påmindelse");
+                    alert.setTitle("Email påmindelse");
                     alert.initOwner(gemBtn.getScene().getWindow()); //Retrieves the title bar icon from the main window by setting the alerts owner to that window.
                     alert.showAndWait();
                 } else {
