@@ -240,7 +240,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" style="-fx-border-color: lightgrey;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="alertLabel" prefWidth="145.0" text="Prøv venligst en anden tid." textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
+            <Label fx:id="alertLabel" prefWidth="145.0" text="Prøv venligst igen." textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
             <MFXButton fx:id="gemBtn" buttonType="RAISED" onAction="#handleSave" prefHeight="40.0" prefWidth="100.0" text="Gem" />
             <MFXButton fx:id="sletBtn" buttonType="RAISED" onAction="#handleSlet" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #BD2323FF;" text="Slet booking" textFill="WHITE" />
             <HBox alignment="TOP_RIGHT" maxHeight="30.0" maxWidth="145.0" minHeight="30.0" minWidth="145.0" prefHeight="30.0" prefWidth="145.0">
