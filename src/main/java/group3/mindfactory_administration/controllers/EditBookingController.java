@@ -49,7 +49,6 @@ public class EditBookingController {
     @FXML private MFXComboBox<String> transportCB, udstyrCB;
     @FXML private MFXListView<String> udstyrLV;
 
-
     public void initialize(){
         transportCB.getItems().addAll("Jeg kommer i lejet bus", "Jeg kommer i offentlig transport");
         udstyrCB.getItems().addAll("Robotter", "Sakse");
