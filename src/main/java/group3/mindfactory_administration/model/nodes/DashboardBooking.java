@@ -14,12 +14,12 @@ import javafx.scene.text.FontWeight;
 
 import java.io.File;
 
-public class UpcomingBooking extends VBox {
+public class DashboardBooking extends VBox {
 
     private final Booking booking;
 
 
-    public UpcomingBooking(Booking booking) {
+    public DashboardBooking(Booking booking) {
         this.booking = booking;
 
         // Styling

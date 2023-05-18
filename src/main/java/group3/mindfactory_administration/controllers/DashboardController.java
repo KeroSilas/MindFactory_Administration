@@ -2,7 +2,7 @@ package group3.mindfactory_administration.controllers;
 
 import group3.mindfactory_administration.AdministrationApplication;
 import group3.mindfactory_administration.model.Booking;
-import group3.mindfactory_administration.model.nodes.UpcomingBooking;
+import group3.mindfactory_administration.model.nodes.DashboardBooking;
 import group3.mindfactory_administration.model.tasks.CountOrgTask;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -87,12 +87,12 @@ public class DashboardController {
 
         Collections.sort(upcomingBookings);
         for (Booking booking : upcomingBookings) {
-            UpcomingBooking upcomingBooking = new UpcomingBooking(booking);
-            hBoxSP.getChildren().add(upcomingBooking);
+            DashboardBooking dashboardBooking = new DashboardBooking(booking);
+            hBoxSP.getChildren().add(dashboardBooking);
         }
 
         hBoxSP.setOnMouseClicked(e -> {
-            if (e.getTarget() instanceof UpcomingBooking ub) {
+            if (e.getTarget() instanceof DashboardBooking ub) {
                 FXMLLoader fxmlLoader = new FXMLLoader(AdministrationApplication.class.getResource("editBooking.fxml"));
                 try {
                     Parent root = fxmlLoader.load();
