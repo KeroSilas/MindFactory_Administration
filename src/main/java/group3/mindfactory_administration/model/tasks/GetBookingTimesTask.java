@@ -9,16 +9,16 @@ import java.util.List;
 
 public class GetBookingTimesTask extends Task<List<BookingTime>> {
 
-    private final BookingDao bookingTimesDao;
+    private final BookingDao bookingDao;
 
     public GetBookingTimesTask() {
-        bookingTimesDao = new BookingDaoImpl();
+        bookingDao = new BookingDaoImpl();
     }
 
     @Override
     public List<BookingTime> call() {
         while (!isCancelled()) { // Keep running until the task is cancelled
-            updateValue(bookingTimesDao.getBookingTimeList());
+            updateValue(bookingDao.getBookingTimeList());
             try {
                 Thread.sleep(5000L); // Sleep for the specified delay
             } catch (InterruptedException e) {
@@ -27,6 +27,6 @@ public class GetBookingTimesTask extends Task<List<BookingTime>> {
                 }
             }
         }
-        return bookingTimesDao.getBookingTimeList();
+        return bookingDao.getBookingTimeList();
     }
 }
