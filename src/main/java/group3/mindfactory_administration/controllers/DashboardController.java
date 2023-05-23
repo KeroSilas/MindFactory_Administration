@@ -77,7 +77,7 @@ public class DashboardController {
         hBoxSP.getChildren().clear();
         List<Booking> upcomingBookings= new ArrayList<>();
         for(Booking booking : bookings){
-            if(booking.getStartDate().isBefore(LocalDate.now().plusDays(7))) {
+            if(booking.getStartDate().isAfter(LocalDate.now()) && booking.getStartDate().isBefore(LocalDate.now().plusDays(7))){
                 if (upcomingBookings.size() == 5) {
                     break;
                 }
